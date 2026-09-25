@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
+@import 'tailwindcss';
+
+@variant dark (&:where(.dark, .dark *));
+
+:root {
+    --primary-blue: #0ea5e9;
+    --safe-green: #10b981;
+    --danger-red: #ef4444;
+}
+
+body {
+    font-family: 'Nunito', system-ui, sans-serif;
+    background: linear-gradient(180deg, #bde4f9 0%, #cae9fb 50%, #b5dff8 100%);
+    background-attachment: fixed;
+    color: #1e293b;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.dark body { 
+    background: linear-gradient(135deg, #0a1128 0%, #0d1b2a 50%, #1b263b 100%) !important; 
+    background-attachment: fixed;
+    color: #f8fafc;
+}
+
+/* ESCONDE A BARRA DE ROLAGEM LATERAL (WEB APP NATIVO) */
+.no-scrollbar::-webkit-scrollbar {
+    display: none !important;
+}
+.no-scrollbar {
+    -ms-overflow-style: none !important;
+    scrollbar-width: none !important;
+}
+
+/* CARDS BRANCOS ELEVADOS DE ALTO CONTRASTE */
+.glass-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    border-radius: 2.2rem;
+    box-shadow: 0 12px 30px -5px rgba(14, 165, 233, 0.08);
+}
+
+.dark .glass-card {
+    background: rgba(15, 23, 42, 0.92) !important;
+    border: 1px solid rgba(51, 65, 85, 0.8) !important;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4) !important;
+}
