@@ -1,8 +1,14 @@
 'use client'
 
+import BrandLabel from '@/components/ui/BrandLabel'
+import BrandIcon from '@/components/ui/BrandIcon'
 import { useState, useTransition } from 'react'
 import { criarMensalista, bloquearMensalista, resetarPinMensalista } from '@/lib/actions/mensalistas'
 import { Mensalista } from '@/lib/types'
+import {VisualText} from '@/components/ui/VisualContent'
+import VisualLabel from '@/components/ui/VisualLabel'
+
+
 
 export default function ClientesClient({ mensalistasIniciais }: { mensalistasIniciais: Mensalista[] }) {
   const [mensalistas, setMensalistas] = useState<Mensalista[]>(mensalistasIniciais)
@@ -102,7 +108,7 @@ export default function ClientesClient({ mensalistasIniciais }: { mensalistasIni
               ? 'bg-amber-500 text-white border-amber-300 shadow-amber-500/30'
               : 'bg-blue-600 text-white border-blue-400 shadow-blue-600/30'
           }`}>
-            <span>{toast.tipo === 'success' ? '✓' : toast.tipo === 'error' ? '✕' : 'ℹ'}</span>
+            <span><BrandLabel text={toast.tipo === 'success' ? '✓' : toast.tipo === 'error' ? '✕' : 'ℹ'}/></span>
             <span>{toast.msg}</span>
           </div>
         </div>
@@ -127,8 +133,8 @@ export default function ClientesClient({ mensalistasIniciais }: { mensalistasIni
 
       {showForm && (
         <div className="glass-card backdrop-blur-md bg-white/95 dark:bg-slate-800/95 border border-white/60 dark:border-slate-700 rounded-3xl p-5 shadow-lg animate-fade-down">
-          <h3 className="text-sm font-black uppercase italic tracking-tighter text-slate-800 dark:text-white mb-4">Novo Cadastro</h3>
-          <form onSubmit={handleSubmit} className="space-y-3">
+          <h3 className="text-sm font-black uppercase italic tracking-tighter text-slate-800 dark:text-white mb-4"><VisualText id="copy-ec9bf8fd7f1d" defaultText={"Novo Cadastro"}/></h3>
+          <form onSubmit={handleSubmit} className="rt-reception-clients space-y-3">
             <input required type="text" placeholder="Nome Completo" value={nome} onChange={e => setNome(e.target.value)} className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500 outline-none font-bold" />
             <input required type="text" placeholder="WhatsApp (ex: 13999999999)" value={telefone} onChange={e => setTelefone(e.target.value)} className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500 outline-none font-bold" />
             <div className="relative">
@@ -136,7 +142,7 @@ export default function ClientesClient({ mensalistasIniciais }: { mensalistasIni
                 onClick={() => setTipoPlanoDrop(!tipoPlanoDrop)}
                 className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 text-sm flex justify-between items-center cursor-pointer font-bold"
               >
-                <span>{tipoPlano === 'mensalista' ? 'Mensalista (Clube)' : 'Guardaria (Dono de Caiaque)'}</span>
+                <span><VisualLabel text={tipoPlano === 'mensalista' ? 'Mensalista (Clube)' : 'Guardaria (Dono de Caiaque)'}/></span>
                 <span className="text-[9px] text-slate-400">▼</span>
               </div>
               
@@ -164,7 +170,7 @@ export default function ClientesClient({ mensalistasIniciais }: { mensalistasIni
               )}
             </div>
             <button disabled={isPending} className="w-full mt-2 py-3 bg-[#10b981] text-white rounded-2xl text-[10px] font-black uppercase tracking-wider shadow-sm transition-all active:scale-95 disabled:opacity-50 cursor-pointer">
-              {isPending ? 'SALVANDO...' : 'CRIAR MENSALISTA'}
+              <VisualLabel text={isPending ? 'SALVANDO...' : 'CRIAR MENSALISTA'}/>
             </button>
           </form>
         </div>
@@ -172,10 +178,10 @@ export default function ClientesClient({ mensalistasIniciais }: { mensalistasIni
 
       {/* FILTROS */}
       <div className="flex gap-2 overflow-x-auto no-scrollbar pb-1">
-        <button onClick={() => setFiltro('todos')} className={`shrink-0 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider border-2 transition-all cursor-pointer ${filtro === 'todos' ? 'bg-slate-800 border-slate-800 text-white' : 'bg-transparent border-slate-300 text-slate-500'}`}>TODOS</button>
-        <button onClick={() => setFiltro('em_dia')} className={`shrink-0 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider border-2 transition-all cursor-pointer ${filtro === 'em_dia' ? 'bg-emerald-500 border-emerald-500 text-white' : 'bg-transparent border-slate-300 text-slate-500'}`}>EM DIA</button>
-        <button onClick={() => setFiltro('vencidos')} className={`shrink-0 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider border-2 transition-all cursor-pointer ${filtro === 'vencidos' ? 'bg-amber-500 border-amber-500 text-white' : 'bg-transparent border-slate-300 text-slate-500'}`}>VENCIDOS</button>
-        <button onClick={() => setFiltro('bloqueados')} className={`shrink-0 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider border-2 transition-all cursor-pointer ${filtro === 'bloqueados' ? 'bg-red-500 border-red-500 text-white' : 'bg-transparent border-slate-300 text-slate-500'}`}>BLOQUEADOS</button>
+        <button onClick={() => setFiltro('todos')} className={`shrink-0 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider border-2 transition-all cursor-pointer ${filtro === 'todos' ? 'bg-slate-800 border-slate-800 text-white' : 'bg-transparent border-slate-300 text-slate-500'}`}><VisualText id="copy-08d7fd9fc981" defaultText={"TODOS"}/></button>
+        <button onClick={() => setFiltro('em_dia')} className={`shrink-0 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider border-2 transition-all cursor-pointer ${filtro === 'em_dia' ? 'bg-emerald-500 border-emerald-500 text-white' : 'bg-transparent border-slate-300 text-slate-500'}`}><VisualText id="copy-75d9fa18e78f" defaultText={"EM DIA"}/></button>
+        <button onClick={() => setFiltro('vencidos')} className={`shrink-0 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider border-2 transition-all cursor-pointer ${filtro === 'vencidos' ? 'bg-amber-500 border-amber-500 text-white' : 'bg-transparent border-slate-300 text-slate-500'}`}><VisualText id="copy-bb0e23d705ff" defaultText={"VENCIDOS"}/></button>
+        <button onClick={() => setFiltro('bloqueados')} className={`shrink-0 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider border-2 transition-all cursor-pointer ${filtro === 'bloqueados' ? 'bg-red-500 border-red-500 text-white' : 'bg-transparent border-slate-300 text-slate-500'}`}><VisualText id="copy-abeaa61c1cf8" defaultText={"BLOQUEADOS"}/></button>
       </div>
 
       {/* LISTA */}
@@ -195,13 +201,13 @@ export default function ClientesClient({ mensalistasIniciais }: { mensalistasIni
               </div>
               <div className="flex gap-2 mt-3 pt-3 border-t border-slate-100 dark:border-slate-700">
                 <div className="flex-1">
-                  <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Créditos</p>
-                  <p className="text-xs font-black text-slate-700 dark:text-slate-200">{m.creditos} <span className="text-[9px]">restantes</span></p>
+                  <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest"><VisualText id="copy-e65c2ff1c527" defaultText={"Créditos"}/></p>
+                  <p className="text-xs font-black text-slate-700 dark:text-slate-200">{m.creditos} <span className="text-[9px]"><VisualText id="copy-3fffaaeb2f41" defaultText={"restantes"}/></span></p>
                 </div>
                 <div className="flex-1">
-                  <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Vencimento</p>
+                  <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest"><VisualText id="copy-e0258586d419" defaultText={"Vencimento"}/></p>
                   <p className={`text-xs font-black uppercase ${isVencido ? 'text-amber-500' : 'text-slate-700 dark:text-slate-200'}`}>
-                    {m.data_vencimento ? new Date(m.data_vencimento).toLocaleDateString('pt-BR') : 'N/A'}
+                    <VisualLabel text={m.data_vencimento ? new Date(m.data_vencimento).toLocaleDateString('pt-BR') : 'N/A'}/>
                   </p>
                 </div>
                 <button 
@@ -209,7 +215,7 @@ export default function ClientesClient({ mensalistasIniciais }: { mensalistasIni
                   onClick={() => toggleBlock(m.id, m.bloqueado)}
                   className={`w-10 h-10 flex items-center justify-center rounded-xl transition-all active:scale-95 cursor-pointer ${m.bloqueado ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'}`}
                 >
-                  {m.bloqueado ? '🔓' : '🔒'}
+                  <BrandLabel text={m.bloqueado ? '🔓' : '🔒'}/>
                 </button>
               </div>
               <div className="mt-2 pt-2 border-t border-slate-100 dark:border-slate-700/50">
@@ -218,14 +224,13 @@ export default function ClientesClient({ mensalistasIniciais }: { mensalistasIni
                   onClick={() => handleResetPin(m)}
                   className="w-full py-2 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-300 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all active:scale-95 flex justify-center items-center gap-2 disabled:opacity-50 cursor-pointer"
                 >
-                  🔑 Resetar PIN de Acesso
-                </button>
+                  <BrandIcon name="key"/><VisualText id="copy-9bd36ad45adf" defaultText={" Resetar PIN de Acesso"}/></button>
               </div>
             </div>
           )
         })}
         {filteredList.length === 0 && (
-          <p className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest text-center mt-4">Nenhum cliente encontrado.</p>
+          <p className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest text-center mt-4"><VisualText id="copy-878495c3e27d" defaultText={"Nenhum cliente encontrado."}/></p>
         )}
       </div>
     </div>

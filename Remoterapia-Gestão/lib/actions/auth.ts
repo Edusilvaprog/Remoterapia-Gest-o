@@ -1,9 +1,11 @@
 'use server'
 
+import {localPreviewEnabled,createLocalPreviewClient} from '@/lib/local-preview-client'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { createServerClient } from '@supabase/ssr'
+import { configuredAppOrigin, hasRecentRecoverySession } from '@/lib/auth-recovery'
 import { ActionResult, PerfilStaff } from '@/lib/types'
 
 /**
@@ -12,59 +14,24 @@ import { ActionResult, PerfilStaff } from '@/lib/types'
  */
 export async function loginStaff(email: string, password: string): Promise<ActionResult<PerfilStaff>> {
   const supabase = await createClient()
-
-  const { error } = await supabase.auth.signInWithPassword({ email, password })
+  const { error } = await supabase.auth.signInWithPassword({ email: email.trim().toLowerCase(), password })
   if (error) {
-    return { ok: false, error: 'Usuário ou senha incorretos.' }
+    if (process.env.NODE_ENV === 'development') console.warn('[login-gestao] auth_failed', { code: error.code, status: error.status })
+    return { ok: false, error: error.code === 'invalid_credentials' ? 'Usuário ou senha incorretos.' : 'Não foi possível validar o acesso agora. Tente novamente.' }
   }
-
-  const { data: { user } } = await supabase.auth.getUser()
-  if (!user) return { ok: false, error: 'Falha ao obter usuário.' }
-
-  let { data: perfil } = await supabase
-    .from('perfis_staff')
-    .select('*')
-    .eq('id', user.id)
-    .single()
-
-  if (!perfil && user.email) {
-    const { data: perfilEmail } = await supabase
-      .from('perfis_staff')
-      .select('*')
-      .eq('email', user.email)
-      .single()
-
-    if (perfilEmail) {
-      await supabase.from('perfis_staff').update({ id: user.id }).eq('email', user.email)
-      perfil = { ...perfilEmail, id: user.id }
-    }
-  }
-
+  const perfil = await getPerfilAtual()
   if (!perfil) {
-    const { data: novoPerfil } = await supabase
-      .from('perfis_staff')
-      .insert({
-        id: user.id,
-        email: user.email,
-        nome: user.email?.split('@')[0].toUpperCase() || 'ADMINISTRADOR',
-        role: 'admin',
-        status: 'ativo'
-      })
-      .select()
-      .single()
-    perfil = novoPerfil
+    if (process.env.NODE_ENV === 'development') console.warn('[login-gestao] profile_unavailable')
+    await supabase.auth.signOut({ scope: 'local' })
+    return { ok: false, error: 'Esta conta não possui acesso à equipe.' }
   }
-
   revalidatePath('/gestao')
-  return { ok: true, data: perfil as PerfilStaff }
+  return { ok: true, data: perfil }
 }
 
-/**
- * Logout do staff
- */
 export async function logoutStaff(): Promise<void> {
   const supabase = await createClient()
-  await supabase.auth.signOut()
+  await supabase.auth.signOut({ scope: 'local' })
   redirect('/gestao/login')
 }
 
@@ -73,66 +40,36 @@ export async function logoutStaff(): Promise<void> {
  */
 export async function getPerfilAtual(): Promise<PerfilStaff | null> {
   const supabase = await createClient()
-  const { data: { session } } = await supabase.auth.getSession()
-  const user = session?.user
-  if (!user) return null
-
-  let { data } = await supabase
-    .from('perfis_staff')
-    .select('*')
-    .eq('id', user.id)
-    .single()
-
-  if (!data && user.email) {
-    const { data: perfilEmail } = await supabase
-      .from('perfis_staff')
-      .select('*')
-      .eq('email', user.email)
-      .single()
-
-    if (perfilEmail) {
-      await supabase.from('perfis_staff').update({ id: user.id }).eq('email', user.email)
-      data = { ...perfilEmail, id: user.id }
-    }
+  const { data: { user }, error } = await supabase.auth.getUser()
+  if (error || !user) {
+    if (process.env.NODE_ENV === 'development' && error && error.name !== 'AuthSessionMissingError') console.warn('[sessao-gestao] validation_failed', { code: error.code, status: error.status })
+    return null
   }
-
-  if (data) {
-    const roleFinal = data.role || (Array.isArray(data.roles) && data.roles[0]) || 'admin'
-    return {
-      ...data,
-      role: roleFinal,
-      ativo: data.ativo !== undefined ? Boolean(data.ativo) : (data.status ? data.status === 'ativo' : true),
-      permissions: data.permissions || { qualidadeEmbarque: true, avaria: true }
-    } as PerfilStaff
-  }
-
-  return null
+  const { data, error: profileError } = await supabase.from('perfis_staff').select('*').eq('id', user.id).eq('ativo', true).maybeSingle()
+  if (process.env.NODE_ENV === 'development' && profileError) console.warn('[sessao-gestao] profile_failed', { code: profileError.code })
+  if (!data || !data.ativo || !['admin','dona','instrutor','recepcao','guardaria'].includes(data.role)) return null
+  return data as PerfilStaff
 }
 
-/**
- * Altera senha do staff logado
- */
 export async function alterarSenha(novaSenha: string): Promise<ActionResult> {
-  if (novaSenha.length < 6) return { ok: false, error: 'Senha deve ter pelo menos 6 caracteres.' }
+  if (typeof novaSenha !== 'string' || novaSenha.length < 12 || novaSenha.length > 128) return { ok: false, error: 'Use uma senha de 12 a 128 caracteres.' }
+  const perfil = await getPerfilAtual()
+  if (!perfil) return { ok: false, error: 'Sessão não autenticada.' }
   const supabase = await createClient()
+  if (!await hasRecentRecoverySession(supabase, perfil.id)) return { ok: false, error: 'Solicite um novo link de recuperação para alterar a senha.' }
   const { error } = await supabase.auth.updateUser({ password: novaSenha })
-  if (error) return { ok: false, error: error.message }
+  if (error) return { ok: false, error: 'Não foi possível alterar a senha. Solicite um novo link.' }
+  await supabase.auth.signOut({ scope: 'global' })
   return { ok: true }
 }
 
-/**
- * Solicita e-mail de recuperação de senha do Supabase
- */
 export async function solicitarRecuperacaoSenha(email: string): Promise<ActionResult> {
+  const origin = configuredAppOrigin()
+  if (!origin) return { ok: false, error: 'A recuperação de senha ainda não está configurada.' }
+  if (typeof email !== 'string' || email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) return { ok: true }
   const supabase = await createClient()
-  // Usa URL absoluta para o redirecionamento funcionar bem no gateway de e-mail do Supabase
-  const redirectTo = `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3005'}/gestao/redefinir-senha`
-  
-  const { error } = await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo
-  })
-  
-  if (error) return { ok: false, error: error.message }
+  const { error } = await supabase.auth.resetPasswordForEmail(email.trim().toLowerCase(), { redirectTo: origin + '/api/auth/callback' })
+  if (error) return { ok: false, error: 'Não foi possível solicitar a recuperação agora. Tente novamente mais tarde.' }
   return { ok: true }
 }
 
@@ -154,8 +91,10 @@ export async function criarStaff(
     return { ok: false, error: 'Sem permissão para criar usuários.' }
   }
 
+  if (!['admin','dona','instrutor','recepcao','guardaria'].includes(role) || password.length < 12) return { ok: false, error: 'Papel ou senha inválidos.' }
+
   // Cria cliente isolado para não sobrescrever os cookies/sessão do Admin
-  const isolatedClient = createServerClient(
+  const isolatedClient = localPreviewEnabled() ? createLocalPreviewClient() : createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
@@ -200,6 +139,8 @@ export async function criarStaff(
  * Lista todos os usuários de staff
  */
 export async function listarStaff(): Promise<ActionResult<PerfilStaff[]>> {
+  const perfil = await getPerfilAtual()
+  if (!perfil || !['admin','dona'].includes(perfil.role)) return { ok: false, error: 'Sem permissão.' }
   const supabase = await createClient()
   const { data, error } = await supabase
     .from('perfis_staff')
@@ -217,6 +158,8 @@ export async function atualizarPermissoesStaff(
   staffId: string,
   permissions: { qualidadeEmbarque: boolean; avaria: boolean }
 ): Promise<ActionResult> {
+  const perfil = await getPerfilAtual()
+  if (!perfil || !['admin','dona'].includes(perfil.role)) return { ok: false, error: 'Sem permissão.' }
   const supabase = await createClient()
   const { error } = await supabase
     .from('perfis_staff')
@@ -250,4 +193,19 @@ export async function desativarStaff(staffId: string): Promise<ActionResult> {
   if (error) return { ok: false, error: error.message }
   revalidatePath('/gestao/admin')
   return { ok: true }
+}
+
+/** Desativa somente o acesso à equipe; preserva identidade e dados do aluno. */
+export async function definirAcessoStaff(staffId: string, ativo: boolean): Promise<ActionResult> {
+  const perfil = await getPerfilAtual()
+  if (!perfil || !['admin','dona'].includes(perfil.role)) return { ok: false, error: 'Sem permissão para gerenciar acessos.' }
+  if (typeof ativo !== 'boolean' || typeof staffId !== 'string' || !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(staffId)) return { ok: false, error: 'Acesso inválido.' }
+  if (!ativo && staffId === perfil.id) return { ok: false, error: 'Você não pode desativar seu próprio acesso administrativo.' }
+  try {
+    const supabase = await createClient()
+    const { data, error } = await supabase.from('perfis_staff').update({ ativo }).eq('id', staffId).select('id').maybeSingle()
+    if (error || !data) return { ok: false, error: 'A alteração do acesso não foi confirmada.' }
+    revalidatePath('/gestao/admin')
+    return { ok: true }
+  } catch { return { ok: false, error: 'Não foi possível atualizar o acesso.' } }
 }

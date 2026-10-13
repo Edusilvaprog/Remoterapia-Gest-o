@@ -1,0 +1,14 @@
+'use client'
+import {useState} from 'react'
+import {Pencil,UserX,UserCheck,Search,ShieldCheck} from 'lucide-react'
+import {WorkspacePanel,WorkspaceEmpty} from './DesktopWorkspace'
+import {VisualText} from '@/components/ui/VisualContent'
+import VisualLabel from '@/components/ui/VisualLabel'
+
+
+interface Staff{id:string;name:string;email:string;roles:string[];ativo?:boolean}
+const roles:Record<string,string>={admin:'Administrador',dona:'Direção',recepcao:'Recepção',instrutor:'Equipe na água',guardaria:'Guardaria'}
+export default function DesktopStaffTable({users,onEdit,onToggle}:{users:Staff[];onEdit:(u:Staff)=>void;onToggle:(u:Staff)=>void}){
+ const [query,setQuery]=useState('');const normalize=(s:string)=>s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase('pt-BR');const found=users.filter(u=>normalize(u.name+' '+u.email+' '+u.roles.map(r=>roles[r]||r).join(' ')).includes(normalize(query.trim())))
+ return <WorkspacePanel title="Equipe e acessos" description={`${users.length} pessoa(s) cadastrada(s) na Gestão`} aside={<ShieldCheck size={20}/>}><div className="dw-directory-search"><Search size={17}/><input type="search" aria-label="Buscar na equipe" placeholder="Buscar por nome, e-mail ou função" value={query} onChange={e=>setQuery(e.target.value)}/><span>{found.length}<VisualText id="copy-51eb86c28f70" defaultText={" resultado(s)"}/></span></div><div className="dw-table-scroll"><table className="dw-table"><thead><tr><th><VisualText id="copy-1492b942ffeb" defaultText={"Pessoa"}/></th><th><VisualText id="copy-41cc2e323937" defaultText={"Funções"}/></th><th><VisualText id="copy-149be8b6b63a" defaultText={"Acesso"}/></th><th><VisualText id="copy-da17170ce235" defaultText={"Ações"}/></th></tr></thead><tbody>{found.map(u=><tr key={u.id}><td><div className="dw-person"><span>{u.name.charAt(0).toUpperCase()}</span><div><strong>{u.name}</strong><small>{u.email}</small></div></div></td><td><div className="dw-tags">{u.roles.map(r=><span key={r} className="dw-badge">{roles[r]||r}</span>)}</div></td><td><span className={'dw-badge '+(u.ativo===false?'':'is-good')}><VisualLabel text={u.ativo===false?'Desativado':'Ativo'}/></span></td><td><div className="dw-actions"><button type="button" onClick={()=>onEdit(u)} aria-label={`Editar ${u.name}`}><Pencil size={15}/><VisualText id="copy-47a7ec7b0db4" defaultText={"Editar"}/></button><button type="button" onClick={()=>onToggle(u)} aria-label={`${u.ativo===false?'Reativar':'Desativar'} ${u.name}`}>{u.ativo===false?<UserCheck size={15}/>:<UserX size={15}/>}<span><VisualLabel text={u.ativo===false?'Reativar':'Desativar'}/></span></button></div></td></tr>)}</tbody></table></div>{!found.length&&<WorkspaceEmpty title={query?'Nenhuma pessoa encontrada':'Nenhum acesso carregado'} description={query?'Tente outro nome, e-mail ou função.':'Atualize os dados ou cadastre uma pessoa na equipe.'}/>}</WorkspacePanel>
+}

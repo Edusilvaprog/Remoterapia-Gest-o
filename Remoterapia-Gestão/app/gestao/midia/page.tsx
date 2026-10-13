@@ -3,13 +3,15 @@ import AppHeader from '@/components/AppHeader'
 import AppBottomNav from '@/components/AppBottomNav'
 import Link from 'next/link'
 import MidiaClient from './MidiaClient'
+import {VisualContentSlot} from '@/components/ui/VisualContent'
+
 
 export default async function MidiaPage() {
   const perfil = await getPerfilAtual()
   if (!perfil) return null
 
   return (
-    <main className="max-w-md mx-auto flex-1 flex flex-col h-screen overflow-hidden w-full relative min-h-0 bg-transparent">
+    <main className="max-w-md lg:max-w-7xl mx-auto flex-1 flex flex-col h-screen overflow-hidden w-full relative min-h-0 bg-transparent" data-rt-area="area-823587e0d557">
       
       {/* HEADER PADRONIZADO */}
       <AppHeader 
@@ -32,7 +34,7 @@ export default async function MidiaPage() {
         ]}
       />
 
-    </main>
+    <VisualContentSlot id="area-823587e0d557"/></main>
   )
 }
 

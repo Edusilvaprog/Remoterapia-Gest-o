@@ -1,8 +1,15 @@
 'use client'
-import { useState, useTransition } from 'react'
+import BrandLabel from '@/components/ui/BrandLabel'
+import BrandIcon from '@/components/ui/BrandIcon'
+import { useState, useTransition, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { realizarCheckin } from '@/lib/actions/locacoes'
+import type { MetodoPagamento } from '@/lib/types'
+import {VisualText,VisualContentSlot} from '@/components/ui/VisualContent'
+import VisualLabel from '@/components/ui/VisualLabel'
+
+
 
 interface Caiaque {
   id: string
@@ -34,12 +41,12 @@ interface Props {
 export default function EmbarqueClient({ 
   caiaques = [], 
   lockers = [], 
-  instrutores = [],
-  precosConfig = {}
+  instrutores = []
 }: Props) {
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
   const [erroMsg, setErroMsg] = useState<string | null>(null)
+  const travaEnvio = useRef(false)
 
   // FROTA COM CAPACIDADE DE LOTAÇÃO DEFINIDA
   const listaCaiaques: Caiaque[] = caiaques
@@ -47,7 +54,7 @@ export default function EmbarqueClient({
   const listaInstrutores: Instrutor[] = instrutores
 
   // ESTADOS DO POP-UP
-  const [caiaqueSelId, setCaiaqueSelId] = useState<string>(caiaques[0]?.id || '01')
+  const [caiaqueSelId, setCaiaqueSelId] = useState<string>(caiaques[0]?.id || '')
   const [lockersSel, setLockersSel] = useState<string[]>([])
   const [pagamento, setPagamento] = useState<string>('Crédito')
   const [instrutor, setInstrutor] = useState(instrutores[0]?.nome || 'Sem Instrutor')
@@ -69,10 +76,12 @@ export default function EmbarqueClient({
     setCDropOpen(false); setLDropOpen(false); setPDropOpen(false); setIDropOpen(false); setTDropOpen(false);
   }
 
+  if(!listaCaiaques.length)return <section className="rt-card" style={{padding:24}} data-rt-area="area-6a2b73039c9c"><BrandIcon name="ship" size={32}/><h2 style={{fontSize:22,marginTop:15}}><VisualText id="copy-a94ffcbc8450" defaultText={"Cadastre a frota para começar"}/></h2><p style={{margin:"12px 0 22px",lineHeight:1.6}}><VisualText id="copy-083d3c6b2236" defaultText={"Nenhuma embarcação disponível foi carregada. A administração precisa cadastrar a frota ou conferir a disponibilidade antes de registrar um embarque."}/></p><Link className="rt-secondary" href="/gestao/recepcao/dashboard"><VisualText id="copy-bf3aef526a1d" defaultText={"Voltar para a base"}/></Link><VisualContentSlot id="area-6a2b73039c9c"/></section>
+
   // CAPACIDADE DO CAIAQUE SELECIONADO (COM BLINDAGEM CASO O BANCO ESTEJA VAZIO)
-  const caiaqueFallback = { id: '01', nome: 'Caiaque Solo #01', tipo: 'individual' as const, status: 'livre' as const }
-  const caiaqueAtual = listaCaiaques.find(c => String(c.id) === String(caiaqueSelId)) || listaCaiaques[0] || caiaqueFallback
-  const capacidadeMaxima = (caiaqueAtual as any)?.capacidade || (caiaqueAtual?.tipo?.toLowerCase().includes('duplo') ? 2 : 1)
+  const caiaqueFallback: Caiaque = { id: '01', nome: 'Caiaque Solo #01', tipo: 'individual' as const, status: 'livre' as const }
+  const caiaqueAtual = listaCaiaques.find(c => String(c.id) === String(caiaqueSelId)) || listaCaiaques[0]
+  const capacidadeMaxima = caiaqueAtual.capacidade || (caiaqueAtual?.tipo?.toLowerCase().includes('duplo') ? 2 : 1)
 
   // CÁLCULO DE TRIPULANTES EFETIVOS NA ÁGUA
   let qtdEfetiva = 0
@@ -101,11 +110,18 @@ export default function EmbarqueClient({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
+    if (travaEnvio.current || isPending) return
     if (!titular.trim()) {
       setErroMsg('Informe o nome do titular / responsável!')
       setTimeout(() => setErroMsg(null), 3500)
       return
     }
+
+    if (!listaCaiaques.some(c => String(c.id) === String(caiaqueAtual.id))) {
+      setErroMsg('Nenhum caiaque cadastrado está disponível para este embarque.')
+      return
+    }
+    setErroMsg(null)
 
     // COMPOSIÇÃO DO NOME DO EMBARQUE
     const nomes: string[] = [titular.trim()]
@@ -115,34 +131,38 @@ export default function EmbarqueClient({
     }
     const nomeFinal = nomes.join(' e ')
 
-    // Limpeza de cache zumbi antigo
-    try {
-      localStorage.removeItem('plorix_locacoes_ativas')
-    } catch {}
-
+    travaEnvio.current = true
     startTransition(async () => {
       try {
-        await realizarCheckin({
+        const result = await realizarCheckin({
           cliente: nomeFinal,
           tipo: 'avulso',
           caiaques_ids: [caiaqueAtual.id],
           lockers_ids: lockersSel,
-          com_instrutor: !!instrutor,
-          instrutor_nome: instrutor || undefined,
-          instrutor_agua: instrutor || undefined,
-          pagamento: pagamento as any,
+          com_instrutor: temInstrutor,
+          instrutor_nome: temInstrutor ? instrutor : undefined,
+          instrutor_agua: temInstrutor ? instrutor : undefined,
+          pagamento: pagamento as MetodoPagamento,
           qtd_pessoas: qtdEfetiva,
           valor_final: valorTotal
         })
-      } catch {}
-
-      router.push('/gestao/recepcao/dashboard')
-      router.refresh()
+        if (!result.ok) {
+          setErroMsg(result.error || 'Não foi possível confirmar o embarque. Tente novamente.')
+          return
+        }
+        router.push('/gestao/recepcao/dashboard')
+        router.refresh()
+      } catch (e: unknown) {
+        const mensagem = e && typeof e === 'object' && 'message' in e ? String(e.message) : 'Falha ao confirmar o embarque.'
+        setErroMsg(mensagem)
+      } finally {
+        travaEnvio.current = false
+      }
     })
   }
 
   return (
-    <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+    <div className="rt-boarding-workspace fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
       
       <form 
         onSubmit={handleSubmit} 
@@ -152,10 +172,8 @@ export default function EmbarqueClient({
         {/* CABEÇALHO */}
         <div className="bg-gradient-to-r from-blue-600 to-cyan-500 px-5 py-4 flex justify-between items-center text-white shrink-0">
           <div className="flex items-center gap-2">
-            <span className="text-base">⛵</span>
-            <h3 className="text-xs font-black uppercase tracking-wider">
-              REGISTRO DE EMBARQUE
-            </h3>
+            <span className="text-base"><BrandIcon name="ship"/></span>
+            <h3 className="text-xs font-black uppercase tracking-wider"><VisualText id="copy-c9385c9ef932" defaultText={"REGISTRO DE EMBARQUE"}/></h3>
           </div>
           <Link 
             href="/gestao/recepcao/dashboard" 
@@ -166,8 +184,8 @@ export default function EmbarqueClient({
         </div>
 
         {erroMsg && (
-          <div className="bg-red-500 text-white text-[10px] font-black uppercase tracking-wider py-2 px-4 text-center">
-            ⚠️ {erroMsg}
+          <div role="alert" className="bg-red-500 text-white text-[10px] font-black uppercase tracking-wider py-2 px-4 text-center">
+            <BrandIcon name="warning"/> {erroMsg}
           </div>
         )}
 
@@ -177,11 +195,8 @@ export default function EmbarqueClient({
           {/* SELEÇÃO DO CAIAQUE */}
           <div>
             <div className="flex justify-between items-center mb-1">
-              <label className="text-[9px] font-black text-slate-500 uppercase ml-1 block tracking-wider">
-                EMBARCAÇÃO
-              </label>
-              <span className="text-[8px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-cyan-300 border border-blue-200 dark:border-blue-900">
-                CAPACIDADE: ATÉ {capacidadeMaxima} {capacidadeMaxima > 1 ? 'PESSOAS' : 'PESSOA'}
+              <label className="text-[9px] font-black text-slate-500 uppercase ml-1 block tracking-wider"><VisualText id="copy-4a19237705a0" defaultText={"EMBARCAÇÃO"}/></label>
+              <span className="text-[8px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-cyan-300 border border-blue-200 dark:border-blue-900"><VisualText id="copy-894d58751798" defaultText={"CAPACIDADE: ATÉ "}/>{capacidadeMaxima} <VisualLabel text={capacidadeMaxima > 1 ? 'PESSOAS' : 'PESSOA'}/>
               </span>
             </div>
             
@@ -223,9 +238,7 @@ export default function EmbarqueClient({
             
             {/* TITULAR */}
             <div>
-              <label className="text-[9px] font-black text-blue-700 dark:text-cyan-400 uppercase ml-1 mb-1 block tracking-wider">
-                1º TRIPULANTE (TITULAR / RESPONSÁVEL)
-              </label>
+              <label className="text-[9px] font-black text-blue-700 dark:text-cyan-400 uppercase ml-1 mb-1 block tracking-wider"><VisualText id="copy-8e8efd21efbf" defaultText={"1º TRIPULANTE (TITULAR / RESPONSÁVEL)"}/></label>
               <input 
                 type="text" 
                 value={titular}
@@ -240,12 +253,8 @@ export default function EmbarqueClient({
             {capacidadeMaxima >= 2 && (
               <div>
                 <div className="flex justify-between items-center mb-1 ml-1">
-                  <label className="text-[9px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-wider">
-                    2º TRIPULANTE (OPCIONAL)
-                  </label>
-                  <span className="text-[7.5px] font-bold text-slate-400 uppercase">
-                    Se sozinho, deixe vazio
-                  </span>
+                  <label className="text-[9px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-wider"><VisualText id="copy-1a7166247554" defaultText={"2º TRIPULANTE (OPCIONAL)"}/></label>
+                  <span className="text-[7.5px] font-bold text-slate-400 uppercase"><VisualText id="copy-e9516f8edaaf" defaultText={"Se sozinho, deixe vazio"}/></span>
                 </div>
                 <input 
                   type="text" 
@@ -263,8 +272,7 @@ export default function EmbarqueClient({
               return (
                 <div key={num}>
                   <label className="text-[9px] font-black text-slate-600 dark:text-slate-400 uppercase ml-1 mb-1 block tracking-wider">
-                    {num}º TRIPULANTE (OPCIONAL)
-                  </label>
+                    {num}<VisualText id="copy-7c5c93509a10" defaultText={"º TRIPULANTE (OPCIONAL)"}/></label>
                   <input 
                     type="text" 
                     value={demaisTripulantes[num] || ''}
@@ -280,15 +288,13 @@ export default function EmbarqueClient({
           {/* GUARDA-VOLUMES & PAGAMENTO */}
           <div className="grid grid-cols-2 gap-2.5">
             <div className="relative">
-              <label className="text-[9px] font-black text-slate-500 uppercase ml-1 mb-1 block tracking-wider">
-                GUARDA-VOLUMES
-              </label>
+              <label className="text-[9px] font-black text-slate-500 uppercase ml-1 mb-1 block tracking-wider"><VisualText id="copy-9d59b98be5ec" defaultText={"GUARDA-VOLUMES"}/></label>
               <div 
                 onClick={() => { const wasOpen = lDropOpen; closeAllDrops(); setLDropOpen(!wasOpen); }}
                 className="py-2.5 px-3 rounded-xl bg-[#f8fafc] dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex justify-between items-center cursor-pointer shadow-sm min-h-[40px]"
               >
                 <span className={`text-xs font-black truncate ${lockersSel.length === 0 ? 'text-slate-400' : 'text-amber-600'}`}>
-                  {lockersSel.length === 0 ? 'Nenhum' : lockersSel.map(id => 'GV ' + id).join(', ')}
+                  <VisualLabel text={lockersSel.length === 0 ? 'Nenhum' : lockersSel.map(id => 'GV ' + id).join(', ')}/>
                 </span>
                 <span className="text-slate-400 text-[9px] font-black ml-1">▼</span>
               </div>
@@ -305,7 +311,7 @@ export default function EmbarqueClient({
                           isSel ? 'bg-amber-50 dark:bg-amber-950/60 text-amber-700 font-black' : 'hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300'
                         }`}
                       >
-                        <span>Armário GV-{l.id}</span>
+                        <span><VisualText id="copy-f2a850dcebd2" defaultText={"Armário GV-"}/>{l.id}</span>
                         <span>{isSel ? '✓' : ''}</span>
                       </div>
                     )
@@ -315,9 +321,7 @@ export default function EmbarqueClient({
             </div>
 
             <div className="relative">
-              <label className="text-[9px] font-black text-slate-500 uppercase ml-1 mb-1 block tracking-wider">
-                PAGAMENTO
-              </label>
+              <label className="text-[9px] font-black text-slate-500 uppercase ml-1 mb-1 block tracking-wider"><VisualText id="copy-473401812ea2" defaultText={"PAGAMENTO"}/></label>
               <div 
                 onClick={() => { const wasOpen = pDropOpen; closeAllDrops(); setPDropOpen(!wasOpen); }}
                 className="py-2.5 px-3 rounded-xl bg-[#f8fafc] dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex justify-between items-center cursor-pointer shadow-sm min-h-[40px]"
@@ -353,15 +357,13 @@ export default function EmbarqueClient({
           {/* INSTRUTOR & TEMPO */}
           <div className="grid grid-cols-2 gap-2.5">
             <div className="relative">
-              <label className="text-[9px] font-black text-slate-500 uppercase ml-1 mb-1 block tracking-wider">
-                INSTRUTOR
-              </label>
+              <label className="text-[9px] font-black text-slate-500 uppercase ml-1 mb-1 block tracking-wider"><VisualText id="copy-9aa916a1790d" defaultText={"INSTRUTOR"}/></label>
               <div 
                 onClick={() => { const wasOpen = iDropOpen; closeAllDrops(); setIDropOpen(!wasOpen); }}
                 className="py-2.5 px-3 rounded-xl bg-[#f8fafc] dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex justify-between items-center cursor-pointer shadow-sm min-h-[40px]"
               >
                 <span className="text-xs font-black truncate text-slate-900 dark:text-white">
-                  {instrutor ? `👤 Inst. ${instrutor}` : 'Nenhum (Autônomo)'}
+                  <BrandLabel text={instrutor ? `👤 Inst. ${instrutor}` : 'Nenhum (Autônomo)'}/>
                 </span>
                 <span className="text-slate-400 text-[9px] font-black ml-1">▼</span>
               </div>
@@ -374,7 +376,7 @@ export default function EmbarqueClient({
                       !instrutor ? 'bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-cyan-300 font-black' : 'hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300'
                     }`}
                   >
-                    <span>Nenhum (Autônomo)</span>
+                    <span><VisualText id="copy-ab5a3987d875" defaultText={"Nenhum (Autônomo)"}/></span>
                     <span>{!instrutor ? '✓' : ''}</span>
                   </div>
                   {listaInstrutores.map(inst => {
@@ -387,7 +389,7 @@ export default function EmbarqueClient({
                           isSel ? 'bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-cyan-300 font-black' : 'hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300'
                         }`}
                       >
-                        <span>👤 Inst. {inst.nome}</span>
+                        <span><BrandIcon name="user"/><VisualText id="copy-a1aa0334ec1f" defaultText={" Inst. "}/>{inst.nome}</span>
                         <span>{isSel ? '✓' : ''}</span>
                       </div>
                     )
@@ -397,15 +399,13 @@ export default function EmbarqueClient({
             </div>
 
             <div className="relative">
-              <label className="text-[9px] font-black text-slate-500 uppercase ml-1 mb-1 block tracking-wider">
-                TEMPO TOTAL
-              </label>
+              <label className="text-[9px] font-black text-slate-500 uppercase ml-1 mb-1 block tracking-wider"><VisualText id="copy-fa4ee93faa3e" defaultText={"TEMPO TOTAL"}/></label>
               <div 
                 onClick={() => { const wasOpen = tDropOpen; closeAllDrops(); setTDropOpen(!wasOpen); }}
                 className="py-2.5 px-3 rounded-xl bg-[#f8fafc] dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex justify-between items-center cursor-pointer shadow-sm min-h-[40px]"
               >
                 <span className="text-xs font-black truncate text-slate-900 dark:text-white">
-                  {tempo === 30 ? '30 Minutos' : tempo === 60 ? '1 Hora (60 min)' : tempo === 120 ? '2 Horas' : '3 Horas'}
+                  <VisualLabel text={tempo === 30 ? '30 Minutos' : tempo === 60 ? '1 Hora (60 min)' : tempo === 120 ? '2 Horas' : '3 Horas'}/>
                 </span>
                 <span className="text-slate-400 text-[9px] font-black ml-1">▼</span>
               </div>
@@ -439,11 +439,9 @@ export default function EmbarqueClient({
 
           {/* INDICADOR DINÂMICO DE TRIPULAÇÃO NA ÁGUA */}
           <div className="flex items-center justify-between px-3.5 py-2 rounded-xl bg-[#eaf4fc] dark:bg-slate-800 border border-blue-200 dark:border-slate-700">
-            <span className="text-[9px] font-black uppercase text-blue-900 dark:text-cyan-400 tracking-wider">
-              TRIPULANTES DETECTADOS:
-            </span>
+            <span className="text-[9px] font-black uppercase text-blue-900 dark:text-cyan-400 tracking-wider"><VisualText id="copy-e9d9b73b00fa" defaultText={"TRIPULANTES DETECTADOS:"}/></span>
             <span className="text-xs font-black text-blue-700 dark:text-white bg-white dark:bg-slate-900 px-2.5 py-0.5 rounded-lg border border-blue-100 dark:border-slate-700 shadow-sm">
-              {qtdEfetiva} {qtdEfetiva > 1 ? 'Pessoas' : 'Pessoa'}
+              {qtdEfetiva} <VisualLabel text={qtdEfetiva > 1 ? 'Pessoas' : 'Pessoa'}/>
             </span>
           </div>
 
@@ -452,7 +450,7 @@ export default function EmbarqueClient({
         {/* RODAPÉ DO POP-UP */}
         <div className="p-4 bg-[#f8fafc] dark:bg-slate-800/90 border-t border-slate-100 dark:border-slate-700 flex items-center justify-between gap-3 shrink-0">
           <div>
-            <span className="text-[7.5px] font-black text-slate-400 uppercase tracking-widest block">VALOR TOTAL</span>
+            <span className="text-[7.5px] font-black text-slate-400 uppercase tracking-widest block"><VisualText id="copy-6dbba48be8bf" defaultText={"VALOR TOTAL"}/></span>
             <span className="text-xl font-black text-emerald-600 dark:text-emerald-400 leading-none tabular-nums">
               R$ {valorTotal.toFixed(2).replace('.', ',')}
             </span>
@@ -463,7 +461,7 @@ export default function EmbarqueClient({
             disabled={isPending}
             className="flex-1 py-3 bg-blue-600 hover:bg-blue-500 active:scale-95 text-white font-black text-xs uppercase tracking-wider rounded-xl shadow-md shadow-blue-500/20 transition-all cursor-pointer text-center disabled:opacity-50"
           >
-            {isPending ? 'Liberando...' : 'VALIDAR E LIBERAR SAÍDA'}
+            <VisualLabel text={isPending ? 'Liberando...' : 'VALIDAR E LIBERAR SAÍDA'}/>
           </button>
         </div>
 

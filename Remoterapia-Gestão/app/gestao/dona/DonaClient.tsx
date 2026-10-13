@@ -1,6 +1,20 @@
 'use client'
+import ResultsWorkspace from '@/components/desktop/ResultsWorkspace'
+import BrandLabel from '@/components/ui/BrandLabel'
+import BrandIcon from '@/components/ui/BrandIcon'
 import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
+import {VisualText} from '@/components/ui/VisualContent'
+
+
+function escapeHtml(value: unknown): string {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+}
 
 interface ItemGestao {
   id: string | number
@@ -162,10 +176,10 @@ export default function DonaClient({
 
     const rowsViagens = itens.map(it => `
       <tr>
-        <td style="padding: 10px 14px; font-weight: 900; text-transform: uppercase; color: #0f172a; font-size: 11px;">${it.cliente}</td>
-        <td style="padding: 10px 14px; text-align: center; color: #64748b; font-weight: 700; font-size: 11px;">${it.entrada} às ${it.saida}</td>
-        <td style="padding: 10px 14px; text-align: center;"><span style="background: #f1f5f9; color: #334155; padding: 3px 8px; border-radius: 6px; font-size: 10px; font-weight: 900; border: 1px solid #e2e8f0;">${it.pagamento}</span></td>
-        <td style="padding: 10px 14px; text-align: right; font-weight: 900; color: #059669; font-size: 12px;">R$ ${Number(it.valor || 0).toFixed(2).replace('.', ',')}</td>
+        <td style="padding: 10px 14px; font-weight: 900; text-transform: uppercase; color: #0f172a; font-size: 11px;">${escapeHtml(it.cliente)}</td>
+        <td style="padding: 10px 14px; text-align: center; color: #64748b; font-weight: 700; font-size: 11px;">${escapeHtml(it.entrada)} às ${escapeHtml(it.saida)}</td>
+        <td style="padding: 10px 14px; text-align: center;"><span style="background: #f1f5f9; color: #334155; padding: 3px 8px; border-radius: 6px; font-size: 10px; font-weight: 900; border: 1px solid #e2e8f0;">${escapeHtml(it.pagamento)}</span></td>
+        <td style="padding: 10px 14px; text-align: right; font-weight: 900; color: #059669; font-size: 12px;">R$ ${escapeHtml(Number(it.valor || 0).toFixed(2).replace('.', ','))}</td>
       </tr>
     `).join('')
 
@@ -182,7 +196,7 @@ export default function DonaClient({
     <html lang="pt-BR">
     <head>
         <meta charset="UTF-8">
-        <title>${tituloDoc}</title>
+        <title>${escapeHtml(tituloDoc)}</title>
         <style>
             @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap');
             * { box-sizing: border-box; }
@@ -234,8 +248,8 @@ export default function DonaClient({
                     </div>
                 </div>
                 <div class="doc-meta">
-                    <h1>${tituloDoc}</h1>
-                    <p>${horaGerado}</p>
+                    <h1>${escapeHtml(tituloDoc)}</h1>
+                    <p>${escapeHtml(horaGerado)}</p>
                 </div>
             </div>
 
@@ -247,11 +261,11 @@ export default function DonaClient({
                         <tr><th>Categoria</th><th style="text-align: right;">Quantidade</th></tr>
                     </thead>
                     <tbody>
-                        <tr><td>Caiaques Solo (Autônomo)</td><td style="text-align: right;"><span class="badge-qty">${qtdSolo}</span></td></tr>
-                        <tr><td>Caiaques Duplo (Locação Comercial)</td><td style="text-align: right;"><span class="badge-qty">${qtdDuplo}</span></td></tr>
+                        <tr><td>Caiaques Solo (Autônomo)</td><td style="text-align: right;"><span class="badge-qty">${escapeHtml(qtdSolo)}</span></td></tr>
+                        <tr><td>Caiaques Duplo (Locação Comercial)</td><td style="text-align: right;"><span class="badge-qty">${escapeHtml(qtdDuplo)}</span></td></tr>
                         <tr style="background: #f0f9ff; font-weight: 900;">
                           <td style="color: #0c4a6e;">Total de Embarques</td>
-                          <td style="text-align: right;"><span class="badge-qty-total">${totalViagens}</span></td>
+                          <td style="text-align: right;"><span class="badge-qty-total">${escapeHtml(totalViagens)}</span></td>
                         </tr>
                     </tbody>
                 </table>
@@ -265,10 +279,10 @@ export default function DonaClient({
                         <tr><th>Método</th><th style="text-align: right;">Valor Total</th></tr>
                     </thead>
                     <tbody>
-                        <tr><td>Pix</td><td style="text-align: right; font-weight: 900; color: #059669;">R$ ${totaisPag.Pix.toFixed(2).replace('.', ',')}</td></tr>
-                        <tr><td>Crédito</td><td style="text-align: right; font-weight: 900; color: #059669;">R$ ${totaisPag.Crédito.toFixed(2).replace('.', ',')}</td></tr>
-                        <tr><td>Débito</td><td style="text-align: right; font-weight: 900; color: #059669;">R$ ${totaisPag.Débito.toFixed(2).replace('.', ',')}</td></tr>
-                        <tr><td>Dinheiro</td><td style="text-align: right; font-weight: 900; color: #059669;">R$ ${totaisPag.Dinheiro.toFixed(2).replace('.', ',')}</td></tr>
+                        <tr><td>Pix</td><td style="text-align: right; font-weight: 900; color: #059669;">R$ ${escapeHtml(totaisPag.Pix.toFixed(2).replace('.', ','))}</td></tr>
+                        <tr><td>Crédito</td><td style="text-align: right; font-weight: 900; color: #059669;">R$ ${escapeHtml(totaisPag.Crédito.toFixed(2).replace('.', ','))}</td></tr>
+                        <tr><td>Débito</td><td style="text-align: right; font-weight: 900; color: #059669;">R$ ${escapeHtml(totaisPag.Débito.toFixed(2).replace('.', ','))}</td></tr>
+                        <tr><td>Dinheiro</td><td style="text-align: right; font-weight: 900; color: #059669;">R$ ${escapeHtml(totaisPag.Dinheiro.toFixed(2).replace('.', ','))}</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -294,9 +308,9 @@ export default function DonaClient({
             <!-- 5. BANDEJA DO FATURAMENTO TOTAL -->
             <div class="total-box">
                 <div>
-                  <p>${isMensal ? 'FATURAMENTO CONSOLIDADO DO MÊS' : 'FATURAMENTO TOTAL DO DIA'}</p>
+                  <p>${escapeHtml(isMensal ? 'FATURAMENTO CONSOLIDADO DO MÊS' : 'FATURAMENTO TOTAL DO DIA')}</p>
                 </div>
-                <h3>R$ ${totalFaturamento.toFixed(2).replace('.', ',')}</h3>
+                <h3>R$ ${escapeHtml(totalFaturamento.toFixed(2).replace('.', ','))}</h3>
             </div>
 
             <!-- RODAPÉ -->
@@ -330,7 +344,7 @@ export default function DonaClient({
   }
 
   return (
-    <div className="space-y-4 relative">
+    <div className="rt-results-workspace space-y-4 relative"><ResultsWorkspace items={itens} total={faturamentoTotal} methods={pagamentosMetodos} values={valoresPorMetodo} hours={horas} counts={contagemHoras} date={dateStr} previous={()=>changeDate(-1)} next={()=>changeDate(1)} today={()=>setSelectedDate(new Date())} isToday={isToday} exportDay={()=>exportarRelatorioGestao()} exportMonth={handleRelatorioMes} exportPeriod={()=>setModalPeriodoOpen(true)}/>
       {/* TOAST FLUTUANTE */}
       {toast && (
         <div className="fixed top-5 left-1/2 -translate-x-1/2 z-[9999] max-w-sm w-[90%] pointer-events-none animate-in fade-in slide-in-from-top-4 duration-300">
@@ -343,28 +357,26 @@ export default function DonaClient({
               ? 'bg-amber-500 text-white border-amber-300 shadow-amber-500/30'
               : 'bg-blue-600 text-white border-blue-400 shadow-blue-600/30'
           }`}>
-            <span>{toast.tipo === 'success' ? '✓' : toast.tipo === 'error' ? '✕' : 'ℹ'}</span>
+            <span><BrandLabel text={toast.tipo === 'success' ? '✓' : toast.tipo === 'error' ? '✕' : 'ℹ'}/></span>
             <span>{toast.msg}</span>
           </div>
         </div>
       )}
       
                 {/* 1. SELETOR DE DATA PADRONIZADO (IDÊNTICO AO REGISTRO E FECHAMENTO) */}
-          <div className="bg-white/95 dark:bg-slate-900/95 p-3.5 flex justify-between items-center rounded-2xl shadow-sm border-t-4 !border-t-cyan-400 border border-white/60 dark:border-slate-800 mb-2">
+          <div className="dw-mobile"><div className="bg-white/95 dark:bg-slate-900/95 p-3.5 flex justify-between items-center rounded-2xl shadow-sm border-t-4 !border-t-cyan-400 border border-white/60 dark:border-slate-800 mb-2">
             <button 
               type="button" 
               onClick={() => changeDate(-1)}
               className="w-10 h-10 flex items-center justify-center text-blue-600 dark:text-cyan-400 bg-[#f2f8fc] dark:bg-slate-800 hover:bg-blue-100 rounded-xl transition-all shadow-sm text-sm font-black active:scale-90 border border-blue-100 dark:border-slate-700 cursor-pointer"
-            >
-              &lt;
-            </button>
+            ><VisualText id="copy-9a153bd3f55f" defaultText={"&lt;"}/></button>
         
         <div className="text-center flex-1 cursor-pointer" onClick={() => setSelectedDate(new Date())}>
           <p className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] mb-0.5">
             {dateLabel}
           </p>
           <p className="text-sm font-black text-blue-950 dark:text-white uppercase flex items-center justify-center gap-1.5 leading-tight">
-            <span>📅</span> {dateStr}
+            <span><BrandIcon name="calendar"/></span> {dateStr}
           </p>
         </div>
 
@@ -377,18 +389,14 @@ export default function DonaClient({
               ? 'text-slate-300 bg-slate-100 dark:bg-slate-800/40 border-transparent cursor-not-allowed' 
               : 'text-blue-600 dark:text-cyan-400 bg-[#f2f8fc] dark:bg-slate-800 hover:bg-blue-100 border-blue-100 dark:border-slate-700'
           }`}
-        >
-          &gt;
-        </button>
-      </div>
+        ><VisualText id="copy-b56813ab82fa" defaultText={"&gt;"}/></button>
+      </div></div>
 
       {/* 2. CARD FATURAMENTO DIÁRIO COM DESIGN ELEVADO */}
-      <div className="bg-white/95 dark:bg-slate-900/95 p-6 rounded-[2.2rem] text-center border-t-4 !border-t-blue-600 border border-white/60 dark:border-slate-800 shadow-xl shadow-blue-500/5 space-y-4">
+      <div className="dw-mobile"><div className="bg-white/95 dark:bg-slate-900/95 p-6 rounded-[2.2rem] text-center border-t-4 !border-t-blue-600 border border-white/60 dark:border-slate-800 shadow-xl shadow-blue-500/5 space-y-4">
         
         <div className="inline-block bg-blue-50 dark:bg-blue-950/60 px-4 py-1.5 rounded-full border border-blue-200 dark:border-blue-900 shadow-sm">
-          <span className="text-[10px] font-black text-blue-700 dark:text-cyan-300 uppercase tracking-widest">
-            FATURAMENTO DIÁRIO
-          </span>
+          <span className="text-[10px] font-black text-blue-700 dark:text-cyan-300 uppercase tracking-widest"><VisualText id="copy-8f335bc8a73e" defaultText={"FATURAMENTO DIÁRIO"}/></span>
         </div>
 
         <h3 className="text-5xl font-black text-slate-900 dark:text-white leading-none tracking-tight my-1 drop-shadow-sm tabular-nums">
@@ -403,8 +411,7 @@ export default function DonaClient({
             onClick={() => exportarRelatorioGestao()} 
             className="w-full py-3.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-[10px] font-black uppercase tracking-wider active:scale-95 shadow-md shadow-blue-500/20 transition-all flex items-center justify-center gap-2 cursor-pointer"
           >
-            <span>📄</span> RELATÓRIO DO DIA
-          </button>
+            <span><BrandIcon name="file"/></span><VisualText id="copy-f7950d3a21ec" defaultText={" RELATÓRIO DO DIA"}/></button>
           
           <div className="grid grid-cols-2 gap-2">
             <button 
@@ -412,25 +419,21 @@ export default function DonaClient({
               onClick={handleRelatorioMes} 
               className="py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-xl text-[9px] font-black uppercase tracking-wider active:scale-95 shadow-sm transition-all flex items-center justify-center gap-1.5 cursor-pointer"
             >
-              <span>🗓️</span> MÊS ATUAL
-            </button>
+              <span><BrandIcon name="calendar"/></span><VisualText id="copy-2b7e427483f2" defaultText={" MÊS ATUAL"}/></button>
             <button 
               type="button" 
               onClick={() => setModalPeriodoOpen(true)} 
               className="py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-xl text-[9px] font-black uppercase tracking-wider active:scale-95 shadow-sm transition-all flex items-center justify-center gap-1.5 cursor-pointer"
             >
-              <span>📅</span> ESCOLHER DIAS
-            </button>
+              <span><BrandIcon name="calendar"/></span><VisualText id="copy-c0021596bc3e" defaultText={" ESCOLHER DIAS"}/></button>
           </div>
         </div>
 
-      </div>
+      </div></div>
 
       {/* 3. CARD GRÁFICO: ENTRADAS POR MÉTODO COM BANDEJA AZULADA */}
-      <div className="bg-white/95 dark:bg-slate-900/95 p-6 rounded-[2.2rem] shadow-xl shadow-blue-500/5 border-t-4 !border-t-cyan-500 border border-white/60 dark:border-slate-800 space-y-4">
-        <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-wider text-center">
-          ENTRADAS POR MÉTODO DE PAGAMENTO
-        </h4>
+      <div className="dw-mobile"><div className="bg-white/95 dark:bg-slate-900/95 p-6 rounded-[2.2rem] shadow-xl shadow-blue-500/5 border-t-4 !border-t-cyan-500 border border-white/60 dark:border-slate-800 space-y-4">
+        <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-wider text-center"><VisualText id="copy-b70d5de8bbd3" defaultText={"ENTRADAS POR MÉTODO DE PAGAMENTO"}/></h4>
         
         {/* BANDEJA AZULADA QUE DESTACA OS VALORES */}
         <div className="bg-[#eaf4fc] dark:bg-slate-800/80 p-4 rounded-2xl border border-blue-100 dark:border-slate-700/60 shadow-inner">
@@ -465,13 +468,11 @@ export default function DonaClient({
             })}
           </div>
         </div>
-      </div>
+      </div></div>
 
       {/* 4. CARD GRÁFICO: MAPA DE CALOR COM BANDEJA AZULADA */}
-      <div className="bg-white/95 dark:bg-slate-900/95 p-6 rounded-[2.2rem] shadow-xl shadow-blue-500/5 border-t-4 !border-t-blue-600 border border-white/60 dark:border-slate-800 space-y-4">
-        <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-wider text-center">
-          MAPA DE CALOR DE HORÁRIOS
-        </h4>
+      <div className="dw-mobile"><div className="bg-white/95 dark:bg-slate-900/95 p-6 rounded-[2.2rem] shadow-xl shadow-blue-500/5 border-t-4 !border-t-blue-600 border border-white/60 dark:border-slate-800 space-y-4">
+        <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-wider text-center"><VisualText id="copy-f99712d4b373" defaultText={"MAPA DE CALOR DE HORÁRIOS"}/></h4>
 
         <div className="bg-[#eaf4fc] dark:bg-slate-800/80 p-4 rounded-2xl border border-blue-100 dark:border-slate-700/60 shadow-inner">
           <div className="relative h-44 flex items-end pt-4 pl-6 pr-1 pb-1">
@@ -517,19 +518,19 @@ export default function DonaClient({
 
           </div>
         </div>
-      </div>
+      </div></div>
       {/* 6. MODAL DE ESCOLHER DIAS (PERÍODO INÍCIO E FIM) */}
       {modalPeriodoOpen && (
-        <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[9990] flex items-center justify-center p-4">
+        <div data-rt-modal className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[9990] flex items-center justify-center p-4">
           <div className="bg-white dark:bg-slate-900 p-6 w-full max-w-sm border-t-4 !border-t-blue-600 shadow-2xl rounded-[2.2rem] border border-white/40 space-y-4">
             <div>
-              <p className="text-[9px] font-black text-blue-600 uppercase tracking-widest">RELATÓRIO PERSONALIZADO</p>
-              <h3 className="text-base font-black text-slate-900 dark:text-white uppercase">ESCOLHER DIAS</h3>
+              <p className="text-[9px] font-black text-blue-600 uppercase tracking-widest"><VisualText id="copy-46df42555a01" defaultText={"RELATÓRIO PERSONALIZADO"}/></p>
+              <h3 className="text-base font-black text-slate-900 dark:text-white uppercase"><VisualText id="copy-a15b7879e025" defaultText={"ESCOLHER DIAS"}/></h3>
             </div>
 
             <div className="space-y-3">
               <div>
-                <label className="text-[9px] font-black text-slate-500 uppercase ml-1 mb-1 block">Data de Início</label>
+                <label className="text-[9px] font-black text-slate-500 uppercase ml-1 mb-1 block"><VisualText id="copy-a5a89417f32e" defaultText={"Data de Início"}/></label>
                 <input 
                   type="date" 
                   value={dataInicio} 
@@ -539,7 +540,7 @@ export default function DonaClient({
               </div>
 
               <div>
-                <label className="text-[9px] font-black text-slate-500 uppercase ml-1 mb-1 block">Data de Fim</label>
+                <label className="text-[9px] font-black text-slate-500 uppercase ml-1 mb-1 block"><VisualText id="copy-9f2a29884ecc" defaultText={"Data de Fim"}/></label>
                 <input 
                   type="date" 
                   value={dataFim} 
@@ -554,16 +555,12 @@ export default function DonaClient({
                 type="button" 
                 onClick={() => setModalPeriodoOpen(false)}
                 className="flex-1 py-3 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-xl text-[10px] font-black uppercase cursor-pointer"
-              >
-                CANCELAR
-              </button>
+              ><VisualText id="copy-63bfd2fe5c79" defaultText={"CANCELAR"}/></button>
               <button 
                 type="button" 
                 onClick={handleConfirmarPeriodo}
                 className="flex-1 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-[10px] font-black uppercase shadow-md cursor-pointer"
-              >
-                GERAR RELATÓRIO
-              </button>
+              ><VisualText id="copy-c905d9041b90" defaultText={"GERAR RELATÓRIO"}/></button>
             </div>
           </div>
         </div>

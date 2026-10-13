@@ -23,6 +23,7 @@ export interface PerfilStaff {
   nome: string
   email: string | null
   role: StaffRole
+  roles?: StaffRole[]
   permissions: {
     qualidadeEmbarque: boolean
     avaria: boolean

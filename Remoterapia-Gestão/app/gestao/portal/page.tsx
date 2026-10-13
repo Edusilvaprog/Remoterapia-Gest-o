@@ -2,6 +2,8 @@
 import AppHeader from '@/components/AppHeader'
 import PortalClient from './PortalClient'
 import { redirect } from 'next/navigation'
+import {VisualContentSlot} from '@/components/ui/VisualContent'
+
 
 export default async function PortalPage() {
   const perfil = await getPerfilAtual()
@@ -12,7 +14,7 @@ export default async function PortalPage() {
   const hasMultipleAccess = ['admin', 'dona'].includes(perfil.role)
 
   return (
-    <main className="max-w-md mx-auto flex-1 flex flex-col h-screen overflow-hidden w-full relative min-h-0 bg-transparent">
+    <main className="max-w-md lg:max-w-7xl mx-auto flex-1 flex flex-col h-screen overflow-hidden w-full relative min-h-0 bg-transparent dw-portal" data-rt-area="area-2a417d631a24">
       <AppHeader 
         title="PORTAL DE ALUNOS" 
         nomeUsuario={perfil.nome} 
@@ -22,6 +24,6 @@ export default async function PortalPage() {
       <div className="flex-1 overflow-y-auto p-4 space-y-4 pb-36 no-scrollbar w-full min-h-0">
         <PortalClient />
       </div>
-    </main>
+    <VisualContentSlot id="area-2a417d631a24"/></main>
   )
 }

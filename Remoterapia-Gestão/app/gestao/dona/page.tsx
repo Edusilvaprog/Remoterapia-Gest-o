@@ -2,6 +2,8 @@ import { getPerfilAtual } from '@/lib/actions/auth'
 import AppHeader from '@/components/AppHeader'
 import AppBottomNav from '@/components/AppBottomNav'
 import DonaClient from './DonaClient'
+import {VisualContentSlot} from '@/components/ui/VisualContent'
+
 
 export default async function DonaPage() {
   const perfil = await getPerfilAtual()
@@ -10,7 +12,7 @@ export default async function DonaPage() {
   const hasMultipleAccess = ['admin', 'dona'].includes(perfil.role)
 
   return (
-    <main className="max-w-md mx-auto flex-1 flex flex-col h-screen overflow-hidden w-full relative min-h-0 bg-transparent">
+    <main className="max-w-md lg:max-w-7xl mx-auto flex-1 flex flex-col h-screen overflow-hidden w-full relative min-h-0 bg-transparent" data-rt-area="area-ca80c5768a00">
       <AppHeader 
         title="CONTROLE DIÁRIO" 
         nomeUsuario={perfil.nome} 
@@ -28,6 +30,6 @@ export default async function DonaPage() {
           { label: 'MÍDIA', href: '/gestao/dona/midia', icon: '📸' },
         ]}
       />
-    </main>
+    <VisualContentSlot id="area-ca80c5768a00"/></main>
   )
 }

@@ -1,0 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+html, body {
+    height: 100%;
+    overscroll-behavior-y: none;
+    background: #e0f2fe;
+    font-family: 'Nunito', system-ui, sans-serif;
+    color: #1e293b;
+    overflow: hidden;
+}
+
+html.dark, html.dark body { 
+    background: #070d1e !important; 
+    color: #f8fafc !important;
+}
+
+.no-scrollbar::-webkit-scrollbar { display: none !important; }
+.no-scrollbar { -ms-overflow-style: none !important; scrollbar-width: none !important; }
+
+/* =========================================================================
+   ANIMAÇÕES DE COMPONENTES (MODAIS E TOASTS)
+   ========================================================================= */
+
+.toast-novo-enter { animation: toastSlideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.toast-novo-exit { animation: toastSlideDown 0.4s cubic-bezier(0.5, 0, 0, 1) forwards; }
+@keyframes toastSlideUp {
+    from { opacity: 0; transform: translate(-50%, 20px) scale(0.95); }
+    to { opacity: 1; transform: translate(-50%, 0) scale(1); }
+}
+@keyframes toastSlideDown {
+    from { opacity: 1; transform: translate(-50%, 0) scale(1); }
+    to { opacity: 0; transform: translate(-50%, 10px) scale(0.95); }
+}
+
+.modal-backdrop-enter { animation: fade 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.modal-backdrop-exit { animation: fadeOut 0.3s cubic-bezier(0.5, 0, 0, 1) forwards; }
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+
+.modal-card-enter { animation: scaleUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.modal-card-exit { animation: scaleDown 0.3s cubic-bezier(0.5, 0, 0, 1) forwards; }
+@keyframes scaleUp {
+    from { opacity: 0; transform: scale(0.9) translateY(10px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes scaleDown {
+    from { opacity: 1; transform: scale(1) translateY(0); }
+    to { opacity: 0; transform: scale(0.95) translateY(10px); }
+}
+
+
+.slide-up-enter { animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.slide-up-exit { animation: slideDown 0.3s cubic-bezier(0.5, 0, 0, 1) forwards; }
+
+@keyframes slideUp {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+}
+@keyframes slideDown {
+    from { transform: translateY(0); }
+    to { transform: translateY(100%); }
+}
+
+.accordion-content {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.accordion-content.open {
+    grid-template-rows: 1fr;
+}
+.accordion-inner {
+    overflow: hidden;
+}
+
+.wa-fab-menu {
+    transform-origin: bottom right;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity: 0; transform: scale(0.9) translateY(10px);
+    pointer-events: none;
+}
+.wa-fab-menu.open {
+    opacity: 1; transform: scale(1) translateY(0);
+    pointer-events: auto;
+}
+
+
+/* 1. Animação de Baixo para Cima (Bottom Sheet) */
+.slide-up-enter { animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.slide-up-exit { animation: slideDown 0.3s cubic-bezier(0.5, 0, 0, 1) forwards; }
+@keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+@keyframes slideDown { from { transform: translateY(0); } to { transform: translateY(100%); } }
+
+/* 2. Animação de Cima para Baixo (Top Dropdown) - Para Clubes */
+.slide-down-enter { animation: slideDrop 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+.slide-down-exit { animation: slideDropOut 0.3s cubic-bezier(0.5, 0, 0, 1) forwards; }
+@keyframes slideDrop { from { transform: translateY(-150%); } to { transform: translateY(0); } }
+@keyframes slideDropOut { from { transform: translateY(0); } to { transform: translateY(-150%); } }
+
+/* WhatsApp FAB Menu */
+.wa-fab-menu {
+    transform-origin: bottom right;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity: 0; transform: translateY(20px) scale(0.95);
+    pointer-events: none;
+}
+.wa-fab-menu.open {
+    opacity: 1; transform: translateY(0) scale(1);
+    pointer-events: auto;
+}

@@ -2,6 +2,8 @@
 import AppHeader from '@/components/AppHeader'
 import AppBottomNav from '@/components/AppBottomNav'
 import DiarioClient from './DiarioClient'
+import {VisualContentSlot} from '@/components/ui/VisualContent'
+
 
 export default async function DiarioPage() {
   const perfil = await getPerfilAtual()
@@ -10,7 +12,7 @@ export default async function DiarioPage() {
   const hasMultipleAccess = ['admin', 'dona'].includes(perfil.role)
 
   return (
-    <main className="max-w-md mx-auto flex-1 flex flex-col h-screen overflow-hidden w-full relative min-h-0 bg-transparent">
+    <main className="max-w-md lg:max-w-7xl mx-auto flex-1 flex flex-col h-screen overflow-hidden w-full relative min-h-0 bg-transparent" data-rt-area="area-54c5a2009b83">
       <AppHeader 
         title="REGISTRO DIÁRIO" 
         nomeUsuario={perfil.nome} 
@@ -33,7 +35,7 @@ export default async function DiarioPage() {
           label: 'Novo Embarque'
         }}
       />
-    </main>
+    <VisualContentSlot id="area-54c5a2009b83"/></main>
   )
 }
 

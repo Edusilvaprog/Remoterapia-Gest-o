@@ -1,11 +1,12 @@
 'use client'
 import { useEffect, useState } from 'react'
+import { Sun, Moon } from 'lucide-react'
 
-export default function ThemeToggle() {
+export default function ThemeToggle({className}:{className?:string}) {
   const [isDark, setIsDark] = useState(true)
 
   useEffect(() => {
-    const isDarkMode = document.documentElement.classList.contains('dark') || localStorage.getItem('theme') === 'dark'
+    const isDarkMode = document.documentElement.classList.contains('dark') || (() => { try { return localStorage.getItem('theme') } catch(e) { return null } })() === 'dark'
     setIsDark(isDarkMode)
     if (isDarkMode) document.documentElement.classList.add('dark')
     else document.documentElement.classList.remove('dark')
@@ -16,10 +17,10 @@ export default function ThemeToggle() {
     setIsDark(next)
     if (next) {
       document.documentElement.classList.add('dark')
-      localStorage.setItem('theme', 'dark')
+      try { localStorage.setItem('theme', 'dark') } catch(e) {}
     } else {
       document.documentElement.classList.remove('dark')
-      localStorage.setItem('theme', 'light')
+      try { localStorage.setItem('theme', 'light') } catch(e) {}
     }
   }
 
@@ -27,10 +28,11 @@ export default function ThemeToggle() {
     <button 
       type="button" 
       onClick={toggle} 
-      className="w-10 h-10 bg-white/20 hover:bg-white/30 text-white rounded-2xl text-base flex items-center justify-center transition-all border border-white/30 backdrop-blur-sm shadow-sm active:scale-95 shrink-0 select-none cursor-pointer"
-      title="Alternar Modo Claro/Escuro"
+      className={className || "w-10 h-10 bg-white/20 hover:bg-white/30 text-white rounded-2xl text-base flex items-center justify-center transition-all border border-white/30 backdrop-blur-sm shadow-sm active:scale-95 shrink-0 select-none cursor-pointer"}
+      title={isDark?'Mudar para modo claro':'Mudar para modo escuro'}
+      aria-label={isDark?'Mudar para modo claro':'Mudar para modo escuro'}
     >
-      {isDark ? '🌙' : '☀️'}
+      {isDark ? <Sun size={19}/> : <Moon size={19}/>}
     </button>
   )
 }

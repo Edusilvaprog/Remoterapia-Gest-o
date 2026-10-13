@@ -12,14 +12,14 @@ export default async function RecepcaoLayout({
   const hasMultipleAccess = ['admin', 'dona'].includes(perfil.role)
 
   return (
-    <main className="max-w-md mx-auto flex-1 flex flex-col h-screen overflow-hidden w-full relative min-h-0 bg-transparent">
+    <main className="max-w-md lg:max-w-7xl mx-auto flex-1 flex flex-col h-screen overflow-hidden w-full relative min-h-0 bg-transparent">
       <AppHeader 
         title="CONTROLE DA BASE" 
         nomeUsuario={perfil.nome} 
         showTrocarArea={hasMultipleAccess} 
       />
 
-      <div className="flex-1 overflow-y-auto p-4 space-y-4 pb-36 no-scrollbar w-full min-h-0">
+      <div className="flex-1 overflow-y-auto p-4 lg:px-6 lg:py-5 space-y-4 pb-36 lg:pb-28 no-scrollbar w-full min-h-0">
         {children}
       </div>
 

@@ -2,6 +2,8 @@
 import AppHeader from '@/components/AppHeader'
 import AppBottomNav from '@/components/AppBottomNav'
 import FechamentoClient from './FechamentoClient'
+import {VisualContentSlot} from '@/components/ui/VisualContent'
+
 
 export default async function FechamentoPage() {
   const perfil = await getPerfilAtual()
@@ -10,7 +12,7 @@ export default async function FechamentoPage() {
   const hasMultipleAccess = ['admin', 'dona'].includes(perfil.role)
 
   return (
-    <main className="max-w-md mx-auto flex-1 flex flex-col h-screen overflow-hidden w-full relative min-h-0 bg-transparent">
+    <main className="max-w-md lg:max-w-7xl mx-auto flex-1 flex flex-col h-screen overflow-hidden w-full relative min-h-0 bg-transparent" data-rt-area="area-9a1d6411bf8d">
       <AppHeader 
         title="FECHAMENTO" 
         nomeUsuario={perfil.nome} 
@@ -33,7 +35,7 @@ export default async function FechamentoPage() {
           label: 'Novo Embarque'
         }}
       />
-    </main>
+    <VisualContentSlot id="area-9a1d6411bf8d"/></main>
   )
 }
 

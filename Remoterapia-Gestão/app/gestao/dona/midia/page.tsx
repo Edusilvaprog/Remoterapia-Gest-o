@@ -2,13 +2,15 @@ import { getPerfilAtual } from '@/lib/actions/auth'
 import AppHeader from '@/components/AppHeader'
 import AppBottomNav from '@/components/AppBottomNav'
 import DonaMidiaClient from './DonaMidiaClient'
+import {VisualContentSlot} from '@/components/ui/VisualContent'
+
 
 export default async function DonaMidiaPage() {
   const perfil = await getPerfilAtual()
   if (!perfil) return null
 
   return (
-    <main className="max-w-md mx-auto flex-1 flex flex-col h-screen overflow-hidden w-full relative min-h-0 bg-transparent">
+    <main className="max-w-md lg:max-w-7xl mx-auto flex-1 flex flex-col h-screen overflow-hidden w-full relative min-h-0 bg-transparent" data-rt-area="area-556be78da651">
       <AppHeader 
         title="MARKETING" 
         nomeUsuario={perfil.nome} 
@@ -26,7 +28,7 @@ export default async function DonaMidiaPage() {
           { label: 'MÍDIA', href: '/gestao/dona/midia', icon: '📸', active: true },
         ]}
       />
-    </main>
+    <VisualContentSlot id="area-556be78da651"/></main>
   )
 }
 

@@ -33,8 +33,8 @@ export default async function NovoEmbarquePage() {
   }
 
   return (
-    <div className="fixed inset-0 z-[100] bg-slate-50 dark:bg-slate-900 flex flex-col h-full w-full overflow-hidden">
-      <div className="max-w-md mx-auto flex-1 flex flex-col h-full w-full relative min-h-0 bg-transparent">
+    <div data-rt-modal className="fixed inset-0 z-[100] bg-slate-50 dark:bg-slate-900 flex flex-col h-full w-full overflow-hidden">
+      <div className="max-w-md lg:max-w-7xl mx-auto flex-1 flex flex-col h-full w-full relative min-h-0 bg-transparent">
         <EmbarqueClient 
           caiaques={caiaquesData ?? []} 
           lockers={lockersData ?? []} 

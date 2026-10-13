@@ -1,0 +1,9 @@
+/* Aparência editada pelo painel visual local. Não contém regras de negócio. */
+@layer rt-visual-custom{
+@media (max-width:1023px){
+
+}
+@media (min-width:1024px){
+
+}
+}

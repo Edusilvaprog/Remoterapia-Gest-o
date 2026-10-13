@@ -1,6 +1,13 @@
 'use client'
+import {WorkspaceHeading} from '@/components/desktop/DesktopWorkspace'
+import BrandLabel from '@/components/ui/BrandLabel'
+import BrandIcon from '@/components/ui/BrandIcon'
 import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
+import {VisualText} from '@/components/ui/VisualContent'
+import VisualLabel from '@/components/ui/VisualLabel'
+
+
 
 interface FotoItem {
   id: string | number
@@ -126,7 +133,7 @@ export default function DonaMidiaClient() {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="rt-director-media space-y-4 dw-director-media"><div className="dw-only"><WorkspaceHeading eyebrow="Acervo da base" title="Galeria e registros" description="Consulte as fotos publicadas pela equipe e organize o acervo por categoria e período."/></div>
       
       {toast && (
         <div className="fixed top-5 left-1/2 -translate-x-1/2 z-[9999] w-full max-w-sm px-4 pointer-events-none animate-bounce">
@@ -138,7 +145,7 @@ export default function DonaMidiaClient() {
           }`}>
             <div className="flex items-center gap-3">
               <span className="text-lg shrink-0">
-                {toast.tipo === 'success' ? '✅' : toast.tipo === 'warning' ? '⚠️' : toast.tipo === 'error' ? '❌' : '🛶'}
+                <BrandLabel text={toast.tipo === 'success' ? '✅' : toast.tipo === 'warning' ? '⚠️' : toast.tipo === 'error' ? '❌' : '🛶'}/>
               </span>
               <p className="text-[11px] font-black leading-snug text-slate-900 dark:text-white">
                 {toast.msg}
@@ -151,15 +158,13 @@ export default function DonaMidiaClient() {
       {/* 1. TÍTULO EM PÍLULA TRANSLÚCIDA */}
       <div className="flex justify-center">
         <div className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm rounded-full py-2 px-5 inline-flex items-center gap-2 border border-white/60 dark:border-slate-800 shadow-sm">
-          <span className="text-base">📸</span>
-          <p className="text-[10px] font-black text-blue-950 dark:text-white uppercase tracking-wider italic leading-none">
-            MARKETING (EQUIPE ÁGUA)
-          </p>
+          <span className="text-base"><BrandIcon name="camera"/></span>
+          <p className="text-[10px] font-black text-blue-950 dark:text-white uppercase tracking-wider italic leading-none"><VisualText id="copy-ba801959ac9d" defaultText={"MARKETING (EQUIPE ÁGUA)"}/></p>
         </div>
       </div>
 
       {/* 2. FILTROS PRINCIPAIS */}
-      <div className="flex flex-wrap gap-2 justify-center">
+      <div className="flex flex-wrap gap-2 justify-center dw-director-filters">
         {[
           { id: 'all', label: 'TODAS' },
           { id: 'Paisagem', label: 'PAISAGENS' },
@@ -184,7 +189,7 @@ export default function DonaMidiaClient() {
       </div>
 
       {/* 3. FILTROS SECUNDÁRIOS DE DATA E INSTRUTOR */}
-      <div className="flex flex-wrap gap-2 justify-center items-center">
+      <div className="flex flex-wrap gap-2 justify-center items-center dw-director-filters">
         <button
           type="button"
           onClick={() => setDataFiltro('all')}
@@ -193,9 +198,7 @@ export default function DonaMidiaClient() {
               ? 'bg-cyan-500 text-white shadow-cyan-500/20'
               : 'bg-white/95 dark:bg-slate-900/95 text-slate-600 dark:text-slate-300 border border-white/60 dark:border-slate-800'
           }`}
-        >
-          TODAS DATAS
-        </button>
+        ><VisualText id="copy-c131fa20ebeb" defaultText={"TODAS DATAS"}/></button>
 
         <button
           type="button"
@@ -205,9 +208,7 @@ export default function DonaMidiaClient() {
               ? 'bg-cyan-500 text-white shadow-cyan-500/20'
               : 'bg-white/95 dark:bg-slate-900/95 text-slate-600 dark:text-slate-300 border border-white/60 dark:border-slate-800'
           }`}
-        >
-          HOJE
-        </button>
+        ><VisualText id="copy-33d38d6c7dd7" defaultText={"HOJE"}/></button>
 
         {autores.length > 0 && (
           <div className="relative inline-block">
@@ -215,7 +216,7 @@ export default function DonaMidiaClient() {
               onClick={() => setAutorFiltroDrop(!autorFiltroDrop)}
               className="py-1.5 px-3 rounded-full text-[9px] font-black uppercase bg-white/95 dark:bg-slate-900/95 text-slate-700 dark:text-slate-300 border border-white/60 dark:border-slate-800 outline-none shadow-sm cursor-pointer flex items-center gap-1.5"
             >
-              <span>{autorFiltro === 'all' ? 'TODOS INSTRUTORES' : autorFiltro}</span>
+              <span><VisualLabel text={autorFiltro === 'all' ? 'TODOS INSTRUTORES' : autorFiltro}/></span>
               <span className="text-[7px]">▼</span>
             </div>
 
@@ -227,7 +228,7 @@ export default function DonaMidiaClient() {
                     autorFiltro === 'all' ? 'bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-cyan-300' : 'hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300'
                   }`}
                 >
-                  <span>TODOS INSTRUTORES</span>
+                  <span><VisualText id="copy-c631b27697c3" defaultText={"TODOS INSTRUTORES"}/></span>
                   <span>{autorFiltro === 'all' ? '✓' : ''}</span>
                 </div>
                 {autores.map(a => {
@@ -255,23 +256,23 @@ export default function DonaMidiaClient() {
       <div className="grid grid-cols-2 gap-3">
         <div className="bg-white/95 dark:bg-slate-900/95 p-4 rounded-[1.8rem] border-t-4 !border-t-cyan-500 border border-white/60 dark:border-slate-800 shadow-xl shadow-blue-500/5 flex items-center justify-between">
           <div>
-            <p className="text-[9px] font-black text-slate-400 uppercase tracking-wider">PAISAGENS</p>
+            <p className="text-[9px] font-black text-slate-400 uppercase tracking-wider"><VisualText id="copy-7e4325371ce7" defaultText={"PAISAGENS"}/></p>
             <p className="text-3xl font-black text-cyan-600 dark:text-cyan-400 mt-0.5">{totalPaisagem}</p>
           </div>
-          <span className="text-3xl select-none">🏝️</span>
+          <span className="text-3xl select-none"><BrandIcon name="umbrella"/></span>
         </div>
 
         <div className="bg-white/95 dark:bg-slate-900/95 p-4 rounded-[1.8rem] border-t-4 !border-t-orange-500 border border-white/60 dark:border-slate-800 shadow-xl shadow-blue-500/5 flex items-center justify-between">
           <div>
-            <p className="text-[9px] font-black text-slate-400 uppercase tracking-wider">SEGURANÇA</p>
+            <p className="text-[9px] font-black text-slate-400 uppercase tracking-wider"><VisualText id="copy-5147e41a2145" defaultText={"SEGURANÇA"}/></p>
             <p className="text-3xl font-black text-orange-500 dark:text-orange-400 mt-0.5">{totalSeguranca}</p>
           </div>
-          <span className="text-3xl select-none">⚠️</span>
+          <span className="text-3xl select-none"><BrandIcon name="warning"/></span>
         </div>
       </div>
 
       {/* 5. GRADE DE FOTOS COM VISUAL NÁUTICO MODERNO */}
-      <div className="grid grid-cols-2 gap-3 pb-8">
+      <div className="grid grid-cols-2 gap-3 pb-8 dw-director-gallery">
         {fotosFiltradas.map(f => {
           const isSeguranca = f.categoria?.toLowerCase() === 'segurança'
           return (
@@ -294,7 +295,7 @@ export default function DonaMidiaClient() {
                     ? 'bg-orange-500/90 text-white border-white/40' 
                     : 'bg-cyan-500/90 text-white border-white/40'
                 }`}>
-                  {isSeguranca ? '⚠️ SEGURANÇA' : '🏝️ PAISAGEM'}
+                  <BrandLabel text={isSeguranca ? '⚠️ SEGURANÇA' : '🏝️ PAISAGEM'}/>
                 </span>
               </div>
 
@@ -320,7 +321,7 @@ export default function DonaMidiaClient() {
                     className="p-1.5 text-slate-300 hover:text-red-500 rounded-lg transition-colors cursor-pointer"
                     title="Excluir foto"
                   >
-                    🗑️
+                    <BrandIcon name="trash"/>
                   </button>
                 </div>
               </div>
@@ -331,7 +332,7 @@ export default function DonaMidiaClient() {
 
       {/* MODAL DE VISUALIZAÇÃO EM TELA CHEIA */}
       {fotoModal && (
-        <div 
+        <div data-rt-modal 
           className="fixed inset-0 bg-black/85 backdrop-blur-md z-[9999] flex items-center justify-center p-4"
           onClick={() => setFotoModal(null)}
         >
@@ -348,8 +349,7 @@ export default function DonaMidiaClient() {
                 <p className="text-xs font-black text-slate-900 dark:text-white uppercase">
                   {fotoModal.categoria}
                 </p>
-                <p className="text-[9px] font-bold text-slate-400 uppercase">
-                  Por {fotoModal.autor} · {formatarHora(fotoModal.criado_em)}
+                <p className="text-[9px] font-bold text-slate-400 uppercase"><VisualText id="copy-edd12cf98b48" defaultText={"Por "}/>{fotoModal.autor} · {formatarHora(fotoModal.criado_em)}
                 </p>
               </div>
 
@@ -357,9 +357,7 @@ export default function DonaMidiaClient() {
                 type="button"
                 onClick={() => setFotoModal(null)}
                 className="px-4 py-2 bg-slate-900 text-white dark:bg-slate-800 rounded-xl text-[10px] font-black uppercase cursor-pointer"
-              >
-                FECHAR
-              </button>
+              ><VisualText id="copy-947eb6f92733" defaultText={"FECHAR"}/></button>
             </div>
           </div>
         </div>
