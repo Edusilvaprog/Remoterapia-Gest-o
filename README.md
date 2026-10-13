@@ -1,1 +1,0 @@
-# Remoterapia-Gest-o
