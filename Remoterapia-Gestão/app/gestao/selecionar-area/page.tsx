@@ -1,4 +1,5 @@
 import BrandIcon from '@/components/ui/BrandIcon'
+import {ChevronRight} from 'lucide-react'
 import { getPerfilAtual } from '@/lib/actions/auth'
 
 import Link from 'next/link'
@@ -36,7 +37,7 @@ export default async function SelecionarArea() {
             </div>
         </div>
 
-        {(roles.includes('guardaria') || isAdmin || isDona) && <Link href="/gestao/guardaria" className="w-full max-w-md mb-3 p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-sm font-extrabold text-blue-900 dark:text-white"><VisualText id="copy-b6390bb56571" defaultText={"Guardaria · embarcações e armazenamento →"}/></Link>}
+        {(roles.includes('guardaria') || isAdmin || isDona) && <Link href="/gestao/guardaria" className="w-full max-w-md mb-3 p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-sm font-extrabold text-blue-900 dark:text-white flex items-center gap-4"><div className="w-14 h-14 rounded-2xl flex items-center justify-center shrink-0"><BrandIcon name="anchor"/></div><div className="text-left flex-1 min-w-0"><p><VisualText id="copy-b6390bb56571" defaultText={"Guardaria · embarcações e armazenamento →"}/></p><p><VisualText id="copy-7ab889213d0c" defaultText="Embarcações e armazenamento"/></p></div><ChevronRight className="rt-area-chevron" aria-hidden="true"/></Link>}
         {/* LISTA DE CARDS: ORDEM ALFABÉTICA + ADMIN FIXADO NO FIM */}
         <div className="w-full space-y-3.5 flex flex-col mb-auto">
                 
@@ -53,6 +54,7 @@ export default async function SelecionarArea() {
                             <p className="font-black text-base text-blue-600 dark:text-blue-400 uppercase tracking-tight leading-tight truncate"><VisualText id="copy-fed0dfb18c98" defaultText={"EQUIPE DE ÁGUA"}/></p>
                             <p className="text-[10px] font-black text-blue-500/90 dark:text-blue-300 uppercase tracking-wider mt-0.5 truncate"><VisualText id="copy-ea86c208fea3" defaultText={"MONITORAMENTO"}/></p>
                         </div>
+                        <ChevronRight className="rt-area-chevron" aria-hidden="true"/>
                     </Link>
                 )}
 
@@ -69,6 +71,7 @@ export default async function SelecionarArea() {
                             <p className="font-black text-base text-orange-600 dark:text-orange-400 uppercase tracking-tight leading-tight truncate"><VisualText id="copy-4c743dde0321" defaultText={"EQUIPE DE AREIA"}/></p>
                             <p className="text-[10px] font-black text-orange-500/90 dark:text-orange-300 uppercase tracking-wider mt-0.5 truncate"><VisualText id="copy-19795c8517e0" defaultText={"RECEPÇÃO"}/></p>
                         </div>
+                        <ChevronRight className="rt-area-chevron" aria-hidden="true"/>
                     </Link>
                 )}
 
@@ -87,6 +90,7 @@ export default async function SelecionarArea() {
                             </div>
                             <p className="text-[10px] font-black text-indigo-500/90 dark:text-indigo-300 uppercase tracking-wider mt-0.5 truncate"><VisualText id="copy-1f2b494a4f32" defaultText={"PORTAL DE ALUNOS"}/></p>
                         </div>
+                        <ChevronRight className="rt-area-chevron" aria-hidden="true"/>
                     </Link>
                 )}
 
@@ -103,6 +107,7 @@ export default async function SelecionarArea() {
                             <p className="font-black text-base text-emerald-600 dark:text-emerald-400 uppercase tracking-tight leading-tight truncate"><VisualText id="copy-66210d79a610" defaultText={"GESTÃO E CONTROLE"}/></p>
                             <p className="text-[10px] font-black text-emerald-500/90 dark:text-emerald-300 uppercase tracking-wider mt-0.5 truncate"><VisualText id="copy-d43a81f7ce49" defaultText={"ADMINISTRAÇÃO"}/></p>
                         </div>
+                        <ChevronRight className="rt-area-chevron" aria-hidden="true"/>
                     </Link>
                 )}
 
@@ -119,6 +124,7 @@ export default async function SelecionarArea() {
                             <p className="font-black text-base text-slate-700 dark:text-slate-300 uppercase tracking-tight leading-tight truncate"><VisualText id="copy-cb0857c21041" defaultText={"ACESSO ADMINISTRADOR"}/></p>
                             <p className="text-[10px] font-black text-slate-500/90 dark:text-slate-400 uppercase tracking-wider mt-0.5 truncate"><VisualText id="copy-ed556210105e" defaultText={"PAINEL (TI)"}/></p>
                         </div>
+                        <ChevronRight className="rt-area-chevron" aria-hidden="true"/>
                     </Link>
                 )}
                 

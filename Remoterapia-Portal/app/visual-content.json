@@ -1,6 +1,31 @@
 {
   "mobile": {
-    "texts": {},
+    "texts": {
+      "copy-cc787042f0b5": "Sair da conta",
+      "copy-7dc767b6991c": "Cancelar agendamento?",
+      "copy-f54666f134e0": "Manter agendamento",
+      "copy-83048eebb62d": "Reservas da semana",
+      "copy-b592c9455a78": "De segunda a domingo",
+      "copy-10ce5cc4c0c8": "Solicitar novo agendamento",
+      "copy-ba6bfe18c851": "Seus agendamentos (",
+      "copy-8daf5fa94f59": "Planos e pagamentos",
+      "copy-fa1391f603f9": "Minha assinatura",
+      "copy-be3e3e82fd17": "Minhas inscrições",
+      "copy-22b50c1219fc": "Meu perfil",
+      "copy-70d5e46f5eb5": "Agendar horário",
+      "copy-9791e36dc2ea": "Ver próximos eventos",
+      "copy-d5880863c154": "Eventos disponíveis",
+      "copy-d3de8de6f45e": " Outra dúvida",
+      "copy-1421596368ff": "Eventos Remoterapia",
+      "copy-fd8bbfaf8193": "Próximos eventos",
+      "copy-31223901267e": "Veja as datas, os horários e as vagas disponíveis.",
+      "copy-e5d633e7c563": "Planos de remada",
+      "copy-2964ef452c30": "Carregando eventos…",
+      "copy-16698d4835d5": "Nenhum evento disponível",
+      "copy-8492df8603a1": "Remoterapia / eventos",
+      "copy-e75bbe92534d": "Ver evento",
+      "copy-3af5fbf95f73": "Detalhes do evento"
+    },
     "slots": {}
   },
   "desktop": {

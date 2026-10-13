@@ -2,7 +2,7 @@
 
 import BrandIcon from '@/components/ui/BrandIcon'
 import { useState } from 'react'
-import { Calendar, X, Info } from 'lucide-react'
+import { Calendar, X, Info, ArrowRight } from 'lucide-react'
 import { PortalDesktopInicio } from '@/components/desktop/PortalDesktop'
 import {VisualText,VisualContentSlot} from '@/components/ui/VisualContent'
 import VisualLabel from '@/components/ui/VisualLabel'
@@ -56,7 +56,7 @@ export default function AbaInicio({
         <div className="flex flex-col gap-4">
           {/* COTAS SEMANAIS (SOMENTE PARA MENSALISTA) */}
           {alunoData.tipo_plano === 'mensalista' && (
-            <div className="bg-white dark:bg-slate-900 p-4 rounded-[1.8rem] shadow-md border border-slate-200 dark:border-slate-800 flex flex-col gap-3">
+            <div className="rt-mobile-quota bg-white dark:bg-slate-900 p-4 rounded-[1.8rem] shadow-md border border-slate-200 dark:border-slate-800 flex flex-col gap-3">
               <div className="flex justify-between items-center">
                 <div className="flex items-center gap-2">
                   <div className="w-8 h-8 rounded-xl bg-blue-50 dark:bg-slate-800 text-[#1D70B8] dark:text-cyan-400 flex items-center justify-center text-base">
@@ -97,13 +97,13 @@ export default function AbaInicio({
             className="w-full py-3.5 bg-gradient-to-r from-[#E52E87] to-[#be185d] hover:opacity-95 text-white font-black rounded-2xl shadow-lg shadow-pink-500/25 active:scale-95 transition-all uppercase tracking-wider text-xs flex justify-center items-center gap-2 cursor-pointer"
           >
             <span><VisualText id="copy-10ce5cc4c0c8" defaultText={"SOLICITAR NOVO AGENDAMENTO"}/></span>
-            <span className="text-sm">➔</span>
+            <ArrowRight size={18} aria-hidden="true"/>
           </button>
         </div>
       )}
 
       {/* 2. SEUS AGENDAMENTOS */}
-      <div className="space-y-3">
+      <div className="rt-mobile-bookings space-y-3">
         <div className="flex justify-between items-center px-1">
           <span className="bg-[#032b57] dark:bg-[#0284c7] text-white px-3 py-0.5 rounded-full text-[9px] font-black uppercase tracking-widest shadow-xs"><VisualText id="copy-ba6bfe18c851" defaultText={"SEUS AGENDAMENTOS ("}/>{agendamentosAtivos.length})
           </span>
@@ -136,7 +136,7 @@ export default function AbaInicio({
               className="px-6 py-3 bg-gradient-to-r from-[#0284c7] to-[#034480] text-white text-xs font-black rounded-xl uppercase tracking-wider shadow-md shadow-sky-600/25 cursor-pointer hover:brightness-105 transition active:scale-95 flex items-center gap-2 mt-2"
             >
               <span><VisualLabel text={alunoData && ['mensalista', 'guardaria', 'combo_mensalista_guardaria'].includes(alunoData.tipo_plano) ? 'Agendar Horário' : 'Ver Próximos Eventos'}/></span>
-              <span className="text-sm">➔</span>
+              <ArrowRight size={18} aria-hidden="true"/>
             </button>
           </div>
         ) : (
@@ -160,7 +160,7 @@ export default function AbaInicio({
             return (
               <div 
                 key={ag.id} 
-                className={`bg-white/95 dark:bg-slate-900/95 backdrop-blur-md rounded-[1.8rem] p-4 shadow-xl border border-white/60 dark:border-slate-800 border-l-[6px] flex flex-col gap-3 transition-all hover:scale-[1.01] ${
+                className={`rt-mobile-booking-card bg-white/95 dark:bg-slate-900/95 backdrop-blur-md rounded-[1.8rem] p-4 shadow-xl border border-white/60 dark:border-slate-800 border-l-[6px] flex flex-col gap-3 transition-all hover:scale-[1.01] ${
                   isCancelado 
                     ? '!border-l-red-500 opacity-95' 
                     : ag.is_evento 
@@ -268,7 +268,7 @@ export default function AbaInicio({
                       onClick={() => onCancelar(ag.id, ag.data_reserva)}
                       className="text-[10px] font-black text-red-600 dark:text-red-400 uppercase tracking-wider bg-red-50 dark:bg-red-950/40 hover:bg-red-100 border border-red-200 dark:border-red-800/50 px-3 py-1.5 rounded-xl transition active:scale-95 flex items-center gap-1 cursor-pointer"
                     >
-                      <span>✕</span><VisualText id="copy-7918475cc18e" defaultText={" Cancelar"}/></button>
+                      <X size={15} aria-hidden="true"/><VisualText id="copy-7918475cc18e" defaultText={" Cancelar"}/></button>
                   )}
                 </div>
               </div>

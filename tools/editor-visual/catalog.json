@@ -7039,6 +7039,12 @@
       "label": "Meu espaço de trabalho",
       "defaultText": "Meu espaço de trabalho",
       "file": "components/desktop/GestaoOverview.tsx"
+    },
+    "copy-7ab889213d0c": {
+      "kind": "text",
+      "label": "Embarcações e armazenamento",
+      "defaultText": "Embarcações e armazenamento",
+      "file": "app/gestao/selecionar-area/page.tsx"
     }
   },
   "portal": {

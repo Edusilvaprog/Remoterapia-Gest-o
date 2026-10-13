@@ -1,1 +1,64 @@
-null
+{
+  "gestao": {
+    "mobile": {
+      "texts": {
+        "copy-6d3fd21fac18": "Administração",
+        "copy-1afbbfe14987": "Monitoramento",
+        "copy-e050a84936a7": "Selecione a área",
+        "copy-b6390bb56571": "Guardaria",
+        "copy-fed0dfb18c98": "Equipe de água",
+        "copy-ea86c208fea3": "Monitoramento",
+        "copy-4c743dde0321": "Equipe de areia",
+        "copy-19795c8517e0": "Recepção",
+        "copy-0e97d411be03": "Eventos",
+        "copy-1f2b494a4f32": "Portal de alunos",
+        "copy-66210d79a610": "Gestão e controle",
+        "copy-d43a81f7ce49": "Administração",
+        "copy-cb0857c21041": "Acesso administrador",
+        "copy-ed556210105e": "Painel de administração",
+        "copy-4bc70d686d41": "Visão geral",
+        "copy-149d8e7e7b8a": ". Confira os agendamentos e as embarcações.",
+        "copy-c97323c964bd": "Resumo do dia",
+        "copy-8edb2162b6ee": "",
+        "copy-bc2db59e2923": "Agendamentos, alunos e embarcações.",
+        "copy-4edb18d658cb": "Ver agendamentos ",
+        "copy-114e7e27ec33": "Acesso rápido",
+        "copy-165dd3f09eea": "Gestão",
+        "copy-fde965dd8bbd": "Operação",
+        "copy-910ed698fd51": "Gestão e controle",
+        "copy-b57d67fd1106": "Selecionar área",
+        "copy-f8e5f728c4ef": "Portal de alunos",
+        "copy-69319f3e7e82": "Diário",
+        "copy-88d852b3cc85": "Clima",
+        "copy-044942e8f0d3": "Gestão e controle",
+        "copy-9df0bed742b4": "Administrador",
+        "copy-9fba505de851": "Equipe de água",
+        "copy-e6f87f067f49": "Eventos",
+        "copy-031f176b1900": ". Selecione a área.",
+        "copy-264c16fd4c03": "Portal de alunos",
+        "copy-391a3ca6e36d": "Nenhum agendamento para hoje"
+      }
+    },
+    "desktop": {}
+  },
+  "portal": {
+    "mobile": {
+      "texts": {
+        "copy-cc787042f0b5": "Sair da conta",
+        "copy-7dc767b6991c": "Cancelar agendamento?",
+        "copy-f54666f134e0": "Manter agendamento",
+        "copy-83048eebb62d": "Reservas da semana",
+        "copy-b592c9455a78": "De segunda a domingo",
+        "copy-10ce5cc4c0c8": "Solicitar novo agendamento",
+        "copy-ba6bfe18c851": "Seus agendamentos (",
+        "copy-8daf5fa94f59": "Planos e pagamentos",
+        "copy-fa1391f603f9": "Minha assinatura",
+        "copy-be3e3e82fd17": "Minhas inscrições",
+        "copy-22b50c1219fc": "Meu perfil",
+        "copy-70d5e46f5eb5": "Agendar horário",
+        "copy-9791e36dc2ea": "Ver próximos eventos"
+      }
+    },
+    "desktop": {}
+  }
+}

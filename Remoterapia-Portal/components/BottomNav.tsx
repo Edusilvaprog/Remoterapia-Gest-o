@@ -15,6 +15,18 @@ export default function BottomNav({ view, setView, alunoData }: BottomNavProps) 
   const isSelected = (v: string) => view === v
   const [waMenuOpen, setWaMenuOpen] = useState(false)
   const menuRef = useRef<HTMLDivElement>(null)
+  const helpToggleRef = useRef<HTMLButtonElement>(null)
+
+  useEffect(() => { setWaMenuOpen(false) }, [view])
+  useEffect(() => {
+    if (!waMenuOpen) return
+    menuRef.current?.querySelector<HTMLAnchorElement>('.wa-fab-menu a')?.focus()
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') { setWaMenuOpen(false); helpToggleRef.current?.focus() }
+    }
+    document.addEventListener('keydown', closeOnEscape)
+    return () => document.removeEventListener('keydown', closeOnEscape)
+  }, [waMenuOpen])
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -22,8 +34,8 @@ export default function BottomNav({ view, setView, alunoData }: BottomNavProps) 
         setWaMenuOpen(false)
       }
     }
-    document.addEventListener("mousedown", handleClickOutside)
-    return () => document.removeEventListener("mousedown", handleClickOutside)
+    document.addEventListener("pointerdown", handleClickOutside)
+    return () => document.removeEventListener("pointerdown", handleClickOutside)
   }, [])
 
   return (
@@ -31,7 +43,7 @@ export default function BottomNav({ view, setView, alunoData }: BottomNavProps) 
       {/* Botão WhatsApp Flutuante Ancorado com Menu */}
       <div ref={menuRef} className="absolute bottom-20 right-4 lg:bottom-6 lg:right-6 z-40 pointer-events-none flex flex-col items-end">
         {/* Menu do WhatsApp */}
-        <div className={`wa-fab-menu bg-white dark:bg-slate-900 p-2 rounded-2xl shadow-xl border border-slate-100 dark:border-slate-800 mb-3 w-48 ${waMenuOpen ? 'open' : ''}`}>
+        {waMenuOpen && <div id="portal-help-options" className="wa-fab-menu open bg-white dark:bg-slate-900 p-2 rounded-2xl shadow-xl border border-slate-100 dark:border-slate-800 mb-3 w-48">
             <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider px-2 pt-1 pb-2"><VisualText id="copy-d4b99478f693" defaultText={"Como podemos ajudar?"}/></p>
             <a href="https://wa.me/5513997421804?text=Olá, equipe Remoterapia! Tenho uma dúvida sobre meus Agendamentos." target="_blank" rel="noreferrer" className="flex items-center gap-2 px-3 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-xl transition text-sm font-semibold text-slate-700 dark:text-slate-300 pointer-events-auto">
                 <CalendarClock className="w-4 h-4 text-sky-500" /><VisualText id="copy-792151f93952" defaultText={" Agendamentos"}/></a>
@@ -39,10 +51,10 @@ export default function BottomNav({ view, setView, alunoData }: BottomNavProps) 
                 <CreditCard className="w-4 h-4 text-emerald-500" /><VisualText id="copy-f0f272d9bf4e" defaultText={" Assinaturas"}/></a>
             <a href="https://wa.me/5513997421804?text=Olá, equipe Remoterapia! Preciso de ajuda com outro assunto." target="_blank" rel="noreferrer" className="flex items-center gap-2 px-3 py-2.5 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-xl transition text-sm font-semibold text-slate-700 dark:text-slate-300 pointer-events-auto">
                 <MessageCircle className="w-4 h-4 text-slate-400" /><VisualText id="copy-d3de8de6f45e" defaultText={" Outra Dúvida"}/></a>
-        </div>
+        </div>}
 
         {/* Botão Principal com SVG Original */}
-        <button aria-label={waMenuOpen ? "Fechar opções de atendimento" : "Abrir opções de atendimento"} aria-expanded={waMenuOpen} 
+        <button ref={helpToggleRef} aria-controls={waMenuOpen ? 'portal-help-options' : undefined} aria-label={waMenuOpen ? "Fechar opções de atendimento" : "Abrir opções de atendimento"} aria-expanded={waMenuOpen} 
           onClick={() => setWaMenuOpen(!waMenuOpen)}
           className={`pointer-events-auto w-12 h-12 ${waMenuOpen ? 'bg-slate-800' : 'bg-[#25D366] hover:bg-[#20bd5a]'} text-white rounded-full flex items-center justify-center shadow-lg active:scale-95 transition-all border-2 border-white dark:border-slate-800 cursor-pointer`}
           title="Falar no WhatsApp"

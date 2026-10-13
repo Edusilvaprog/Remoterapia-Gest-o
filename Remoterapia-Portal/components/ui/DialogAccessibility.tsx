@@ -6,6 +6,10 @@ export default function DialogAccessibility(){
   let active:HTMLElement|null=null,previous:HTMLElement|null=null
   const focusable='button:not(:disabled),a[href],input:not(:disabled),select:not(:disabled),textarea:not(:disabled),[tabindex="0"]'
   const visible=(node:HTMLElement)=>node.getClientRects().length>0&&!node.closest('[inert]')
+  const dismissButton=(panel:HTMLElement)=>Array.from(panel.querySelectorAll<HTMLButtonElement>('button')).find(button=>{
+   const label=(button.getAttribute('aria-label')||button.title||button.innerText||'').trim()
+   return !button.disabled&&visible(button)&&/^(?:fechar(?:\s.*)?|voltar(?:\s.*)?|cancelar|manter (?:agendamento|reserva)|continuar editando)$/i.test(label)
+  })
   const scan=()=>{
    const overlays=Array.from(document.querySelectorAll<HTMLElement>('[data-rt-modal]')).filter(visible)
    const overlay=overlays.sort((a,b)=>(Number(getComputedStyle(a).zIndex)||0)-(Number(getComputedStyle(b).zIndex)||0)).at(-1)
@@ -16,13 +20,15 @@ export default function DialogAccessibility(){
    if(!active)return
    previous=document.activeElement instanceof HTMLElement?document.activeElement:null
    active.setAttribute('role','dialog');active.setAttribute('aria-modal','true');active.setAttribute('tabindex','-1')
-   if(!active.hasAttribute('aria-label')&&!active.hasAttribute('aria-labelledby'))active.setAttribute('aria-label',active.querySelector('h1,h2,h3,h4')?.textContent?.trim()||'Janela da Remoterapia')
+   if(!active.hasAttribute('aria-label')&&!active.hasAttribute('aria-labelledby'))active.setAttribute('aria-label',(active.querySelector('h1,h2,h3,h4') as HTMLElement|null)?.innerText?.trim()||'Janela da Remoterapia')
    active.querySelectorAll<HTMLButtonElement>('button').forEach(button=>{if(!button.textContent?.trim()&&!button.hasAttribute('aria-label'))button.setAttribute('aria-label',button.title|| (button.querySelector('.lucide-x')?'Fechar janela':'Ação da janela'))})
-   const first=Array.from(active.querySelectorAll<HTMLElement>(focusable)).find(visible);(first||active).focus()
+   const first=Array.from(active.querySelectorAll<HTMLElement>(focusable)).find(visible)
+   const keep=Array.from(active.querySelectorAll<HTMLButtonElement>('button')).find(button=>visible(button)&&!button.disabled&&/^manter (?:agendamento|reserva)$/i.test(button.innerText.trim()))
+   ;(keep||first||active).focus()
   }
   const key=(event:KeyboardEvent)=>{
    if(!active||!active.isConnected)return
-   if(event.key==='Escape'){const close=Array.from(active.querySelectorAll<HTMLButtonElement>('button')).find(button=>/fechar|cancelar|voltar/i.test(button.getAttribute('aria-label')||button.title||button.textContent||'')&&visible(button));if(close&&!close.disabled){event.preventDefault();close.click()}return}
+   if(event.key==='Escape'){const close=dismissButton(active);if(close){event.preventDefault();close.click()}return}
    if(event.key!=='Tab')return
    const choices=Array.from(active.querySelectorAll<HTMLElement>(focusable)).filter(visible)
    if(!choices.length){event.preventDefault();active.focus();return}
