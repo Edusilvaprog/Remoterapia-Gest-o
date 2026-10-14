@@ -7188,6 +7188,49 @@
       "label": "Alunos cadastrados",
       "defaultText": "Alunos cadastrados",
       "file": "components/desktop/GestaoOverview.tsx"
+    },
+    "copy-b9c408c4a001": {
+      "kind": "text",
+      "label": "Conferência de pagamentos e pendências",
+      "defaultText": "Conferência de pagamentos e pendências",
+      "file": "components/FinancialAssistant.tsx"
+    },
+    "copy-b9c408c4a002": {
+      "kind": "text",
+      "label": "Resumo por regras, com recomendações para a equipe.",
+      "defaultText": "Resumo por regras, com recomendações para a equipe.",
+      "file": "components/FinancialAssistant.tsx"
+    },
+    "copy-b9c408c4a003": {
+      "kind": "text",
+      "label": "Esta conferência lê registros do sistema. Não consulta o saldo bancário, confirma pagame",
+      "defaultText": "Esta conferência lê registros do sistema. Não consulta o saldo bancário, confirma pagamentos, cobra alunos ou realiza estornos. Não há IA generativa conectada.",
+      "file": "components/FinancialAssistant.tsx"
+    },
+    "copy-b9c408c4a004": {
+      "kind": "text",
+      "label": "pedidos recentes consultados (máximo 100) e",
+      "defaultText": "pedidos recentes consultados (máximo 100) e",
+      "file": "components/FinancialAssistant.tsx"
+    },
+    "copy-b9c408c4a005": {
+      "kind": "text",
+      "label": "cadastros recentes (máximo 50). Novos registros e recebimentos externos podem não estar ",
+      "defaultText": "cadastros recentes (máximo 50). Novos registros e recebimentos externos podem não estar nesta consulta.",
+      "file": "components/FinancialAssistant.tsx"
+    },
+    "copy-b9c408c4a006": {
+      "kind": "text",
+      "label": "Nenhum alerta encontrado nos registros consultados. Isso não comprova ausência de dívida",
+      "defaultText": "Nenhum alerta encontrado nos registros consultados. Isso não comprova ausência de dívidas ou recebimento no banco.",
+      "file": "components/FinancialAssistant.tsx"
+    },
+    "area-b9c408c4a001": {
+      "kind": "area",
+      "label": "Conferência de pagamentos",
+      "file": "components/FinancialAssistant.tsx",
+      "canHide": false,
+      "canAdd": true
     }
   },
   "portal": {
@@ -10424,6 +10467,157 @@
       "label": "Canceladas",
       "defaultText": "Canceladas",
       "file": "components/PortalHistoryLayout.tsx"
+    },
+    "copy-b8c408c4a001": {
+      "kind": "text",
+      "label": "Ajuda do Portal",
+      "defaultText": "Ajuda do Portal",
+      "file": "components/AlunoAssistente.tsx"
+    },
+    "copy-b8c408c4a002": {
+      "kind": "text",
+      "label": "Encontre orientações sobre sua rotina na base.",
+      "defaultText": "Encontre orientações sobre sua rotina na base.",
+      "file": "components/AlunoAssistente.tsx"
+    },
+    "copy-b8c408c4a003": {
+      "kind": "text",
+      "label": "Respostas da base",
+      "defaultText": "Respostas da base",
+      "file": "components/AlunoAssistente.tsx"
+    },
+    "copy-b8c408c4a004": {
+      "kind": "text",
+      "label": "As respostas são locais, retiradas desta biblioteca. Não há IA generativa conectada. A b",
+      "defaultText": "As respostas são locais, retiradas desta biblioteca. Não há IA generativa conectada. A busca não consulta dados de alunos, reservas ou finanças e não salva perguntas.",
+      "file": "components/AlunoAssistente.tsx"
+    },
+    "copy-b8c408c4a005": {
+      "kind": "text",
+      "label": "Qual é sua dúvida?",
+      "defaultText": "Qual é sua dúvida?",
+      "file": "components/AlunoAssistente.tsx"
+    },
+    "copy-b8c408c4a006": {
+      "kind": "text",
+      "label": "Até 400 caracteres. Não inclua dados pessoais ou senhas.",
+      "defaultText": "Até 400 caracteres. Não inclua dados pessoais ou senhas.",
+      "file": "components/AlunoAssistente.tsx"
+    },
+    "copy-b8c408c4a007": {
+      "kind": "text",
+      "label": "Buscar na base",
+      "defaultText": "Buscar na base",
+      "file": "components/AlunoAssistente.tsx"
+    },
+    "copy-b8c408c4a008": {
+      "kind": "text",
+      "label": "Dúvidas frequentes",
+      "defaultText": "Dúvidas frequentes",
+      "file": "components/AlunoAssistente.tsx"
+    },
+    "copy-b8c408c4a009": {
+      "kind": "text",
+      "label": "A base não tem orientação para essa dúvida.",
+      "defaultText": "A base não tem orientação para essa dúvida.",
+      "file": "components/AlunoAssistente.tsx"
+    },
+    "copy-b8c408c4a010": {
+      "kind": "text",
+      "label": "Escolha um assunto sugerido ou fale com a equipe pelo atendimento.",
+      "defaultText": "Escolha um assunto sugerido ou fale com a equipe pelo atendimento.",
+      "file": "components/AlunoAssistente.tsx"
+    },
+    "copy-b8c408c4a011": {
+      "kind": "text",
+      "label": "Abrir atendimento",
+      "defaultText": "Abrir atendimento",
+      "file": "components/AlunoAssistente.tsx"
+    },
+    "copy-b8c408c4a012": {
+      "kind": "text",
+      "label": "O atendimento abre somente ao clicar. Nenhuma mensagem é enviada automaticamente.",
+      "defaultText": "O atendimento abre somente ao clicar. Nenhuma mensagem é enviada automaticamente.",
+      "file": "components/AlunoAssistente.tsx"
+    },
+    "area-b8c408c4a001": {
+      "kind": "area",
+      "label": "Ajuda do Portal",
+      "file": "components/AlunoAssistente.tsx",
+      "canHide": false,
+      "canAdd": true
+    },
+    "copy-b8c408c4a101": {
+      "kind": "text",
+      "label": "Como agendar uma remada?",
+      "defaultText": "Como agendar uma remada?",
+      "file": "lib/assistants/faq.ts"
+    },
+    "copy-b8c408c4a102": {
+      "kind": "text",
+      "label": "Use a área de agendamento do Portal para consultar as opções disponíveis. A possibilidad",
+      "defaultText": "Use a área de agendamento do Portal para consultar as opções disponíveis. A possibilidade de reservar depende do seu plano e das vagas exibidas. Se a opção não estiver disponível ou você tiver dúvida sobre o plano, fale com a equipe.",
+      "file": "lib/assistants/faq.ts"
+    },
+    "copy-b8c408c4a103": {
+      "kind": "text",
+      "label": "Como trocar ou cancelar uma reserva?",
+      "defaultText": "Como trocar ou cancelar uma reserva?",
+      "file": "lib/assistants/faq.ts"
+    },
+    "copy-b8c408c4a104": {
+      "kind": "text",
+      "label": "Confira sua reserva e as ações disponíveis na interface do Portal. Use a opção de troca ",
+      "defaultText": "Confira sua reserva e as ações disponíveis na interface do Portal. Use a opção de troca ou cancelamento quando ela estiver disponível. Se não encontrar a ação, procure o atendimento para confirmar o procedimento e as condições aplicáveis.",
+      "file": "lib/assistants/faq.ts"
+    },
+    "copy-b8c408c4a105": {
+      "kind": "text",
+      "label": "Quem confirma a remada em caso de mau tempo?",
+      "defaultText": "Quem confirma a remada em caso de mau tempo?",
+      "file": "lib/assistants/faq.ts"
+    },
+    "copy-b8c408c4a106": {
+      "kind": "text",
+      "label": "A equipe define as orientações sobre o clima e a realização da atividade. Confira os avi",
+      "defaultText": "A equipe define as orientações sobre o clima e a realização da atividade. Confira os avisos do Portal e, se precisar confirmar sua saída, fale com a equipe. Esta base de respostas não consulta a previsão nem confirma condições de segurança.",
+      "file": "lib/assistants/faq.ts"
+    },
+    "copy-b8c408c4a107": {
+      "kind": "text",
+      "label": "Como consultar planos e pagamentos?",
+      "defaultText": "Como consultar planos e pagamentos?",
+      "file": "lib/assistants/faq.ts"
+    },
+    "copy-b8c408c4a108": {
+      "kind": "text",
+      "label": "Os recursos de pagamentos estão em preparação. Consulte as informações e os avisos dispo",
+      "defaultText": "Os recursos de pagamentos estão em preparação. Consulte as informações e os avisos disponíveis na área de planos e pagamentos do Portal. Para confirmar cobranças ou meios de pagamento, fale com o atendimento. Esta ajuda não consulta sua situação financeira.",
+      "file": "lib/assistants/faq.ts"
+    },
+    "copy-b8c408c4a109": {
+      "kind": "text",
+      "label": "Como pedir orientação sobre reembolso?",
+      "defaultText": "Como pedir orientação sobre reembolso?",
+      "file": "lib/assistants/faq.ts"
+    },
+    "copy-b8c408c4a110": {
+      "kind": "text",
+      "label": "Fale com o atendimento para verificar seu caso e as condições aplicáveis. Esta base não ",
+      "defaultText": "Fale com o atendimento para verificar seu caso e as condições aplicáveis. Esta base não define valores, prazos ou aprovação de reembolso e não faz solicitações em seu nome.",
+      "file": "lib/assistants/faq.ts"
+    },
+    "copy-b8c408c4a111": {
+      "kind": "text",
+      "label": "Como recuperar ou mudar minha senha?",
+      "defaultText": "Como recuperar ou mudar minha senha?",
+      "file": "lib/assistants/faq.ts"
+    },
+    "copy-b8c408c4a112": {
+      "kind": "text",
+      "label": "Use a opção de recuperação de senha disponível na tela de entrada. Se já estiver conecta",
+      "defaultText": "Use a opção de recuperação de senha disponível na tela de entrada. Se já estiver conectado, confira a opção de mudar senha no perfil. Se não conseguir concluir pela interface, peça orientação à equipe. Não informe sua senha no atendimento nem nesta busca.",
+      "file": "lib/assistants/faq.ts"
     }
   }
 }

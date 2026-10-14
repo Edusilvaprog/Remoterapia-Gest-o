@@ -1,4 +1,5 @@
 'use client'
+import AlunoAssistente from './AlunoAssistente'
 import {Camera,Lock,CalendarDays,MessageCircle,Smartphone,LogOut,ChevronRight,ShieldCheck,Mail,Phone,Anchor,CreditCard} from 'lucide-react'
 import {VisualText,VisualContentSlot} from '@/components/ui/VisualContent'
 type Props={aluno:any;onPhoto?:()=>void;onPassword:()=>void;onInstall:()=>void;onLogout:()=>void;onPlan:()=>void;onEvents:()=>void;support:string;registration:string;phone:string;planName:string}
@@ -31,6 +32,7 @@ export default function PortalProfileLayout({aluno,onPhoto,onPassword,onInstall,
      </div><VisualContentSlot id="area-d0455064f461"/>
     </section>
     <section className="rt-base-panel rt-base-support" data-rt-area="area-73b436061a80"><MessageCircle size={24}/><div><h2><VisualText id="copy-4189b8cfb139" defaultText="Suporte"/></h2><p><VisualText id="copy-d53d26e22a8a" defaultText="Atendimento via WhatsApp"/></p></div><a className="rt-base-secondary" href={support} target="_blank" rel="noreferrer"><VisualText id="copy-4155904a0213" defaultText="Abrir atendimento"/><ChevronRight size={16}/></a><VisualContentSlot id="area-73b436061a80"/></section>
+    <AlunoAssistente support={support}/>
     <button type="button" className="rt-base-signout" onClick={onLogout}><LogOut size={18}/><VisualText id="copy-2ed7a460825b" defaultText="Encerrar sessão"/></button>
    </div>
   </div><VisualContentSlot id="area-c9cfd543f781"/>

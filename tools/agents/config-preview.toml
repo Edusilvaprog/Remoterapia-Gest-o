@@ -1,0 +1,15 @@
+[agents]
+enabled = true
+max_concurrent_threads_per_session = 2
+
+[agents.remoterapia_investigador]
+description = "Localiza código e causas, sem editar."
+config_file = "../tools/agents/remoterapia-investigador.toml"
+
+[agents.remoterapia_executor]
+description = "Aplica uma correção delimitada na prévia."
+config_file = "../tools/agents/remoterapia-executor.toml"
+
+[agents.remoterapia_revisor]
+description = "Revê a mudança e suas regressões, sem editar."
+config_file = "../tools/agents/remoterapia-revisor.toml"

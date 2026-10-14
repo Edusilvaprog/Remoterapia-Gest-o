@@ -33,17 +33,26 @@ export default function VisualPreviewBridge() {
       const allAreas=Array.from(document.querySelectorAll<HTMLElement>('[data-rt-area]')).map(element=>element.dataset.rtArea)
       const serialized=JSON.stringify([ids,texts,allAreas]);if(serialized!==lastAreas){lastAreas=serialized;post({type:'rt-visible-areas',ids,texts,allAreas})}
     }
+    const resolveCopy=(target:Element)=>{
+      const direct=target.closest<HTMLElement>('[data-rt-copy-id]');if(direct)return direct
+      const container=target.closest('button,a,h1,h2,h3,h4,label,summary')
+      const copies=Array.from(container?.querySelectorAll<HTMLElement>('[data-rt-copy-id]')||[]).filter(item=>item.getClientRects().length>0)
+      return copies.length===1?copies[0]:null
+    }
     const pick=(event:MouseEvent)=>{
       if(!editing||!(event.target instanceof Element))return
       if(event.target.closest('[contenteditable="plaintext-only"]')){event.stopPropagation();event.stopImmediatePropagation();return}
       event.preventDefault();event.stopPropagation();event.stopImmediatePropagation()
-      const extra=event.target.closest<HTMLElement>('[data-rt-extra-id]'),copy=event.target.closest<HTMLElement>('[data-rt-copy-id]');let area=event.target.closest<HTMLElement>('[data-rt-area]');while(area?.classList.contains('rt-card-heading'))area=area.parentElement?.closest<HTMLElement>('[data-rt-area]')||null
+      const extra=event.target.closest<HTMLElement>('[data-rt-extra-id]')
+      const copy=resolveCopy(event.target)
+      let area=event.target.closest<HTMLElement>('[data-rt-area]');while(area?.classList.contains('rt-card-heading'))area=area.parentElement?.closest<HTMLElement>('[data-rt-area]')||null
       const kind=extra?'extra':copy?'text':'area',id=extra?.dataset.rtExtraId||copy?.dataset.rtCopyId||area?.dataset.rtArea
       if(id){highlight(id);post({type:'rt-element-selected',id,kind,area:extra?.dataset.rtExtraParent||area?.dataset.rtArea})}
+      if(!extra&&!copy)post({type:'rt-selection-unavailable',message:area?'Bloco selecionado. Este trecho vem de um cadastro ou ainda não é um texto editável. Use os campos de aparência do bloco ou escolha um texto na lista.':'Este controle não possui texto editável. Use Navegar para abrir o menu ou a tela e depois volte a Editar conteúdo.'})
     }
     const inline=(event:MouseEvent)=>{
       if(!editing||!(event.target instanceof Element))return
-      const root=event.target.closest<HTMLElement>('[data-rt-copy-id]');if(!root)return
+      const root=resolveCopy(event.target);if(!root)return
       event.preventDefault();event.stopPropagation()
       const text=Array.from(root.children).find(child=>getComputedStyle(child).display!=='none') as HTMLElement|undefined
       if(!text)return;text.contentEditable='plaintext-only';text.focus()
@@ -74,8 +83,10 @@ export default function VisualPreviewBridge() {
     const observer=new MutationObserver(()=>{clearTimeout(timer);timer=setTimeout(()=>{protectControls();areas()},200)});observer.observe(document.body,{childList:true,subtree:true})
     const headObserver=new MutationObserver(records=>{if(records.some(record=>(record.target as Element).id!=='rt-local-visual-preview'&&(record.target as Element).parentElement?.id!=='rt-local-visual-preview'))clearSavedStyles()});headObserver.observe(document.head,{childList:true,subtree:true})
     const onStyleLoad=(event:Event)=>{if(event.target instanceof HTMLLinkElement)clearSavedStyles()};document.addEventListener('load',onStyleLoad,true)
+    const announce=()=>{if(window.parent!==window)window.parent.postMessage({type:'rt-editor-ready'},'*')}
+    window.addEventListener('hashchange',announce)
     if(window.parent!==window)window.parent.postMessage({type:'rt-editor-ready'},'*')
-    return () => { window.removeEventListener('message', handle);document.removeEventListener('click',pick,true);document.removeEventListener('dblclick',inline,true);document.removeEventListener('submit',guardSubmit,true);document.removeEventListener('load',onStyleLoad,true);observer.disconnect();headObserver.disconnect();clearTimeout(timer);editing=false;protectControls();document.documentElement.removeAttribute('data-rt-editing');document.getElementById('rt-local-visual-preview')?.remove() }
+    return () => { window.removeEventListener('message', handle);window.removeEventListener('hashchange',announce);document.removeEventListener('click',pick,true);document.removeEventListener('dblclick',inline,true);document.removeEventListener('submit',guardSubmit,true);document.removeEventListener('load',onStyleLoad,true);observer.disconnect();headObserver.disconnect();clearTimeout(timer);editing=false;protectControls();document.documentElement.removeAttribute('data-rt-editing');document.getElementById('rt-local-visual-preview')?.remove() }
   }, [])
   return null
 }
