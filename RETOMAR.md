@@ -1,79 +1,38 @@
-# Remoterapia — trabalho pausado
+# Retomar Remoterapia
 
-Pausa solicitada pelo usuário em 14/10/2026. Não iniciar novos trabalhos até ele pedir a retomada. Os arquivos foram salvos na prévia; aplicativos e banco reais não foram alterados nesta revisão.
+Retomada autorizada em 14/10/2026. Prioridade atendida: editor simples, com rascunho separado dos aplicativos. Não retomar cursos, referência Imua, domínio ou publicação sem novo escopo.
 
-## Concluído nesta revisão
+## Concluído
 
-- Gestão: `middleware.ts` migrado para `proxy.ts`, preservando corpo, cookies, MFA e matcher. Dez cenários comparados entre as duas versões passaram. Build da Gestão passou sem os avisos antigos de middleware/Edge.
-- Editor: clique e duplo clique agora compartilham a resolução do texto. Isso inclui ícone/espaço de controles com um único texto. Três cópias do bridge sincronizadas. A limitação da automação para clicar no iframe ainda não foi resolvida ou comprovada como problema humano.
-- Três agentes de desenvolvimento configurados: investigador, executor e revisor. TOML validado, caminhos conferidos, máximo de dois auxiliares, modelo herdado e saídas curtas. Configurações em `.codex/config.toml` da prévia e do workspace desta conversa; perfis em `tools/agents/`.
-- Instruções curtas de projeto em AGENTS.md e estado resumido em STATUS.md. Caveman lite adotado. Nenhuma porcentagem de economia foi medida.
-- Portal / Perfil: Ajuda do Portal integrada, com seis tópicos, busca local e atendimento explícito. Dúvida conhecida e desconhecida testadas na interface. Não guarda perguntas nem consulta outros alunos.
-- Gestão / Pagamentos: conferência local de pedidos e pendências integrada. Detecta prazo local encerrado, revisão, contestação, devolução, valor inválido e pendências cadastrais; recomenda conferência humana. Não confirma pagamentos, cobra, estorna ou altera registros.
-- Os dois assistentes do SaaS são baseados em regras e **não têm IA generativa conectada**. Não foram criados serviços de IA pagos ou enviadas informações a modelos externos.
-- Build final do Portal passou. A primeira tentativa simultânea com a Gestão falhou por memória do computador; a repetição individual passou.
-- Testes do simulador e de regras financeiras passaram. Exemplos temporários inseridos para teste foram removidos apenas da memória local. Evidência: `evidencias-pendencias/conferencia-pagamentos.png`.
+- Editor: somente selecionar site/tela/versão, editar palavras/fonte/tamanho/cor, redimensionar blocos, adicionar/remover, zoom, desfazer e restaurar tudo. Sem modos/botões duplicados, exportação, ajustes globais ou aplicação na nova versão.
+- Rascunho automático persistente em `.editor-draft.json`, ignorado pelo Git; recuperação de edição pendente no navegador; controle de revisão impede sobrescrita silenciosa por outra aba; até 30 etapas para desfazer. Restaurar volta à base visual, mantendo os aplicativos. Os endpoints antigos de aplicação foram desativados.
+- Seleção por texto/bloco e listas; duplo clique para edição inline; Alt + clique para navegar. Área funcional protegida contra remoção; blocos novos removíveis. Largura/altura mínima não cortam conteúdo.
+- Testes reutilizáveis: `tools/editor-visual/verify-drafts.cjs`, `verify-selection.cjs`, `scripts/verify-proxy.cjs`, `scripts/verify-assistants.cjs`. Dez cenários de proxy sem depender do arquivo antigo fora do Git. Tipos dos dois aplicativos passaram.
+- Interface: campos, palavras, criação/remoção, tamanho/fonte, salvamento e recuperação após recarregar testados. Conferência de pagamentos no celular com largura 390 px e sem transbordamento horizontal.
+- CSS, conteúdo e configuração base dos aplicativos conferidos intactos durante testes de API. Código dos originais preservado: 160 arquivos da aplicação sem mudanças, além das duas alterações anteriores conhecidas de `.gitignore`.
+- Cinco reservas fictícias e 16 registros de alterações locais recuperados do snapshot anterior. Exemplos usados nos testes visuais foram removidos do rascunho; base e personalizações anteriores mantidas.
+- Ajuda do aluno: seis tópicos locais, sem preços/quotas/prazos inventados; casos específicos enviados à equipe. Conferência financeira por regras, com consulta humana; não confirma, cobra ou estorna.
+- Pesquisa e conselho finalizados em `ECONOMIA-AGENTES-PAGAMENTOS.md`: manter Supabase agora, Neon como alternativa a medir, custo/capacidade/logins, orçamento de manutenção, Mercado Pago x Stripe e único CNPJ recebedor.
+- Caveman lite, instruções curtas e três perfis de agentes delimitados preparados. Não houve contratação de IA, conexão Cloud, economia medida ou envio de dados a modelos externos.
 
-## Banco consultado, sem modificações
+## Limitações ainda abertas
 
-Projeto Supabase Remoterapia V: `dtrpfcxvqveijkoaylcw`.
+1. Clique humano dentro do iframe: a ferramenta de navegador retorna “Click target is no longer available” para alvos visíveis da prévia. Isso também ocorre com coordenadas. Os handlers reais de texto, ícone, bloco, duplo clique, edição inline e Alt passaram nos testes isolados; seleção por campos funcionou no navegador. Não considerar a automação do clique como aprovada. A próxima conferência manual deve selecionar título, botão com ícone, espaço de bloco e editar com dois cliques nos dois sites.
+2. Agentes em nova sessão: TOML e caminhos conferidos; diagnóstico do CLI não resolveu seu diretório pessoal nesta execução. Carregamento automático dos perfis ainda não demonstrado. Não inventar economia percentual.
+3. Regras oficiais da Remoterapia: ampliar a biblioteca de ajuda só depois de confirmar políticas de reserva, reembolso e cobrança. A biblioteca atual evita fixar condições comerciais desconhecidas.
 
-- Vinte funções públicas SECURITY DEFINER revisadas: gates de equipe/ownership e search_path restrito conferidos; nenhum bypass de aluno para equipe reproduzível identificado nessa leitura.
-- Helper atual `private.has_staff_role` confirma perfil ativo, papel e AAL2 quando há fator verificado.
-- `private.cotas_upload` e `public.recebimentos_mp`: RLS ativa, acesso direto de anon/authenticated negado. Ausência de políticas nesses casos é intencional; não abrir acesso para eliminar avisos.
-- Contagem atual: três perfis privilegiados ativos, zero fatores MFA verificados, zero pedidos online reais.
-- Proteção contra senhas vazadas continua desativada, conforme advisor. Disponibilidade/configuração no plano precisam ser verificadas antes de produção.
-- Arquivos de evidência de definições, fora da prévia: `work/security-live-definitions.json` e `work/security-live-helpers.json`.
+## Antes de produção, quando autorizado
 
-## Decisões do usuário
+- Configurar SMTP e testar recuperação de senha real; titular cadastrar MFA; verificar proteção contra senhas vazadas no plano.
+- Criar aplicação Mercado Pago no CNPJ da Remoterapia; credenciais apenas no servidor, collector ID, webhook assinado e homologação de plano/evento, duplicação, valor, cancelamento e pagamento tardio. Receber somente na conta empresarial definida. Orientação fiscal com contador.
+- Publicar com a simulação local desligada. Validar novamente autenticação, permissões/RLS e funcionalidades reais; a prévia não prova segurança de produção.
+- Rotina de backup de banco/arquivos e recuperação. GitHub é backup do código.
+- Se for desejada IA generativa: definir provedor e orçamento antes de conectar. Hoje os dois assistentes locais não exigem API paga.
 
-- Domínio e publicação adiados; não registrar domínio agora.
-- Agentes desejados tanto para desenvolvimento quanto para o SaaS.
-- Prioridades do SaaS: dúvidas dos alunos e conferência de pagamentos/pendências, podendo ser assistentes separados.
-- Eventos recebidos **somente pelo CNPJ da própria Remoterapia**.
-- Manutenção acordada anteriormente: R$ 100/mês; infraestrutura paga pela cliente.
+## Onde procurar
 
-## Próximos passos, em ordem
+`STATUS.md` é a entrada curta. `COMO-USAR.md` explica o editor. `BASE-PADRAO.md` conserva a prova das telas anteriores; `REVISAO-MOBILE.md` conserva a revisão móvel. Evidência da conferência financeira anterior em `evidencias-pendencias/`; editor simplificado em `evidencias-editor/`.
 
-1. Conferir o diff desta revisão e fechar a validação do editor por clique/duplo clique. Testar os novos blocos no editor e a conferência em celular; os campos/listas de edição já funcionavam antes.
-2. Tornar o teste de proxy reutilizável no repositório. A prova atual está em `work/verify-preview-proxy.cjs`; sua referência antiga está em `work/base-padrao-recuperacao/middleware-antes.ts`, fora do Git.
-3. Revisar os textos e orientações dos assistentes com as regras oficiais da Remoterapia. A biblioteca atual evita inventar preço, quota ou política de cancelamento.
-4. Validar o carregamento dos agentes numa nova sessão do Codex. Arquivos e referências foram validados; a sessão atual não demonstrou o carregamento automático dos novos perfis.
-5. Finalizar o documento de economia, agentes e pagamentos. Não instalar toda a família Caveman nem conectar Caveman Cloud por padrão: CLI/credenciais de Cloud não estão configurados e não há chamadas de LLM nos aplicativos atuais. Economia real ainda não mensurada.
-6. Entregar o conselho de pagamento: comparar Mercado Pago já preparado com Stripe, regras de titularidade CNPJ, tarifas, prazos e responsabilidades fiscais. Nenhuma integração Stripe foi criada.
-7. Enviar o checkpoint ao GitHub quando a retomada for autorizada. A última versão remota confirmada antes desta revisão era `06d5b59`, branch `preview-editor`. Conferir o commit local de pausa e o estado remoto antes de enviar.
+Recuperação anterior fora do Git: `work/base-padrao-recuperacao/antes-das-pendencias.zip` e `restart-local.json`. Banco Supabase consultado anteriormente, sem mutações nesta revisão; definições em `work/security-live-definitions.json` e `security-live-helpers.json`. Não repetir toda a auditoria por padrão.
 
-## Pagamentos — pesquisa já realizada
-
-Recomendação em elaboração: começar com Mercado Pago na conta CNPJ da Remoterapia, aproveitando a integração preparada e a conta existente. Um único recebedor dispensa arquitetura de marketplace/split neste estágio. O recebedor é definido pela conta/credencial verificada do gateway, não pelo CPF/CNPJ informado pelo comprador.
-
-Tarifas públicas consultadas em 14/10/2026, sujeitas ao contrato e à conta:
-
-| Método | Mercado Pago Checkout | Stripe Brasil |
-| --- | --- | --- |
-| Pix | 0,99% | 1,19%; página pública informa disponibilidade por convite |
-| Cartão nacional | 4,98% na hora; 4,49% em 14 dias; 3,98% em 30 dias | 3,99% + R$ 0,39 por transação |
-| Boleto | R$ 3,49 | R$ 3,45 |
-
-Fontes primárias já consultadas:
-
-- [Mercado Pago — Checkout e tarifas](https://www.mercadopago.com.br/ferramentas-para-vender/check-out)
-- [Stripe — preços Brasil](https://stripe.com/br/pricing)
-- [Stripe — cadastro brasileiro, CPF/CNPJ e conta bancária correspondente](https://support.stripe.com/questions/brazil-specific-information-to-open-a-stripe-account)
-- [Stripe — documento/tipo de conta não pode ser alterado após verificação](https://support.stripe.com/questions/updating-tax-information-for-stripe-accounts-in-brazil)
-- [Receita Federal — Portal NFS-e](https://www.gov.br/nfse/pt-br/)
-- [Codex — configuração de agentes](https://learn.chatgpt.com/docs/agent-configuration/subagents)
-- [OpenAI — instruções e skills menores](https://developers.openai.com/blog/rethinking-skills-and-prompts-for-gpt-6-astra)
-
-A conta empresarial e os documentos precisam corresponder ao recebedor; emissão fiscal deve ser definida com o contador conforme atividade/regime. O gateway preparado não implementa emissão de NFS-e. Não contratar serviços, registrar CNPJ, ativar cobranças ou cadastrar contas sem escopo próprio.
-
-## Dependências externas mantidas para depois
-
-Aplicação e credenciais do Mercado Pago, homologação/webhooks, SMTP e recuperação real, MFA configurado pelo titular, definição de fornecedor/modelo e orçamento se for desejada IA generativa, publicação com o modo local desativado. Cursos e referência Imua permanecem fora do escopo atual.
-
-## Recuperação e evidências
-
-- Código anterior: `work/base-padrao-recuperacao/antes-das-pendencias.zip`.
-- Sites atuais: conferência de 162 arquivos encontrou somente as duas alterações conhecidas de `.gitignore` da etapa anterior de backup; os 160 arquivos de aplicação conferidos continuam iguais.
-- Os exemplos de negócio ficam na memória do editor e não no Git. Para preservá-los entre reinícios, exportar a revisão local ou usar o snapshot de recuperação; não reiniciar os exemplos como forma de salvar código.
-- Scripts auxiliares desta revisão estão em `work/`; copiar apenas os úteis/reutilizáveis para o repositório, após revisão.
+Backup do código desta retomada: branch privada `preview-editor`. Confirmar estado remoto pelo Git antes de nova atualização; nunca forçar push ou misturar os originais.

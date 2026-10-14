@@ -1,13 +1,13 @@
-# Estado atual — Remoterapia — PAUSADO
+# Estado atual — Remoterapia — prévia retomada
 
-- Trabalho: prévia isolada; originais preservados.
-- Editor 3010, Gestão 3015, Portal 3016; iniciar com Abrir-Previa.cmd.
-- Base visual anterior: commit 06d5b59, branch preview-editor, GitHub privado.
-- Detalhes das telas e testes anteriores: BASE-PADRAO.md; não reler por padrão.
-- Nova revisão: migração da Gestão para proxy, seleção consistente do editor e agentes de desenvolvimento delimitados.
-- SaaS: Ajuda do Portal e conferência de pagamentos por regras locais; sem IA generativa/API paga conectada.
-- Banco: RLS e gates de RPC consultados; nenhuma migração ou remoção aplicada nesta revisão.
-- Domínio e publicação adiados pelo usuário.
-- Pagamentos reais: aplicação, credenciais, recebedor e homologação ainda necessários. Não habilitar cobrança com dados de exemplo.
-- SMTP, testes de recuperação reais e MFA dos administradores dependem de configuração e participação do titular.
-- Ponto de retomada e pendências: RETOMAR.md. Não retomar automaticamente; aguardar o usuário.
+- Trabalhar em work/versao-preview; originais preservados.
+- Editor: http://localhost:3010/; Gestão 3015; Portal 3016. Abrir-Previa.cmd inicia a prévia.
+- Editor simplificado: seleção, texto/fonte/tamanho/cor, dimensões, adicionar/remover, zoom, desfazer/restaurar.
+- Salvamento automático somente em rascunho local; sem aplicação/publicação e sem endpoints antigos de gravação nos aplicativos.
+- Base e ajustes anteriores preservados. Cinco reservas fictícias e histórico local recuperados do snapshot.
+- Testes do rascunho, seleção, proxy, assistentes e tipos dos dois aplicativos passaram; painel financeiro celular conferido em 390 px sem transbordamento horizontal.
+- Limitação: automação não executa clique dentro do iframe; handlers reais passaram em teste isolado. Campos/seletores e recuperação foram comprovados na interface. Conferência manual do clique ainda necessária.
+- Custos, capacidade, agentes e CNPJ: ECONOMIA-AGENTES-PAGAMENTOS.md.
+- SMTP, recuperação real, MFA do titular e Mercado Pago real dependem de configuração externa. Domínio/publicação/cursos/Imua adiados.
+- Agentes: configurações preparadas e validadas estruturalmente; carregamento em nova sessão ainda não comprovado. Caveman lite ativo; economia percentual não medida.
+- Detalhes da retomada e dependências: RETOMAR.md. Uso: COMO-USAR.md.

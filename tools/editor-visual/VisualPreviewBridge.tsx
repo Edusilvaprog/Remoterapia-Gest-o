@@ -40,15 +40,15 @@ export default function VisualPreviewBridge() {
       return copies.length===1?copies[0]:null
     }
     const pick=(event:MouseEvent)=>{
-      if(!editing||!(event.target instanceof Element))return
-      if(event.target.closest('[contenteditable="plaintext-only"]')){event.stopPropagation();event.stopImmediatePropagation();return}
-      event.preventDefault();event.stopPropagation();event.stopImmediatePropagation()
+      if(!editing||event.altKey||!(event.target instanceof Element))return
+      if(event.target.closest('[contenteditable="plaintext-only"]')){event.stopPropagation();return}
+      event.preventDefault();event.stopPropagation()
       const extra=event.target.closest<HTMLElement>('[data-rt-extra-id]')
       const copy=resolveCopy(event.target)
       let area=event.target.closest<HTMLElement>('[data-rt-area]');while(area?.classList.contains('rt-card-heading'))area=area.parentElement?.closest<HTMLElement>('[data-rt-area]')||null
       const kind=extra?'extra':copy?'text':'area',id=extra?.dataset.rtExtraId||copy?.dataset.rtCopyId||area?.dataset.rtArea
       if(id){highlight(id);post({type:'rt-element-selected',id,kind,area:extra?.dataset.rtExtraParent||area?.dataset.rtArea})}
-      if(!extra&&!copy)post({type:'rt-selection-unavailable',message:area?'Bloco selecionado. Este trecho vem de um cadastro ou ainda não é um texto editável. Use os campos de aparência do bloco ou escolha um texto na lista.':'Este controle não possui texto editável. Use Navegar para abrir o menu ou a tela e depois volte a Editar conteúdo.'})
+      if(!extra&&!copy)post({type:'rt-selection-unavailable',message:area?'Bloco selecionado. Este trecho vem de um cadastro ou ainda não é um texto editável. Use os campos de aparência do bloco ou escolha um texto na lista.':'Este controle não possui texto editável. Segure Alt ao clicar para abrir o menu ou a tela.'})
     }
     const inline=(event:MouseEvent)=>{
       if(!editing||!(event.target instanceof Element))return
