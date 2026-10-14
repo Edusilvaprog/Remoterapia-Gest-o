@@ -1,6 +1,9 @@
 {
   "checked": 162,
-  "unchanged": true,
-  "changed": [],
-  "checkedAt": "2026-10-13T17:26:59.382Z"
+  "unchanged": false,
+  "changed": [
+    "Remoterapia-Gestão/.gitignore",
+    "Remoterapia-Portal/.gitignore"
+  ],
+  "checkedAt": "2026-10-13T21:46:11.687Z"
 }

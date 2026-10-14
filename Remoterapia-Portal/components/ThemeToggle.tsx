@@ -48,8 +48,9 @@ export default function ThemeToggle({ className }: { className?: string }) {
       onClick={toggle} 
       className={className || "w-9 h-9 bg-white/15 hover:bg-white/25 text-white rounded-xl flex items-center justify-center transition-all border border-white/25 backdrop-blur-sm shadow-xs active:scale-95 shrink-0 select-none cursor-pointer"}
       title={isDark ? 'Mudar para Modo Claro' : 'Mudar para Modo Escuro'}
+      aria-label={isDark ? 'Mudar para Modo Claro' : 'Mudar para Modo Escuro'}
     >
-      {isDark ? <Sun className="w-4 h-4 text-amber-300" /> : <Moon className="w-4 h-4 text-white" />}
+      {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
     </button>
   )
 }

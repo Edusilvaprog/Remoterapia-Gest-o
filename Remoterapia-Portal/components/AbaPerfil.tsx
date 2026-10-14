@@ -1,9 +1,9 @@
 'use client'
 
-import PortalProfileDesktop from './desktop/PortalProfileDesktop'
+import PortalProfileLayout from './PortalProfileLayout'
 import React, { useState, useEffect } from 'react'
 import { 
-  Lock, 
+  Lock, X,
   MessageCircle, 
   Smartphone, 
   LogOut, 
@@ -146,328 +146,7 @@ export default function AbaPerfil({
 
   return (
     <div className="rt-profile-area space-y-3 animate-fade-in pb-2">
-<PortalProfileDesktop aluno={alunoData} onPhoto={onTrocarFoto} onPassword={onAbrirTrocarSenha} onInstall={onInstalarApp} onLogout={onLogout} onPlan={onPagamentos||(()=>setModalAssinatura(true))} onEvents={()=>setModalMeusEventos(true)} support={suporteWhatsappUrl}/>
-<div className="rt-mobile-profile space-y-3">
-      
-      {/* 1. CARD PRINCIPAL BRANCO: IDENTIFICAÇÃO DO ALUNO */}
-      <div className="bg-white/95 dark:bg-slate-900/90 backdrop-blur-xl p-4 rounded-[2rem] shadow-sm border border-slate-200/80 dark:border-slate-800 space-y-3">
-        <div className="flex items-center gap-3.5">
-          
-          {/* FOTO OU MONOGRAMA COM BOTÃO DE CÂMERA INTEGRADO */}
-          <div className="relative shrink-0">
-            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#0284c7] to-[#034480] p-0.5 shadow-md flex items-center justify-center">
-              {alunoData?.foto_url ? (
-                <img 
-                  src={alunoData.foto_url} 
-                  alt={nomeAluno} 
-                  className="w-full h-full object-cover rounded-[0.9rem]"
-                />
-              ) : (
-                <div className="w-full h-full bg-[#034480] text-white flex items-center justify-center rounded-[0.9rem] font-black text-base tracking-wider">
-                  {iniciais}
-                </div>
-              )}
-            </div>
-
-            <button 
-              type="button" 
-              onClick={onTrocarFoto}
-              title="Alterar Foto de Perfil"
-              className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-[#0284c7] hover:bg-[#034480] text-white flex items-center justify-center shadow-md border-2 border-white dark:border-slate-900 transition active:scale-95 cursor-pointer"
-            >
-              <Camera className="w-2.5 h-2.5" />
-            </button>
-          </div>
-
-          {/* DADOS CADASTRAIS (CLASSIFICAÇÃO, MATRÍCULA E TELEFONE COM MÁSCARA) */}
-          <div className="min-w-0 flex-1">
-            <div className="flex items-center justify-between gap-1">
-              <span className="text-[8px] font-black uppercase px-2 py-0.5 rounded-md bg-sky-50 dark:bg-sky-950/50 text-[#0284c7] dark:text-sky-400 border border-sky-200 dark:border-sky-800 tracking-wider">
-                {rotuloClassificacao}
-              </span>
-              <span className="text-[9px] font-mono font-bold text-slate-400 tracking-wider">
-                {matricula}
-              </span>
-            </div>
-            
-            <h2 className="text-sm font-black uppercase tracking-tight text-slate-900 dark:text-white truncate mt-1">
-              {nomeAluno}
-            </h2>
-            <p className="text-[10px] font-semibold text-slate-400 dark:text-slate-400 flex items-center gap-1 mt-0.5">
-              {formatarTelefone(alunoData?.telefone)}
-            </p>
-          </div>
-        </div>
-
-        {/* 2. ÁREA DE SERVIÇO / PLANOS */}
-        <div className="pt-3 border-t border-slate-100 dark:border-slate-800">
-          
-          {/* CASO A: CLIENTE (SEM ASSINATURA) */}
-          {isAluno && (
-            <div className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/80 flex items-center justify-between gap-3">
-              <div className="min-w-0">
-                <p className="text-xs font-black text-slate-900 dark:text-white uppercase"><VisualText id="copy-18c695f97a8f" defaultText={"Clubes Remoterapia"}/></p>
-                <p className="text-[9.5px] font-medium text-slate-500 dark:text-slate-400 mt-0.5"><VisualText id="copy-bc6e2ed6d561" defaultText={"Conheça os planos Mensalista e Guardaria."}/></p>
-              </div>
-              <button 
-                type="button" 
-                onClick={onPagamentos||(()=>setModalAssinatura(true))}
-                className="px-3 py-2 bg-[#034480] hover:bg-[#0284c7] text-white text-[9.5px] font-black uppercase rounded-xl shadow-sm transition active:scale-95 shrink-0 cursor-pointer"
-              ><VisualText id="copy-d78487560f0b" defaultText={"Conhecer ➔"}/></button>
-            </div>
-          )}
-
-          {/* CASO B: MENSALISTA */}
-          {isApenasMensalista && (
-            <div className="grid grid-cols-2 gap-2.5">
-              <div className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/80 flex flex-col justify-between">
-                <div className="flex items-center gap-1.5 mb-1">
-                  <ShieldCheck className="w-3 h-3 text-[#0284c7]" />
-                  <span className="text-[8px] font-black uppercase text-slate-400 tracking-wider block"><VisualText id="copy-aeab4f39f8ac" defaultText={"Plano"}/></span>
-                </div>
-                <div>
-                  <p className="text-xs font-black text-slate-900 dark:text-white uppercase leading-tight"><VisualText id="copy-a437972165a6" defaultText={"Clube Mensalista"}/></p>
-                  <p className="text-[9.5px] font-semibold text-[#0284c7] dark:text-sky-400 mt-0.5"><VisualText id="copy-c5e834bf7949" defaultText={"2 remadas por semana"}/></p>
-                </div>
-              </div>
-
-              <div className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/80 flex flex-col justify-between">
-                <div className="flex items-center justify-between gap-1 mb-1">
-                  <div className="flex items-center gap-1.5">
-                    <Clock className="w-3 h-3 text-slate-400" />
-                    <span className="text-[8px] font-black uppercase text-slate-400 tracking-wider block"><VisualText id="copy-24078b6e20a6" defaultText={"Vencimento"}/></span>
-                  </div>
-                  <span className={`text-[7.5px] font-black uppercase px-1.5 py-0.5 rounded-full border inline-flex items-center gap-1 leading-none ${
-                    isCancelado
-                      ? 'bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 border-rose-200 dark:border-rose-800'
-                      : isPendente
-                      ? 'bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 border-amber-200 dark:border-amber-800'
-                      : 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800'
-                  }`}>
-                    <span className="w-1 h-1 rounded-full bg-current"></span>
-                    <VisualLabel text={isCancelado ? 'Cancelado' : isPendente ? 'Pendente' : 'Em dia'}/>
-                  </span>
-                </div>
-                <div>
-                  <p className="text-xs font-black text-slate-900 dark:text-white uppercase leading-tight"><VisualText id="copy-63404513d05c" defaultText={"Dia "}/>{diaVenc}</p>
-                  <p className="text-[9.5px] font-semibold text-slate-400 mt-0.5"><VisualText id="copy-4e8edb21cbac" defaultText={"Mensal"}/></p>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* CASO C: GUARDARIA */}
-          {isApenasGuardaria && (
-            <div className="grid grid-cols-2 gap-2.5">
-              <div className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/80 flex flex-col justify-between">
-                <div className="flex items-center gap-1.5 mb-1">
-                  <ShieldCheck className="w-3 h-3 text-[#0284c7]" />
-                  <span className="text-[8px] font-black uppercase text-slate-400 tracking-wider block"><VisualText id="copy-77086ffb9d02" defaultText={"Plano"}/></span>
-                </div>
-                <div>
-                  <p className="text-xs font-black text-slate-900 dark:text-white uppercase leading-tight"><VisualText id="copy-c3ad4f17f0c1" defaultText={"Guardaria"}/></p>
-                  <p className="text-[9.5px] font-semibold text-[#0284c7] dark:text-sky-400 mt-0.5">
-                    {alunoData?.tipo_embarcacao || 'Caiaque'}
-                  </p>
-                </div>
-              </div>
-
-              <div className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/80 flex flex-col justify-between">
-                <div className="flex items-center justify-between gap-1 mb-1">
-                  <div className="flex items-center gap-1.5">
-                    <Clock className="w-3 h-3 text-slate-400" />
-                    <span className="text-[8px] font-black uppercase text-slate-400 tracking-wider block"><VisualText id="copy-79250f02f4ff" defaultText={"Vencimento"}/></span>
-                  </div>
-                  <span className={`text-[7.5px] font-black uppercase px-1.5 py-0.5 rounded-full border inline-flex items-center gap-1 leading-none ${
-                    isCancelado
-                      ? 'bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 border-rose-200 dark:border-rose-800'
-                      : isPendente
-                      ? 'bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 border-amber-200 dark:border-amber-800'
-                      : 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800'
-                  }`}>
-                    <span className="w-1 h-1 rounded-full bg-current"></span>
-                    <VisualLabel text={isCancelado ? 'Cancelado' : isPendente ? 'Pendente' : 'Em dia'}/>
-                  </span>
-                </div>
-                <div>
-                  <p className="text-xs font-black text-slate-900 dark:text-white uppercase leading-tight"><VisualText id="copy-30fd456d49cf" defaultText={"Dia "}/>{diaVenc}</p>
-                  <p className="text-[9.5px] font-semibold text-slate-400 mt-0.5"><VisualText id="copy-e25fc5c75e84" defaultText={"Mensal"}/></p>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* CASO D: COMBO (MENSALISTA + GUARDARIA) */}
-          {isCombo && (
-            <div className="grid grid-cols-2 gap-2.5">
-              <div className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/80 flex flex-col justify-between">
-                <div className="flex items-center gap-1.5 mb-1">
-                  <ShieldCheck className="w-3 h-3 text-[#0284c7]" />
-                  <span className="text-[8px] font-black uppercase text-slate-400 tracking-wider block"><VisualText id="copy-bdf2da9503c4" defaultText={"Plano"}/></span>
-                </div>
-                <div>
-                  <p className="text-xs font-black text-slate-900 dark:text-white uppercase leading-tight"><VisualText id="copy-afc71e12cbbf" defaultText={"Mensalista & Guardaria"}/></p>
-                  <p className="text-[9.5px] font-semibold text-[#0284c7] dark:text-sky-400 mt-0.5"><VisualText id="copy-aa453ab7886f" defaultText={"2 remadas + "}/>{alunoData?.tipo_embarcacao || 'Caiaque'}</p>
-                </div>
-              </div>
-
-              <div className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/80 flex flex-col justify-between">
-                <div className="flex items-center justify-between gap-1 mb-1">
-                  <div className="flex items-center gap-1.5">
-                    <Clock className="w-3 h-3 text-slate-400" />
-                    <span className="text-[8px] font-black uppercase text-slate-400 tracking-wider block"><VisualText id="copy-1644c17cf0e8" defaultText={"Vencimento"}/></span>
-                  </div>
-                  <span className={`text-[7.5px] font-black uppercase px-1.5 py-0.5 rounded-full border inline-flex items-center gap-1 leading-none ${
-                    isCancelado
-                      ? 'bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 border-rose-200 dark:border-rose-800'
-                      : isPendente
-                      ? 'bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 border-amber-200 dark:border-amber-800'
-                      : 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800'
-                  }`}>
-                    <span className="w-1 h-1 rounded-full bg-current"></span>
-                    <VisualLabel text={isCancelado ? 'Cancelado' : isPendente ? 'Pendente' : 'Em dia'}/>
-                  </span>
-                </div>
-                <div>
-                  <p className="text-xs font-black text-slate-900 dark:text-white uppercase leading-tight"><VisualText id="copy-a46a2104e50b" defaultText={"Dia "}/>{diaVenc}</p>
-                  <p className="text-[9.5px] font-semibold text-slate-400 mt-0.5"><VisualText id="copy-aa1f89a6576c" defaultText={"Mensal"}/></p>
-                </div>
-              </div>
-            </div>
-          )}
-
-        </div>
-      </div>
-
-      {/* 3. LISTA DE AÇÕES INSTITUCIONAIS UNIFICADAS (SEM FAIXAS LATERAIS) */}
-      <div className="bg-white/95 dark:bg-slate-900/90 backdrop-blur-xl rounded-[2rem] shadow-sm border border-slate-200/80 dark:border-slate-800 overflow-hidden divide-y divide-slate-100 dark:divide-slate-800">
-        
-        {/* AÇÃO 1: MINHA ASSINATURA */}
-        <button aria-label="Próximo" 
-          type="button" 
-          onClick={onPagamentos||(()=>setModalAssinatura(true))}
-          className="w-full flex items-center justify-between p-3.5 hover:bg-slate-50 dark:hover:bg-slate-800/60 active:scale-[0.99] transition text-left cursor-pointer"
-        >
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-xl bg-slate-50 dark:bg-slate-800/80 text-[#034480] dark:text-sky-400 flex items-center justify-center border border-slate-200/80 dark:border-slate-700/80 shrink-0">
-              <ShieldCheck className="w-4 h-4" />
-            </div>
-            <div>
-              <span className="text-xs font-black uppercase tracking-wider text-slate-900 dark:text-white block leading-tight"><VisualText id="copy-fa1391f603f9" defaultText={"Minha Assinatura"}/></span>
-              <span className="text-[9.5px] font-medium text-slate-400"><VisualText id="copy-6b2ad95d8856" defaultText={"Plano atual e mensalidade"}/></span>
-            </div>
-          </div>
-          <ChevronRight className="w-4 h-4 text-slate-400 shrink-0" />
-        </button>
-
-        {/* AÇÃO 2: MEUS EVENTOS */}
-        <button aria-label="Próximo" 
-          type="button" 
-          onClick={() => setModalMeusEventos(true)}
-          className="w-full flex items-center justify-between p-3.5 hover:bg-slate-50 dark:hover:bg-slate-800/60 active:scale-[0.99] transition text-left cursor-pointer"
-        >
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-xl bg-slate-50 dark:bg-slate-800/80 text-[#034480] dark:text-sky-400 flex items-center justify-center border border-slate-200/80 dark:border-slate-700/80 shrink-0">
-              <Calendar className="w-4 h-4" />
-            </div>
-            <div>
-              <span className="text-xs font-black uppercase tracking-wider text-slate-900 dark:text-white block leading-tight"><VisualText id="copy-1d4a97279b8c" defaultText={"Meus Eventos"}/></span>
-              <span className="text-[9.5px] font-medium text-slate-400"><VisualText id="copy-0804ac6056d3" defaultText={"Inscrições confirmadas e roteiros"}/></span>
-            </div>
-          </div>
-          <ChevronRight className="w-4 h-4 text-slate-400 shrink-0" />
-        </button>
-
-        {/* AÇÃO 3: MUDAR SENHA DE ACESSO */}
-        <button aria-label="Próximo" 
-          type="button" 
-          onClick={onAbrirTrocarSenha}
-          className="w-full flex items-center justify-between p-3.5 hover:bg-slate-50 dark:hover:bg-slate-800/60 active:scale-[0.99] transition text-left cursor-pointer"
-        >
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-xl bg-slate-50 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 flex items-center justify-center border border-slate-200/80 dark:border-slate-700/80 shrink-0">
-              <Lock className="w-4 h-4" />
-            </div>
-            <div>
-              <span className="text-xs font-black uppercase tracking-wider text-slate-900 dark:text-white block leading-tight"><VisualText id="copy-c8880eb54ea1" defaultText={"Mudar Senha"}/></span>
-              <span className="text-[9.5px] font-medium text-slate-400"><VisualText id="copy-e971ec8dec08" defaultText={"Atualizar senha da conta"}/></span>
-            </div>
-          </div>
-          <ChevronRight className="w-4 h-4 text-slate-400 shrink-0" />
-        </button>
-
-        {/* AÇÃO 4: SUPORTE (COM STATUS REAL ONLINE/OFFLINE) */}
-        <a 
-          href={suporteWhatsappUrl}
-          target="_blank" 
-          rel="noreferrer"
-          className="w-full flex items-center justify-between p-3.5 hover:bg-emerald-50/40 dark:hover:bg-emerald-950/20 active:scale-[0.99] transition text-left cursor-pointer"
-        >
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 flex items-center justify-center border border-emerald-200 dark:border-emerald-800/50 shrink-0">
-              <MessageCircle className="w-4 h-4" />
-            </div>
-            <div>
-              <div className="flex items-center gap-1.5">
-                <span className="text-xs font-black uppercase tracking-wider text-slate-900 dark:text-white leading-tight"><VisualText id="copy-4189b8cfb139" defaultText={"Suporte"}/></span>
-                <span className={`text-[7.5px] font-black uppercase px-2 py-0.5 rounded-full border ${
-                  isAtendimentoOnline
-                    ? 'bg-emerald-100 dark:bg-emerald-900/60 text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800'
-                    : 'bg-amber-100 dark:bg-amber-900/60 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-800'
-                }`}>
-                  <VisualLabel text={isAtendimentoOnline ? 'Online' : 'Offline'}/>
-                </span>
-              </div>
-              <span className="text-[9.5px] font-medium text-slate-400"><VisualText id="copy-d53d26e22a8a" defaultText={"Atendimento via WhatsApp"}/></span>
-            </div>
-          </div>
-          <ChevronRight className="w-4 h-4 text-emerald-500 shrink-0" />
-        </a>
-
-        {/* AÇÃO 5: INSTALAR APLICATIVO NO CELULAR (PWA) */}
-        <button aria-label="Próximo" 
-          type="button" 
-          onClick={onInstalarApp}
-          className="w-full flex items-center justify-between p-3.5 hover:bg-slate-50 dark:hover:bg-slate-800/60 active:scale-[0.99] transition text-left cursor-pointer"
-        >
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-xl bg-slate-50 dark:bg-slate-800/80 text-[#0284c7] flex items-center justify-center border border-slate-200/80 dark:border-slate-700/80 shrink-0">
-              <Smartphone className="w-4 h-4" />
-            </div>
-            <div>
-              <span className="text-xs font-black uppercase tracking-wider text-slate-900 dark:text-white block leading-tight"><VisualText id="copy-6b11698946a0" defaultText={"Instalar Aplicativo"}/></span>
-              <span className="text-[9.5px] font-medium text-slate-400"><VisualText id="copy-fc1a8dc77260" defaultText={"Adicionar atalho na tela inicial"}/></span>
-            </div>
-          </div>
-          <ChevronRight className="w-4 h-4 text-slate-400 shrink-0" />
-        </button>
-
-        {/* AÇÃO 6: ENCERRAR SESSÃO */}
-        <button aria-label="Próximo" 
-          type="button" 
-          onClick={onLogout}
-          className="w-full flex items-center justify-between p-3.5 hover:bg-rose-50 dark:hover:bg-rose-950/30 active:scale-[0.99] transition text-left cursor-pointer"
-        >
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-xl bg-rose-50 dark:bg-rose-950/40 text-rose-500 flex items-center justify-center border border-rose-100 dark:border-rose-900/40 shrink-0">
-              <LogOut className="w-4 h-4" />
-            </div>
-            <div>
-              <span className="text-xs font-black uppercase tracking-wider text-rose-500 block leading-tight"><VisualText id="copy-2ed7a460825b" defaultText={"Encerrar Sessão"}/></span>
-              <span className="text-[9.5px] font-medium text-rose-400"><VisualText id="copy-b6591b5cf9ae" defaultText={"Sair da conta neste aparelho"}/></span>
-            </div>
-          </div>
-          <ChevronRight className="w-4 h-4 text-rose-300 dark:text-rose-600 shrink-0" />
-        </button>
-      </div>
-
-      {/* ========================================================================= */}
-      {/* 4. MODAIS EM FORMATO BOTTOM SHEET DESLIZANTES                             */}
-      {/* ========================================================================= */}
-
-
-
-</div>
+<PortalProfileLayout aluno={alunoData} registration={matricula} phone={formatarTelefone(alunoData?.telefone)} planName={rotuloClassificacao} onPhoto={onTrocarFoto} onPassword={onAbrirTrocarSenha} onInstall={onInstalarApp} onLogout={onLogout} onPlan={onPagamentos||(()=>setModalAssinatura(true))} onEvents={()=>setModalMeusEventos(true)} support={suporteWhatsappUrl}/>
       {/* MODAL 1: MINHA ASSINATURA */}
       {modalAssinatura && (
         <div data-rt-modal 
@@ -505,7 +184,7 @@ export default function AbaPerfil({
                 }} 
                 className="w-7 h-7 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-slate-900 dark:hover:text-white font-bold flex items-center justify-center text-xs transition cursor-pointer"
               >
-                ✕
+                <X size={18} aria-hidden="true"/>
               </button>
             </div>
 
@@ -697,7 +376,7 @@ export default function AbaPerfil({
                 onClick={() => setModalMeusEventos(false)} 
                 className="w-7 h-7 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-slate-900 dark:hover:text-white font-bold flex items-center justify-center text-xs transition cursor-pointer"
               >
-                ✕
+                <X size={18} aria-hidden="true"/>
               </button>
             </div>
 
@@ -710,10 +389,12 @@ export default function AbaPerfil({
                     ? new Date(ev.data_reserva + 'T00:00:00').toLocaleDateString('pt-BR', { weekday: 'short', day: '2-digit', month: 'short' })
                     : 'Data Agendada'
 
+                  const statusInscricao = ({confirmado:'Vaga confirmada',pendente:'Aguardando confirmação',concluido:'Evento concluído',realizado:'Evento concluído',cancelado:'Inscrição cancelada',cancelado_aluno:'Inscrição cancelada',cancelado_clima:'Cancelado pelo clima',reembolso_solicitado:'Reembolso solicitado',reagendado:'Reagendado'} as Record<string,string>)[ev.status] || 'Situação não informada'
+                  const inscricaoCancelada = ['cancelado','cancelado_aluno','cancelado_clima','reembolso_solicitado'].includes(ev.status)
                   return (
                     <div key={idx} className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200/80 dark:border-slate-700 space-y-3">
                       <div className="flex items-center justify-between">
-                        <span className="text-[8px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-800"><VisualText id="copy-e8287e65da56" defaultText={"● Vaga Confirmada"}/></span>
+                        <span className={'rt-base-badge '+(inscricaoCancelada?'is-warn':'is-good')}>{statusInscricao}</span>
                         <span className="text-[8.5px] font-mono font-bold text-slate-400">{voucher}</span>
                       </div>
 
@@ -801,7 +482,7 @@ export default function AbaPerfil({
                 onClick={() => setModalRoteiro(null)} 
                 className="w-7 h-7 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-slate-900 dark:hover:text-white font-bold flex items-center justify-center text-xs transition cursor-pointer"
               >
-                ✕
+                <X size={18} aria-hidden="true"/>
               </button>
             </div>
 

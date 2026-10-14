@@ -3364,7 +3364,7 @@
     },
     "area-ce3739f1d622": {
       "kind": "area",
-      "label": "Olá,",
+      "label": "Áreas da Gestão",
       "canHide": false,
       "file": "app/gestao/selecionar-area/page.tsx",
       "canAdd": true
@@ -3945,7 +3945,7 @@
     },
     "area-3d2bc04493d2": {
       "kind": "area",
-      "label": "Visão geral da Gestão",
+      "label": "Visão geral",
       "canHide": false,
       "file": "components/desktop/GestaoOverview.tsx",
       "canAdd": true
@@ -3958,8 +3958,8 @@
     },
     "copy-4bc70d686d41": {
       "kind": "text",
-      "label": "Um bom dia começa com clareza",
-      "defaultText": "Um bom dia começa com clareza",
+      "label": "Visão geral",
+      "defaultText": "Visão geral",
       "file": "components/desktop/GestaoOverview.tsx"
     },
     "copy-0306c6fe63a1": {
@@ -4033,14 +4033,14 @@
     },
     "copy-7d1ae11a890b": {
       "kind": "text",
-      "label": "Próximas reservas do dia, em ordem de horário.",
-      "defaultText": "Próximas reservas do dia, em ordem de horário.",
+      "label": "Próximas reservas em ordem de horário.",
+      "defaultText": "Próximas reservas em ordem de horário.",
       "file": "components/desktop/GestaoOverview.tsx"
     },
     "copy-06b5b4184a22": {
       "kind": "text",
       "label": "Ver agenda",
-      "defaultText": "Ver agenda ",
+      "defaultText": "Ver agenda",
       "file": "components/desktop/GestaoOverview.tsx"
     },
     "copy-ba8835b0b270": {
@@ -7030,8 +7030,8 @@
     },
     "copy-caf3b326acb1": {
       "kind": "text",
-      "label": "Configurar operação",
-      "defaultText": "Configurar operação",
+      "label": "Configurações",
+      "defaultText": "Configurações",
       "file": "components/desktop/GestaoOverview.tsx"
     },
     "copy-25c12def89e4": {
@@ -7045,6 +7045,149 @@
       "label": "Embarcações e armazenamento",
       "defaultText": "Embarcações e armazenamento",
       "file": "app/gestao/selecionar-area/page.tsx"
+    },
+    "copy-b4c408c4a001": {
+      "kind": "text",
+      "label": ". Confira a operação e os próximos agendamentos.",
+      "defaultText": ". Confira a operação e os próximos agendamentos.",
+      "file": "components/desktop/GestaoOverview.tsx"
+    },
+    "copy-b4c408c4a003": {
+      "kind": "text",
+      "label": "Nenhum agendamento para hoje",
+      "defaultText": "Nenhum agendamento para hoje",
+      "file": "components/desktop/GestaoOverview.tsx"
+    },
+    "copy-b4c408c4a004": {
+      "kind": "text",
+      "label": "Os agendamentos registrados para esta data aparecerão aqui.",
+      "defaultText": "Os agendamentos registrados para esta data aparecerão aqui.",
+      "file": "components/desktop/GestaoOverview.tsx"
+    },
+    "copy-b4c408c4a006": {
+      "kind": "text",
+      "label": "Acesso rápido",
+      "defaultText": "Acesso rápido",
+      "file": "components/desktop/GestaoOverview.tsx"
+    },
+    "copy-b4c408c4a007": {
+      "kind": "text",
+      "label": "Cadastros e controles da Remoterapia.",
+      "defaultText": "Cadastros e controles da Remoterapia.",
+      "file": "components/desktop/GestaoOverview.tsx"
+    },
+    "area-b4c408c4a002": {
+      "kind": "area",
+      "label": "Resumo da operação",
+      "file": "components/desktop/GestaoOverview.tsx",
+      "canAdd": true,
+      "canHide": true
+    },
+    "area-b4c408c4a005": {
+      "kind": "area",
+      "label": "Acesso rápido",
+      "file": "components/desktop/GestaoOverview.tsx",
+      "canAdd": true,
+      "canHide": false
+    },
+    "copy-b5c408c4a001": {
+      "kind": "text",
+      "label": "Áreas da Gestão",
+      "defaultText": "Áreas da Gestão",
+      "file": "app/gestao/selecionar-area/page.tsx"
+    },
+    "copy-b5c408c4a002": {
+      "kind": "text",
+      "label": "Selecione a área que deseja acessar.",
+      "defaultText": "Selecione a área que deseja acessar.",
+      "file": "app/gestao/selecionar-area/page.tsx"
+    },
+    "copy-b5c408c4a003": {
+      "kind": "text",
+      "label": "Visão geral",
+      "defaultText": "Visão geral",
+      "file": "app/gestao/selecionar-area/page.tsx"
+    },
+    "copy-b5c408c4a005": {
+      "kind": "text",
+      "label": "Operação na base",
+      "defaultText": "Operação na base",
+      "file": "app/gestao/selecionar-area/page.tsx"
+    },
+    "copy-b5c408c4a007": {
+      "kind": "text",
+      "label": "Administração e cadastros",
+      "defaultText": "Administração e cadastros",
+      "file": "app/gestao/selecionar-area/page.tsx"
+    },
+    "area-b5c408c4a004": {
+      "kind": "area",
+      "label": "Operação na base",
+      "file": "app/gestao/selecionar-area/page.tsx",
+      "canAdd": true,
+      "canHide": false
+    },
+    "area-b5c408c4a006": {
+      "kind": "area",
+      "label": "Administração e cadastros",
+      "file": "app/gestao/selecionar-area/page.tsx",
+      "canAdd": true,
+      "canHide": false
+    },
+    "copy-b6c408c4a002": {
+      "kind": "text",
+      "label": "Usuários ativos",
+      "defaultText": "Usuários ativos",
+      "file": "app/gestao/admin/AdminClient.tsx"
+    },
+    "copy-b6c408c4a003": {
+      "kind": "text",
+      "label": "Embarcações",
+      "defaultText": "Embarcações",
+      "file": "app/gestao/admin/AdminClient.tsx"
+    },
+    "copy-b6c408c4a004": {
+      "kind": "text",
+      "label": "Guarda-volumes",
+      "defaultText": "Guarda-volumes",
+      "file": "app/gestao/admin/AdminClient.tsx"
+    },
+    "copy-b6c408c4a005": {
+      "kind": "text",
+      "label": "Registros de auditoria",
+      "defaultText": "Registros de auditoria",
+      "file": "app/gestao/admin/AdminClient.tsx"
+    },
+    "area-b6c408c4a001": {
+      "kind": "area",
+      "label": "Resumo da administração",
+      "file": "app/gestao/admin/AdminClient.tsx",
+      "canAdd": true,
+      "canHide": true
+    },
+    "copy-b4c408c4a008": {
+      "kind": "text",
+      "label": "Agendamentos de hoje",
+      "defaultText": "Agendamentos de hoje",
+      "file": "components/desktop/GestaoOverview.tsx"
+    },
+    "copy-b4c408c4a009": {
+      "kind": "text",
+      "label": "Na água agora",
+      "defaultText": "Na água agora",
+      "file": "components/desktop/GestaoOverview.tsx"
+    },
+    "copy-b4c408c4a010": {
+      "kind": "text",
+      "label": "Embarcações livres",
+      "defaultText": "Embarcações livres",
+      "file": "components/desktop/GestaoOverview.tsx"
+    },
+    "copy-b4c408c4a011": {
+      "kind": "text",
+      "label": "Alunos cadastrados",
+      "defaultText": "Alunos cadastrados",
+      "file": "components/desktop/GestaoOverview.tsx"
     }
   },
   "portal": {
@@ -7576,21 +7719,21 @@
     },
     "copy-03fe43816fcd": {
       "kind": "text",
-      "label": "Meus Eventos",
-      "defaultText": "Meus Eventos",
-      "file": "components/AbaHistorico.tsx"
+      "label": "Meus eventos",
+      "defaultText": "Meus eventos",
+      "file": "components/PortalHistoryLayout.tsx"
     },
     "copy-df3572a88cbf": {
       "kind": "text",
-      "label": "Agendamento Feito",
-      "defaultText": "Agendamento Feito",
-      "file": "components/AbaHistorico.tsx"
+      "label": "Agendamento feito",
+      "defaultText": "Agendamento feito",
+      "file": "components/PortalHistoryLayout.tsx"
     },
     "copy-92883d3b187c": {
       "kind": "text",
       "label": "Reagendar",
       "defaultText": "Reagendar",
-      "file": "components/AbaHistorico.tsx"
+      "file": "components/PortalHistoryLayout.tsx"
     },
     "copy-27580e34597e": {
       "kind": "text",
@@ -7602,13 +7745,13 @@
       "kind": "text",
       "label": "Falar no WhatsApp",
       "defaultText": "Falar no WhatsApp",
-      "file": "components/AbaHistorico.tsx"
+      "file": "components/PortalHistoryLayout.tsx"
     },
     "area-d738a233a857": {
       "kind": "area",
-      "label": "Início do aluno · celular",
+      "label": "Meu plano e reservas da semana",
       "canHide": false,
-      "file": "components/AbaInicio.tsx",
+      "file": "components/PortalHomeLayout.tsx",
       "canAdd": true
     },
     "copy-83048eebb62d": {
@@ -7651,7 +7794,7 @@
       "kind": "text",
       "label": "Nenhum agendamento ativo no momento",
       "defaultText": "Nenhum agendamento ativo no momento",
-      "file": "components/AbaInicio.tsx"
+      "file": "components/PortalHomeLayout.tsx"
     },
     "copy-288dfe65a73a": {
       "kind": "text",
@@ -7668,8 +7811,8 @@
     "copy-7918475cc18e": {
       "kind": "text",
       "label": "Cancelar",
-      "defaultText": " Cancelar",
-      "file": "components/AbaInicio.tsx"
+      "defaultText": "Cancelar",
+      "file": "components/PortalHomeLayout.tsx"
     },
     "copy-5f0164bb24e5": {
       "kind": "text",
@@ -7938,69 +8081,69 @@
     },
     "copy-fa1391f603f9": {
       "kind": "text",
-      "label": "Minha Assinatura",
-      "defaultText": "Minha Assinatura",
-      "file": "components/AbaPerfil.tsx"
+      "label": "Minha assinatura",
+      "defaultText": "Minha assinatura",
+      "file": "components/PortalProfileLayout.tsx"
     },
     "copy-6b2ad95d8856": {
       "kind": "text",
       "label": "Plano atual e mensalidade",
       "defaultText": "Plano atual e mensalidade",
-      "file": "components/AbaPerfil.tsx"
+      "file": "components/PortalProfileLayout.tsx"
     },
     "copy-1d4a97279b8c": {
       "kind": "text",
-      "label": "Meus Eventos",
-      "defaultText": "Meus Eventos",
-      "file": "components/AbaPerfil.tsx"
+      "label": "Meus eventos",
+      "defaultText": "Meus eventos",
+      "file": "components/PortalProfileLayout.tsx"
     },
     "copy-0804ac6056d3": {
       "kind": "text",
       "label": "Inscrições confirmadas e roteiros",
       "defaultText": "Inscrições confirmadas e roteiros",
-      "file": "components/AbaPerfil.tsx"
+      "file": "components/PortalProfileLayout.tsx"
     },
     "copy-c8880eb54ea1": {
       "kind": "text",
-      "label": "Mudar Senha",
-      "defaultText": "Mudar Senha",
-      "file": "components/AbaPerfil.tsx"
+      "label": "Mudar senha",
+      "defaultText": "Mudar senha",
+      "file": "components/PortalProfileLayout.tsx"
     },
     "copy-e971ec8dec08": {
       "kind": "text",
       "label": "Atualizar senha da conta",
       "defaultText": "Atualizar senha da conta",
-      "file": "components/AbaPerfil.tsx"
+      "file": "components/PortalProfileLayout.tsx"
     },
     "copy-4189b8cfb139": {
       "kind": "text",
       "label": "Suporte",
       "defaultText": "Suporte",
-      "file": "components/AbaPerfil.tsx"
+      "file": "components/PortalProfileLayout.tsx"
     },
     "copy-d53d26e22a8a": {
       "kind": "text",
       "label": "Atendimento via WhatsApp",
       "defaultText": "Atendimento via WhatsApp",
-      "file": "components/AbaPerfil.tsx"
+      "file": "components/PortalProfileLayout.tsx"
     },
     "copy-6b11698946a0": {
       "kind": "text",
-      "label": "Instalar Aplicativo",
-      "defaultText": "Instalar Aplicativo",
-      "file": "components/AbaPerfil.tsx"
+      "label": "Instalar aplicativo",
+      "defaultText": "Instalar aplicativo",
+      "file": "components/PortalProfileLayout.tsx"
     },
     "copy-fc1a8dc77260": {
       "kind": "text",
       "label": "Adicionar atalho na tela inicial",
       "defaultText": "Adicionar atalho na tela inicial",
-      "file": "components/AbaPerfil.tsx"
+      "file": "components/PortalProfileLayout.tsx"
     },
     "copy-2ed7a460825b": {
       "kind": "text",
-      "label": "Encerrar Sessão",
-      "defaultText": "Encerrar Sessão",
-      "file": "components/AbaPerfil.tsx"
+      "label": "Encerrar sessão",
+      "defaultText": "Encerrar sessão",
+      "file": "components/PortalProfileLayout.tsx"
     },
     "copy-b6591b5cf9ae": {
       "kind": "text",
@@ -8460,8 +8603,8 @@
     },
     "copy-1efcab19165c": {
       "kind": "text",
-      "label": "Resumo do Agendamento",
-      "defaultText": "Resumo do Agendamento",
+      "label": "Resumo do agendamento",
+      "defaultText": "Resumo do agendamento",
       "file": "components/AgendamentoWizard.tsx"
     },
     "copy-04fb39f433e1": {
@@ -8478,14 +8621,14 @@
     },
     "copy-cec3901f9490": {
       "kind": "text",
-      "label": "AGENDANDO...",
-      "defaultText": "AGENDANDO...",
+      "label": "Agendando…",
+      "defaultText": "Agendando…",
       "file": "components/AgendamentoWizard.tsx"
     },
     "copy-bd502cbbe46a": {
       "kind": "text",
-      "label": "CONFIRMAR AGENDAMENTO",
-      "defaultText": "CONFIRMAR AGENDAMENTO",
+      "label": "Confirmar agendamento",
+      "defaultText": "Confirmar agendamento",
       "file": "components/AgendamentoWizard.tsx"
     },
     "copy-d4b99478f693": {
@@ -8622,9 +8765,9 @@
     },
     "area-7628bf1b809e": {
       "kind": "area",
-      "label": "Olá,",
+      "label": "Início do Portal",
       "canHide": false,
-      "file": "components/desktop/PortalDesktop.tsx",
+      "file": "components/PortalHomeLayout.tsx",
       "canAdd": true
     },
     "copy-7f1ad7a77877": {
@@ -8721,9 +8864,9 @@
     },
     "area-af1d5591bf01": {
       "kind": "area",
-      "label": "Sua agenda",
+      "label": "Seus agendamentos",
       "canHide": false,
-      "file": "components/desktop/PortalDesktop.tsx",
+      "file": "components/PortalHomeLayout.tsx",
       "canAdd": true
     },
     "area-048f5464e0b9": {
@@ -8795,9 +8938,9 @@
     },
     "area-4c92ab1c1169": {
       "kind": "area",
-      "label": "Viva além da rotina",
-      "canHide": true,
-      "file": "components/desktop/PortalDesktop.tsx",
+      "label": "Eventos Remoterapia",
+      "canHide": false,
+      "file": "components/PortalHomeLayout.tsx",
       "canAdd": true
     },
     "copy-928e60204cb0": {
@@ -8814,9 +8957,9 @@
     },
     "copy-13c6f4d85bee": {
       "kind": "text",
-      "label": "Explorar eventos",
-      "defaultText": "Explorar eventos ",
-      "file": "components/desktop/PortalDesktop.tsx"
+      "label": "Ver eventos",
+      "defaultText": "Ver eventos",
+      "file": "components/PortalHomeLayout.tsx"
     },
     "area-971cc626c27b": {
       "kind": "area",
@@ -8839,47 +8982,47 @@
     },
     "area-3a136e22a3fa": {
       "kind": "area",
-      "label": "Histórico de atividades",
+      "label": "Histórico",
       "canHide": false,
-      "file": "components/desktop/PortalHistoryDesktop.tsx",
+      "file": "components/PortalHistoryLayout.tsx",
       "canAdd": true
     },
     "copy-0fcfd7787a34": {
       "kind": "text",
-      "label": "SUA JORNADA NA ÁGUA",
-      "defaultText": "SUA JORNADA NA ÁGUA",
-      "file": "components/desktop/PortalHistoryDesktop.tsx"
+      "label": "Portal do aluno",
+      "defaultText": "Portal do aluno",
+      "file": "components/PortalHistoryLayout.tsx"
     },
     "copy-d81714ef2274": {
       "kind": "text",
-      "label": "Histórico de atividades",
-      "defaultText": "Histórico de atividades",
-      "file": "components/desktop/PortalHistoryDesktop.tsx"
+      "label": "Histórico",
+      "defaultText": "Histórico",
+      "file": "components/PortalHistoryLayout.tsx"
     },
     "copy-2f84c31ad823": {
       "kind": "text",
-      "label": "Acompanhe suas remadas, cancelamentos e inscrições.",
-      "defaultText": "Acompanhe suas remadas, cancelamentos e inscrições.",
-      "file": "components/desktop/PortalHistoryDesktop.tsx"
+      "label": "Remadas, avaliações, cancelamentos e eventos.",
+      "defaultText": "Remadas, avaliações, cancelamentos e eventos.",
+      "file": "components/PortalHistoryLayout.tsx"
     },
     "copy-91461912da9e": {
       "kind": "text",
       "label": "Agendar remada",
       "defaultText": "Agendar remada",
-      "file": "components/desktop/PortalHistoryDesktop.tsx"
+      "file": "components/PortalHistoryLayout.tsx"
     },
     "area-748d0ea1ca3b": {
       "kind": "area",
-      "label": "Nenhuma atividade neste filtro",
+      "label": "Filtros e atividades",
       "canHide": false,
-      "file": "components/desktop/PortalHistoryDesktop.tsx",
+      "file": "components/PortalHistoryLayout.tsx",
       "canAdd": true
     },
     "copy-40388819e7f9": {
       "kind": "text",
       "label": "atividades nesta consulta",
-      "defaultText": " atividades nesta consulta",
-      "file": "components/desktop/PortalHistoryDesktop.tsx"
+      "defaultText": "atividades nesta consulta",
+      "file": "components/PortalHistoryLayout.tsx"
     },
     "copy-48312509775a": {
       "kind": "text",
@@ -8915,69 +9058,69 @@
       "kind": "text",
       "label": "Nova reserva",
       "defaultText": "Nova reserva",
-      "file": "components/desktop/PortalHistoryDesktop.tsx"
+      "file": "components/PortalHistoryLayout.tsx"
     },
     "copy-957cc666d634": {
       "kind": "text",
       "label": "Nenhuma atividade neste filtro",
       "defaultText": "Nenhuma atividade neste filtro",
-      "file": "components/desktop/PortalHistoryDesktop.tsx"
+      "file": "components/PortalHistoryLayout.tsx"
     },
     "copy-91d7cf242eab": {
       "kind": "text",
-      "label": "Escolha outro filtro ou explore as próximas remadas.",
-      "defaultText": "Escolha outro filtro ou explore as próximas remadas.",
-      "file": "components/desktop/PortalHistoryDesktop.tsx"
+      "label": "Altere os filtros ou consulte os próximos eventos.",
+      "defaultText": "Altere os filtros ou consulte os próximos eventos.",
+      "file": "components/PortalHistoryLayout.tsx"
     },
     "copy-18e75d715c9f": {
       "kind": "text",
-      "label": "Explorar eventos",
-      "defaultText": "Explorar eventos",
-      "file": "components/desktop/PortalHistoryDesktop.tsx"
+      "label": "Ver eventos",
+      "defaultText": "Ver eventos",
+      "file": "components/PortalHistoryLayout.tsx"
     },
     "area-c9cfd543f781": {
       "kind": "area",
-      "label": "Perfil e preferências",
+      "label": "Meu perfil",
       "canHide": false,
-      "file": "components/desktop/PortalProfileDesktop.tsx",
+      "file": "components/PortalProfileLayout.tsx",
       "canAdd": true
     },
     "copy-9c935e3e00fc": {
       "kind": "text",
-      "label": "SEU ESPAÇO",
-      "defaultText": "SEU ESPAÇO",
-      "file": "components/desktop/PortalProfileDesktop.tsx"
+      "label": "Portal do aluno",
+      "defaultText": "Portal do aluno",
+      "file": "components/PortalProfileLayout.tsx"
     },
     "copy-2e29584ab9c5": {
       "kind": "text",
-      "label": "Perfil e preferências",
-      "defaultText": "Perfil e preferências",
-      "file": "components/desktop/PortalProfileDesktop.tsx"
+      "label": "Meu perfil",
+      "defaultText": "Meu perfil",
+      "file": "components/PortalProfileLayout.tsx"
     },
     "copy-edb1c8358991": {
       "kind": "text",
-      "label": "Gerencie seu acesso e encontre as informações da sua conta.",
-      "defaultText": "Gerencie seu acesso e encontre as informações da sua conta.",
-      "file": "components/desktop/PortalProfileDesktop.tsx"
+      "label": "Informações da conta, plano e preferências.",
+      "defaultText": "Informações da conta, plano e preferências.",
+      "file": "components/PortalProfileLayout.tsx"
     },
     "area-704382de2300": {
       "kind": "area",
-      "label": "rt-card",
+      "label": "Identificação do aluno",
       "canHide": false,
-      "file": "components/desktop/PortalProfileDesktop.tsx",
+      "file": "components/PortalProfileLayout.tsx",
       "canAdd": true
     },
     "copy-39b38e4dc505": {
       "kind": "text",
       "label": "Telefone",
       "defaultText": "Telefone",
-      "file": "components/desktop/PortalProfileDesktop.tsx"
+      "file": "components/PortalProfileLayout.tsx"
     },
     "copy-7aa37588beaa": {
       "kind": "text",
       "label": "Plano",
       "defaultText": "Plano",
-      "file": "components/desktop/PortalProfileDesktop.tsx"
+      "file": "components/PortalProfileLayout.tsx"
     },
     "copy-e98234471c72": {
       "kind": "text",
@@ -8994,15 +9137,15 @@
     },
     "copy-014284159bd7": {
       "kind": "text",
-      "label": "Seu acesso ao Portal é independente da sessão da Gestão.",
-      "defaultText": "Seu acesso ao Portal é independente da sessão da Gestão.",
-      "file": "components/desktop/PortalProfileDesktop.tsx"
+      "label": "Para atualizar seus dados, fale com a equipe.",
+      "defaultText": "Para atualizar seus dados, fale com a equipe.",
+      "file": "components/PortalProfileLayout.tsx"
     },
     "area-d0455064f461": {
       "kind": "area",
       "label": "Conta e atividades",
       "canHide": false,
-      "file": "components/desktop/PortalProfileDesktop.tsx",
+      "file": "components/PortalProfileLayout.tsx",
       "canAdd": true
     },
     "area-fa0c887c25e7": {
@@ -9016,19 +9159,19 @@
       "kind": "text",
       "label": "Conta e atividades",
       "defaultText": "Conta e atividades",
-      "file": "components/desktop/PortalProfileDesktop.tsx"
+      "file": "components/PortalProfileLayout.tsx"
     },
     "copy-ba8d1f0bb94e": {
       "kind": "text",
-      "label": "Configurações e informações pessoais",
-      "defaultText": "Configurações e informações pessoais",
-      "file": "components/desktop/PortalProfileDesktop.tsx"
+      "label": "Acesse as opções da sua conta.",
+      "defaultText": "Acesse as opções da sua conta.",
+      "file": "components/PortalProfileLayout.tsx"
     },
     "area-73b436061a80": {
       "kind": "area",
-      "label": "Podemos ajudar?",
+      "label": "Suporte",
       "canHide": false,
-      "file": "components/desktop/PortalProfileDesktop.tsx",
+      "file": "components/PortalProfileLayout.tsx",
       "canAdd": true
     },
     "copy-5113565474ef": {
@@ -9047,7 +9190,7 @@
       "kind": "text",
       "label": "Abrir atendimento",
       "defaultText": "Abrir atendimento",
-      "file": "components/desktop/PortalProfileDesktop.tsx"
+      "file": "components/PortalProfileLayout.tsx"
     },
     "copy-bcc3c08113c9": {
       "kind": "text",
@@ -9064,20 +9207,20 @@
     },
     "copy-1421596368ff": {
       "kind": "text",
-      "label": "EXPERIÊNCIAS REMOTERAPIA",
-      "defaultText": "EXPERIÊNCIAS REMOTERAPIA",
+      "label": "Eventos Remoterapia",
+      "defaultText": "Eventos Remoterapia",
       "file": "components/ModuloEventos.tsx"
     },
     "copy-fd8bbfaf8193": {
       "kind": "text",
-      "label": "Encontre seu próximo horizonte",
-      "defaultText": "Encontre seu próximo horizonte",
+      "label": "Próximos eventos",
+      "defaultText": "Próximos eventos",
       "file": "components/ModuloEventos.tsx"
     },
     "copy-31223901267e": {
       "kind": "text",
-      "label": "Encontros, remadas e boas histórias para levar com você.",
-      "defaultText": "Encontros, remadas e boas histórias para levar com você.",
+      "label": "Veja as datas, os horários e as vagas disponíveis.",
+      "defaultText": "Veja as datas, os horários e as vagas disponíveis.",
       "file": "components/ModuloEventos.tsx"
     },
     "area-1a271babf759": {
@@ -9089,8 +9232,8 @@
     },
     "copy-e5d633e7c563": {
       "kind": "text",
-      "label": "Um pouco mais de água na sua rotina",
-      "defaultText": "Um pouco mais de água na sua rotina",
+      "label": "Planos de remada",
+      "defaultText": "Planos de remada",
       "file": "components/ModuloEventos.tsx"
     },
     "copy-01b35fc26409": {
@@ -9107,8 +9250,8 @@
     },
     "copy-2964ef452c30": {
       "kind": "text",
-      "label": "Buscando experiências…",
-      "defaultText": "Buscando experiências…",
+      "label": "Carregando eventos…",
+      "defaultText": "Carregando eventos…",
       "file": "components/ModuloEventos.tsx"
     },
     "area-4c781414b4e6": {
@@ -9120,8 +9263,8 @@
     },
     "copy-16698d4835d5": {
       "kind": "text",
-      "label": "Novas experiências estão a caminho",
-      "defaultText": "Novas experiências estão a caminho",
+      "label": "Nenhum evento disponível",
+      "defaultText": "Nenhum evento disponível",
       "file": "components/ModuloEventos.tsx"
     },
     "copy-3ce625a6f4bb": {
@@ -9150,14 +9293,14 @@
     },
     "copy-e75bbe92534d": {
       "kind": "text",
-      "label": "Ver experiência",
-      "defaultText": "Ver experiência",
+      "label": "Ver evento",
+      "defaultText": "Ver evento",
       "file": "components/ModuloEventos.tsx"
     },
     "copy-3af5fbf95f73": {
       "kind": "text",
-      "label": "SUA PRÓXIMA EXPERIÊNCIA",
-      "defaultText": "SUA PRÓXIMA EXPERIÊNCIA",
+      "label": "Detalhes do evento",
+      "defaultText": "Detalhes do evento",
       "file": "components/ModuloEventos.tsx"
     },
     "copy-788ba04b42eb": {
@@ -9204,7 +9347,7 @@
     },
     "copy-d22cb2dabc2f": {
       "kind": "text",
-      "label": "A vaga é confirmada somente após o Mercado Pago informar a aprovação. Equipamentos e acomp",
+      "label": "A vaga é confirmada somente após o Mercado Pago informar a aprovação. Equipamentos e aco",
       "defaultText": "A vaga é confirmada somente após o Mercado Pago informar a aprovação. Equipamentos e acompanhantes são organizados com a equipe. Consulte a base sobre as condições de cancelamento.",
       "file": "components/ModuloEventos.tsx"
     },
@@ -10059,6 +10202,228 @@
       "label": "Mais você.",
       "defaultText": "Mais você.",
       "file": "components/desktop/DesktopLoginBrand.tsx"
+    },
+    "copy-b1c408c4a001": {
+      "kind": "text",
+      "label": "E-mail",
+      "defaultText": "E-mail",
+      "file": "components/PortalProfileLayout.tsx"
+    },
+    "copy-b1c408c4a003": {
+      "kind": "text",
+      "label": "Vencimento",
+      "defaultText": "Vencimento",
+      "file": "components/PortalProfileLayout.tsx"
+    },
+    "copy-b1c408c4a004": {
+      "kind": "text",
+      "label": "Reservas por semana",
+      "defaultText": "Reservas por semana",
+      "file": "components/PortalProfileLayout.tsx"
+    },
+    "copy-b1c408c4a005": {
+      "kind": "text",
+      "label": "Ver planos e pagamentos",
+      "defaultText": "Ver planos e pagamentos",
+      "file": "components/PortalProfileLayout.tsx"
+    },
+    "copy-b1c408c4a007": {
+      "kind": "text",
+      "label": "Minha embarcação",
+      "defaultText": "Minha embarcação",
+      "file": "components/PortalProfileLayout.tsx"
+    },
+    "copy-b1c408c4a008": {
+      "kind": "text",
+      "label": "Informações da Guardaria",
+      "defaultText": "Informações da Guardaria",
+      "file": "components/PortalProfileLayout.tsx"
+    },
+    "area-b1c408c4a002": {
+      "kind": "area",
+      "label": "Minha assinatura",
+      "file": "components/PortalProfileLayout.tsx",
+      "canAdd": true,
+      "canHide": false
+    },
+    "area-b1c408c4a006": {
+      "kind": "area",
+      "label": "Minha embarcação",
+      "file": "components/PortalProfileLayout.tsx",
+      "canAdd": true,
+      "canHide": false
+    },
+    "area-b2c408c4a001": {
+      "kind": "area",
+      "label": "Resumo de atividades",
+      "file": "components/PortalHistoryLayout.tsx",
+      "canAdd": true,
+      "canHide": true
+    },
+    "copy-b3c408c4a002": {
+      "kind": "text",
+      "label": "Agendar remada",
+      "defaultText": "Agendar remada",
+      "file": "components/AgendamentoWizard.tsx"
+    },
+    "copy-b3c408c4a003": {
+      "kind": "text",
+      "label": "Voltar ao início",
+      "defaultText": "Voltar ao início",
+      "file": "components/AgendamentoWizard.tsx"
+    },
+    "copy-b3c408c4a006": {
+      "kind": "text",
+      "label": "Confira suas escolhas antes de confirmar.",
+      "defaultText": "Confira suas escolhas antes de confirmar.",
+      "file": "components/AgendamentoWizard.tsx"
+    },
+    "copy-b3c408c4a007": {
+      "kind": "text",
+      "label": "Data",
+      "defaultText": "Data",
+      "file": "components/AgendamentoWizard.tsx"
+    },
+    "copy-b3c408c4a008": {
+      "kind": "text",
+      "label": "Horário",
+      "defaultText": "Horário",
+      "file": "components/AgendamentoWizard.tsx"
+    },
+    "copy-b3c408c4a009": {
+      "kind": "text",
+      "label": "Embarcação",
+      "defaultText": "Embarcação",
+      "file": "components/AgendamentoWizard.tsx"
+    },
+    "copy-b3c408c4a010": {
+      "kind": "text",
+      "label": "Guarda-volumes",
+      "defaultText": "Guarda-volumes",
+      "file": "components/AgendamentoWizard.tsx"
+    },
+    "copy-b3c408c4a011": {
+      "kind": "text",
+      "label": "A reserva será registrada depois da confirmação.",
+      "defaultText": "A reserva será registrada depois da confirmação.",
+      "file": "components/AgendamentoWizard.tsx"
+    },
+    "area-b3c408c4a001": {
+      "kind": "area",
+      "label": "Agendar remada",
+      "file": "components/AgendamentoWizard.tsx",
+      "canAdd": true,
+      "canHide": false
+    },
+    "area-b3c408c4a004": {
+      "kind": "area",
+      "label": "Calendário",
+      "file": "components/AgendamentoWizard.tsx",
+      "canAdd": true,
+      "canHide": false
+    },
+    "area-b3c408c4a005": {
+      "kind": "area",
+      "label": "Resumo do agendamento",
+      "file": "components/AgendamentoWizard.tsx",
+      "canAdd": true,
+      "canHide": false
+    },
+    "copy-b7c408c4a001": {
+      "kind": "text",
+      "label": "Ver motivo",
+      "defaultText": "Ver motivo",
+      "file": "components/PortalHomeLayout.tsx"
+    },
+    "copy-b7c408c4a002": {
+      "kind": "text",
+      "label": "Portal do aluno",
+      "defaultText": "Portal do aluno",
+      "file": "components/PortalHomeLayout.tsx"
+    },
+    "copy-b7c408c4a003": {
+      "kind": "text",
+      "label": "Início",
+      "defaultText": "Início",
+      "file": "components/PortalHomeLayout.tsx"
+    },
+    "copy-b7c408c4a004": {
+      "kind": "text",
+      "label": "Seu plano e seus próximos agendamentos.",
+      "defaultText": "Seu plano e seus próximos agendamentos.",
+      "file": "components/PortalHomeLayout.tsx"
+    },
+    "copy-b7c408c4a005": {
+      "kind": "text",
+      "label": "Meu plano",
+      "defaultText": "Meu plano",
+      "file": "components/PortalHomeLayout.tsx"
+    },
+    "copy-b7c408c4a006": {
+      "kind": "text",
+      "label": "reservas disponíveis nesta semana",
+      "defaultText": "reservas disponíveis nesta semana",
+      "file": "components/PortalHomeLayout.tsx"
+    },
+    "copy-b7c408c4a007": {
+      "kind": "text",
+      "label": "reservas utilizadas",
+      "defaultText": "reservas utilizadas",
+      "file": "components/PortalHomeLayout.tsx"
+    },
+    "copy-b7c408c4a008": {
+      "kind": "text",
+      "label": "Novo agendamento",
+      "defaultText": "Novo agendamento",
+      "file": "components/PortalHomeLayout.tsx"
+    },
+    "copy-b7c408c4a009": {
+      "kind": "text",
+      "label": "Seus agendamentos",
+      "defaultText": "Seus agendamentos",
+      "file": "components/PortalHomeLayout.tsx"
+    },
+    "copy-b7c408c4a010": {
+      "kind": "text",
+      "label": "Datas, horários e situação das reservas.",
+      "defaultText": "Datas, horários e situação das reservas.",
+      "file": "components/PortalHomeLayout.tsx"
+    },
+    "copy-b7c408c4a011": {
+      "kind": "text",
+      "label": "Faça uma reserva para acompanhar seus horários aqui.",
+      "defaultText": "Faça uma reserva para acompanhar seus horários aqui.",
+      "file": "components/PortalHomeLayout.tsx"
+    },
+    "copy-b7c408c4a012": {
+      "kind": "text",
+      "label": "Eventos Remoterapia",
+      "defaultText": "Eventos Remoterapia",
+      "file": "components/PortalHomeLayout.tsx"
+    },
+    "copy-b7c408c4a013": {
+      "kind": "text",
+      "label": "Consulte os eventos, vagas e informações de participação.",
+      "defaultText": "Consulte os eventos, vagas e informações de participação.",
+      "file": "components/PortalHomeLayout.tsx"
+    },
+    "copy-b2c408c4a002": {
+      "kind": "text",
+      "label": "Concluídas",
+      "defaultText": "Concluídas",
+      "file": "components/PortalHistoryLayout.tsx"
+    },
+    "copy-b2c408c4a003": {
+      "kind": "text",
+      "label": "Eventos",
+      "defaultText": "Eventos",
+      "file": "components/PortalHistoryLayout.tsx"
+    },
+    "copy-b2c408c4a004": {
+      "kind": "text",
+      "label": "Canceladas",
+      "defaultText": "Canceladas",
+      "file": "components/PortalHistoryLayout.tsx"
     }
   }
 }

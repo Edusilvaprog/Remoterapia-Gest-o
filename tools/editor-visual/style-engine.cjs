@@ -62,19 +62,19 @@ function generateView(s){
   for(const key of COLORS) if(s[key]) for(const token of map[key])root.push(`${token}:${s[key]}!important`);
   if(s.cardRadius!==undefined)root.push(`--rt-radius:${s.cardRadius}px!important`);
   if(root.length) rule(':root',root.join(';'));
-  if(s.primary){rule('.rt-primary,.dw-primary,.plorix-btn-login,button[class*="bg-blue-600"],button[class*="bg-sky-600"],button[class*="bg-[#0284c7]"],button[class*="bg-[#0369a1]"]',`background-color:${s.primary}!important`);rule('.rt-nav-item.is-active,.rt-desktop-section-tabs .is-active',`border-color:${s.primary}!important`);}
+  if(s.primary){rule('.rt-base-primary,.rt-primary,.dw-primary,.plorix-btn-login,button[class*="bg-blue-600"],button[class*="bg-sky-600"],button[class*="bg-[#0284c7]"],button[class*="bg-[#0369a1]"]',`background-color:${s.primary}!important`);rule('.rt-nav-item.is-active,.rt-desktop-section-tabs .is-active',`border-color:${s.primary}!important`);}
   if(s.accent) rule('.rt-heading-dot,.rt-nav-item.is-active>svg',`color:${s.accent}!important`);
   if(s.canvas)rule('html,body,.rt-gestao-main,.rt-workspace-body,.rt-portal-content',`background-color:${s.canvas}!important`);
-  if(s.surface)rule('.dw-panel,.dw-editor,.dw-metric,.dw-note,.rt-card,.rt-payment-option,.rt-payment-table,.rt-topbar,.rt-experience-card',`background-color:${s.surface}!important`);
-  if(s.ink)rule('.dw-heading h1,.rt-page-heading h1,.dw-panel h2,.dw-editor h3,.dw-editor h4,.rt-card h2',`color:${s.ink}!important`);
+  if(s.surface)rule('.rt-base-panel,.rt-base-hub-card,.dw-panel,.dw-editor,.dw-metric,.dw-note,.rt-card,.rt-payment-option,.rt-payment-table,.rt-topbar,.rt-experience-card',`background-color:${s.surface}!important`);
+  if(s.ink)rule('.rt-base-heading h1,.rt-base-panel h2,.dw-heading h1,.rt-page-heading h1,.dw-panel h2,.dw-editor h3,.dw-editor h4,.rt-card h2',`color:${s.ink}!important`);
   if(s.muted)rule('.dw-heading p,.rt-page-heading p,.dw-note p',`color:${s.muted}!important`);
   if(s.font && FONTS[s.font])rule('html,body,button,input,select,textarea',`font-family:${FONTS[s.font]}!important`);
   if(s.textSize!==undefined)rule('p,label,input,select,textarea,.dw-table,.rt-table,.rt-payment-table table',`font-size:${s.textSize}px!important`);
   if(s.headingSize!==undefined)rule('h1,.dw-heading h1,.rt-page-heading h1',`font-size:${s.headingSize}px!important`);
-  if(s.cardRadius!==undefined)rule('.dw-panel,.dw-editor,.dw-metric,.dw-note,.rt-card,.rt-payment-option,.rt-experience-card,.rt-experience-dialog,[class*="rounded-3xl"]',`border-radius:${s.cardRadius}px!important`);
+  if(s.cardRadius!==undefined)rule('.rt-base-panel,.rt-base-hub-card,.rt-base-history-card,.dw-panel,.dw-editor,.dw-metric,.dw-note,.rt-card,.rt-payment-option,.rt-experience-card,.rt-experience-dialog,[class*="rounded-3xl"]',`border-radius:${s.cardRadius}px!important`);
   if(s.buttonRadius!==undefined)rule('button,.rt-primary,.dw-primary',`border-radius:${s.buttonRadius}px!important`);
   if(s.buttonHeight!==undefined)rule('button:not([role="switch"]),.rt-primary,.dw-primary',`min-height:${s.buttonHeight}px!important`);
-  if(s.pagePadding!==undefined)rule('.rt-workspace-body>main,.rt-portal-content,.rt-overview,.rt-settings,.rt-desktop-home',`padding:${s.pagePadding}px!important`);
+  if(s.pagePadding!==undefined)rule('.rt-base-page,.rt-workspace-body>main,.rt-portal-content,.rt-overview,.rt-settings,.rt-desktop-home',`padding:${s.pagePadding}px!important`);
   if(s.rowPadding!==undefined)rule('th,td',`padding-top:${s.rowPadding}px!important;padding-bottom:${s.rowPadding}px!important`);
   if(s.iconSize!==undefined)rule('.rt-brand-icon,button>svg,.rt-nav-item>svg',`width:${s.iconSize}px!important;height:${s.iconSize}px!important`);
   for(const [id,style] of Object.entries(s.elements||{})){

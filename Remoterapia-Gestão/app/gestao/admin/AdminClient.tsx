@@ -464,7 +464,7 @@ export default function AdminClient() {
   }
 
   return (
-    <main className="max-w-md lg:max-w-7xl mx-auto flex-1 flex flex-col h-screen overflow-hidden w-full relative min-h-0 bg-transparent dw-admin" data-rt-area="area-997d948784a2"><div className="dw-only"><WorkspaceHeading eyebrow="Administração da base" title="Equipe e equipamentos" description="Organize os acessos da equipe, a frota, as tarifas e os guarda-volumes."/></div><div className="dw-only">{carregandoDados&&<p className="dw-operation-info" role="status"><VisualText id="copy-2be53fa50253" defaultText={"Carregando administração…"}/></p>}{erroCarga&&<div role="alert" className="rt-error-note">{erroCarga}<button type="button" onClick={carregarDados}><VisualText id="copy-d246484a1a27" defaultText={"Atualizar dados"}/></button></div>}</div>
+    <main className="max-w-md lg:max-w-7xl mx-auto flex-1 flex flex-col h-screen overflow-hidden w-full relative min-h-0 bg-transparent dw-admin rt-base-admin" data-rt-area="area-997d948784a2"><div className="dw-only"><WorkspaceHeading eyebrow="Administração da base" title="Equipe e equipamentos" description="Organize os acessos da equipe, a frota, as tarifas e os guarda-volumes."/></div><div className="dw-only">{carregandoDados&&<p className="dw-operation-info" role="status"><VisualText id="copy-2be53fa50253" defaultText={"Carregando administração…"}/></p>}{erroCarga&&<div role="alert" className="rt-error-note">{erroCarga}<button type="button" onClick={carregarDados}><VisualText id="copy-d246484a1a27" defaultText={"Atualizar dados"}/></button></div>}</div>
       
       {/* TOAST NÁUTICO PLORIX COM ALTO CONTRASTE */}
       {toast && (
@@ -491,6 +491,14 @@ export default function AdminClient() {
       {/* CABEÇALHO NÁUTICO OFICIAL PRESERVADO COM BOTÕES QUADRADINHOS   */}
       {/* ═══════════════════════════════════════════════════════════════ */}
       <section className="rt-mobile-area-heading"><h1><VisualLabel text="Painel administrativo"/></h1><p><VisualLabel text="Organize a equipe, os equipamentos e os planos da base."/></p>{carregandoDados&&<p role="status"><VisualText id="copy-ee8490cadd41" defaultText={"Carregando dados…"}/></p>}{erroCarga&&<div role="alert">{erroCarga}<button type="button" onClick={carregarDados}><VisualText id="copy-61c676d8a15e" defaultText={"Atualizar dados"}/></button></div>}</section>
+      <section className="rt-base-metrics rt-base-four-metrics rt-base-admin-summary" data-rt-area="area-b6c408c4a001" aria-label="Resumo da administração">
+       <article><span><VisualText id="copy-b6c408c4a002" defaultText="Usuários ativos"/></span><strong>{carregandoDados||erroCarga?'—':usuarios.filter(u=>u.ativo!==false).length}</strong></article>
+       <article><span><VisualText id="copy-b6c408c4a003" defaultText="Embarcações"/></span><strong>{carregandoDados||erroCarga?'—':frota.length}</strong></article>
+       <article><span><VisualText id="copy-b6c408c4a004" defaultText="Guarda-volumes"/></span><strong>{carregandoDados||erroCarga?'—':lockers.length}</strong></article>
+       <article><span><VisualText id="copy-b6c408c4a005" defaultText="Registros de auditoria"/></span><strong>{carregandoDados||erroCarga?'—':auditoria.length}</strong></article><VisualContentSlot id="area-b6c408c4a001"/>
+      </section>
+      <nav className="rt-base-management-sections rt-base-desktop" aria-label="Seções da administração">{[{id:'usuarios',label:'Usuários'},{id:'frota',label:'Frota e preços'},{id:'lockers',label:'Guarda-volumes'},{id:'auditoria',label:'Auditoria'}].map(section=><button key={section.id} type="button" aria-pressed={tab===section.id} onClick={()=>setTab(section.id as typeof tab)}>{section.label}</button>)}</nav>
+
 
       {/* CONTEÚDO PRINCIPAL (COM SCROLL INTERNO) */}
       <div className="flex-1 overflow-y-auto p-3 space-y-4 pb-36 no-scrollbar w-full min-h-0">

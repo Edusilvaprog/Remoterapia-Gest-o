@@ -3,7 +3,7 @@
 import { useState, useMemo, useRef, useEffect } from 'react'
 import { ChevronLeft, ChevronRight, Check, Key, Calendar as CalendarIcon, Clock, ArrowRight, RotateCcw } from 'lucide-react'
 import gsap from 'gsap'
-import {VisualText} from '@/components/ui/VisualContent'
+import {VisualText,VisualContentSlot} from '@/components/ui/VisualContent'
 import VisualLabel from '@/components/ui/VisualLabel'
 
 
@@ -111,7 +111,7 @@ export default function AgendamentoWizard({
         { opacity: 0, y: 12 },
         { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' }
       )
-      setTimeout(() => {
+      if (window.matchMedia('(max-width: 1023px)').matches) setTimeout(() => {
         turnoRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
       }, 80)
     }
@@ -125,7 +125,7 @@ export default function AgendamentoWizard({
         { opacity: 0, y: 12 },
         { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' }
       )
-      setTimeout(() => {
+      if (window.matchMedia('(max-width: 1023px)').matches) setTimeout(() => {
         embarcacaoRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
       }, 80)
     }
@@ -140,7 +140,7 @@ export default function AgendamentoWizard({
         { opacity: 0, y: 12 },
         { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' }
       )
-      setTimeout(() => {
+      if (window.matchMedia('(max-width: 1023px)').matches) setTimeout(() => {
         lockerRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
       }, 80)
     }
@@ -154,7 +154,7 @@ export default function AgendamentoWizard({
         { opacity: 0, y: 12 },
         { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out' }
       )
-      setTimeout(() => {
+      if (window.matchMedia('(max-width: 1023px)').matches) setTimeout(() => {
         resumoRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' })
       }, 80)
     }
@@ -225,6 +225,7 @@ export default function AgendamentoWizard({
       setLocker('')
     } else {
       setData(dStr)
+      setHora(''); setCaiaque(''); setLocker('')
     }
   }
 
@@ -236,6 +237,7 @@ export default function AgendamentoWizard({
       setLocker('')
     } else {
       setHora(turnoStr)
+      setCaiaque(''); setLocker('')
     }
   }
 
@@ -246,6 +248,7 @@ export default function AgendamentoWizard({
       setLocker('')
     } else {
       setCaiaque(boatId)
+      setLocker('')
     }
   }
 
@@ -280,14 +283,16 @@ export default function AgendamentoWizard({
   }
 
   return (
-    <div className="rt-booking-workspace space-y-3.5 pb-12">
+    <div className="rt-base-page rt-base-booking" data-rt-area="area-b3c408c4a001">
       
       {/* CABEÇALHO DO AGENDAMENTO COM STATUS */}
-      <div className="rt-booking-heading flex items-center justify-between px-1.5 pt-1">
+      <div className="rt-base-heading">
         <div>
+          <h1><VisualText id="copy-b3c408c4a002" defaultText="Agendar remada"/></h1>
           <span className="text-[10px] font-black uppercase tracking-widest text-[#0284c7] dark:text-cyan-400 block"><VisualText id="copy-af0ddd0abb42" defaultText={"Reserva de Vaga"}/></span>
           <p className="text-xs font-bold text-slate-500 dark:text-slate-400"><VisualText id="copy-d514f0c1816f" defaultText={"Preencha as opções abaixo para confirmar sua remada"}/></p>
         </div>
+        <button type="button" className="rt-base-secondary" onClick={onCancel} disabled={loading}><ChevronLeft size={17}/><VisualText id="copy-b3c408c4a003" defaultText="Voltar ao início"/></button>
         {data && (
           <button
             type="button"
@@ -300,10 +305,12 @@ export default function AgendamentoWizard({
         )}
       </div>
 
+      <ol className="rt-base-booking-progress" aria-label="Etapas do agendamento">{[{label:'Data',ready:!!data},{label:'Horário',ready:!!hora},{label:'Embarcação',ready:!!caiaque||isGuardaria&&!!hora},{label:'Guarda-volumes',ready:!!locker}].map((step,index,steps)=><li key={step.label} className={step.ready?'is-complete':''} aria-current={!step.ready&&(index===0||steps[index-1].ready)?'step':undefined}><span>{step.ready?<Check size={16}/>:index+1}</span><strong>{step.label}</strong></li>)}</ol>
+      <div className="rt-base-booking-grid"><div className="rt-base-booking-steps">
       {/* ========================================================================= */}
       {/* BLOCO 1: CALENDÁRIO (SEMPRE VISÍVEL) */}
       {/* ========================================================================= */}
-      <div className="rt-booking-calendar bg-white/95 dark:bg-slate-900/95 backdrop-blur-md rounded-[1.8rem] p-4 shadow-xl border border-white/60 dark:border-slate-800 space-y-3 transition-all">
+      <div className="rt-booking-calendar rt-base-panel bg-white/95 dark:bg-slate-900/95 backdrop-blur-md rounded-[1.8rem] p-4 shadow-xl border border-white/60 dark:border-slate-800 space-y-3 transition-all" data-rt-area="area-b3c408c4a004">
         <div className="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-slate-800">
           <div className="flex items-center gap-2.5">
             <div className={`w-7 h-7 rounded-xl flex items-center justify-center text-xs font-black transition-all ${
@@ -440,7 +447,7 @@ export default function AgendamentoWizard({
                     : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 hover:border-slate-400'
                 }`}
               >
-                {hora === '06:00 às 08:00' && <span>✓</span>}
+                {hora === '06:00 às 08:00' && <Check size={16} aria-hidden="true"/>}
                 <span><VisualText id="copy-171d421ede1c" defaultText={"06:00 às 08:00"}/></span>
               </button>
               <button 
@@ -452,7 +459,7 @@ export default function AgendamentoWizard({
                     : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 hover:border-slate-400'
                 }`}
               >
-                {hora === '08:00 às 10:00' && <span>✓</span>}
+                {hora === '08:00 às 10:00' && <Check size={16} aria-hidden="true"/>}
                 <span><VisualText id="copy-48706ded3b67" defaultText={"08:00 às 10:00"}/></span>
               </button>
             </div>
@@ -605,45 +612,18 @@ export default function AgendamentoWizard({
       {/* ========================================================================= */}
       {/* BLOCO 5: RESUMO EXECUTIVO E FINALIZAÇÃO */}
       {/* ========================================================================= */}
-      {locker && (
-        <div ref={resumoRef} className="rt-booking-summary bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900 text-white p-4.5 rounded-[1.8rem] shadow-2xl border border-blue-500/20 space-y-3">
-          <div className="flex items-center justify-between pb-2 border-b border-white/10">
-            <span className="text-[9px] font-black text-cyan-400 uppercase tracking-widest"><VisualText id="copy-1efcab19165c" defaultText={"Resumo do Agendamento"}/></span>
-            <span className="text-[10px] font-bold text-slate-400"><VisualText id="copy-04fb39f433e1" defaultText={"Pronto para Confirmar"}/></span>
-          </div>
-
-          <div className="grid grid-cols-2 gap-2 text-xs">
-            <div className="bg-white/5 p-2.5 rounded-xl border border-white/5">
-              <span className="text-[8.5px] font-bold text-slate-400 uppercase block"><VisualText id="copy-82c6154207ec" defaultText={"Data & Turno"}/></span>
-              <span className="font-black text-white">{dataFormatada}</span>
-              <span className="text-[10px] text-cyan-300 block">{hora}</span>
-            </div>
-            <div className="bg-white/5 p-2.5 rounded-xl border border-white/5">
-              <span className="text-[8.5px] font-bold text-slate-400 uppercase block">
-                <VisualLabel text={isGuardaria ? 'Equipamento & Locker' : 'Embarcação & Locker'}/>
-              </span>
-              <span className="font-black text-white truncate block">{caiaqueNomeSelecionado}</span>
-              <span className="text-[10px] text-cyan-300 block">{lockerNomeSelecionado}</span>
-            </div>
-          </div>
-
-          <button 
-            type="button"
-            disabled={loading || !data || !hora || (!caiaque && !isGuardaria) || !locker}
-            onClick={handleSalvar}
-            className="w-full py-4 px-4 bg-gradient-to-r from-[#0284c7] to-[#034480] text-white font-black rounded-2xl shadow-lg shadow-sky-950/40 text-xs uppercase tracking-wider active:scale-95 transition flex items-center justify-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer hover:brightness-110"
-          >
-            {loading ? (
-              <span><VisualText id="copy-cec3901f9490" defaultText={"AGENDANDO..."}/></span>
-            ) : (
-              <>
-                <span><VisualText id="copy-bd502cbbe46a" defaultText={"CONFIRMAR AGENDAMENTO"}/></span>
-                <ArrowRight className="w-4 h-4" />
-              </>
-            )}
-          </button>
-        </div>
-      )}
+      </div>
+      <aside ref={resumoRef} className="rt-base-panel rt-base-booking-review" data-rt-area="area-b3c408c4a005">
+       <div className="rt-base-panel-title"><div><h2><VisualText id="copy-1efcab19165c" defaultText="Resumo do agendamento"/></h2><p><VisualText id="copy-b3c408c4a006" defaultText="Confira suas escolhas antes de confirmar."/></p></div></div>
+       <dl className="rt-base-booking-facts" aria-live="polite">
+        <div><dt><CalendarIcon size={17}/><VisualText id="copy-b3c408c4a007" defaultText="Data"/></dt><dd>{data?dataFormatada:'Selecione uma data'}</dd></div>
+        <div><dt><Clock size={17}/><VisualText id="copy-b3c408c4a008" defaultText="Horário"/></dt><dd>{hora||'Selecione um horário'}</dd></div>
+        <div><dt><VisualText id="copy-b3c408c4a009" defaultText="Embarcação"/></dt><dd>{caiaque||isGuardaria?caiaqueNomeSelecionado:'Selecione uma embarcação'}</dd></div>
+        <div><dt><Key size={17}/><VisualText id="copy-b3c408c4a010" defaultText="Guarda-volumes"/></dt><dd>{locker?lockerNomeSelecionado:'Selecione um armário'}</dd></div>
+       </dl>
+       <button type="button" className="rt-base-primary" disabled={loading||!data||!hora||(!caiaque&&!isGuardaria)||!locker} onClick={handleSalvar}>{loading?<VisualText id="copy-cec3901f9490" defaultText="Agendando…"/>:<><VisualText id="copy-bd502cbbe46a" defaultText="Confirmar agendamento"/><ArrowRight size={18}/></>}</button>
+       <p className="rt-base-caption"><VisualText id="copy-b3c408c4a011" defaultText="A reserva será registrada depois da confirmação."/></p><VisualContentSlot id="area-b3c408c4a005"/>
+      </aside></div><VisualContentSlot id="area-b3c408c4a001"/>
 
     </div>
   )

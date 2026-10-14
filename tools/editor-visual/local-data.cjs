@@ -8,19 +8,27 @@ function reset(){
  const now=new Date().toISOString();db=Object.fromEntries(tables.map(table=>[table,[]]));changes=[];
  db.perfis_staff=[{id:USER,nome:'Equipe de demonstração',email:user.email,role:'admin',roles:['dona','recepcao','instrutor','guardaria'],ativo:true,permissions:{qualidadeEmbarque:true,avaria:true},created_at:now,updated_at:now}];
  db.mensalistas=[{id:ALUNO,auth_id:USER,nome:'Aluno de demonstração',email:user.email,telefone:'13000000000',tipo_plano:'mensalista',creditos:8,status_pagamento:'ativo',data_vencimento:tomorrow(),dia_vencimento:10,bloqueado:false,primeiro_acesso:false,precisa_trocar_senha:false,avatar:null,foto_url:null,cpf:null,caiaque_vinculado:null,pendencias:[],historico_estornos:[],arquivado_em:null,plano_valor:150,plano_dia_venc:10,plano_descricao:'Plano de demonstração',created_at:now,updated_at:now}];
- db.caiaques=[1,2,3,4].map(n=>({id:'K0'+n,nome:'Caiaque de exemplo '+n,tipo:n===4?'duplo':'individual',status:'livre',dono:null,mensalista_id:null,created_at:now,updated_at:now}));
- db.lockers=[1,2,3].map(n=>({id:'L0'+n,nome:'Armário '+n,status:'Livre',created_at:now}));
+ db.caiaques=[1,2,3,4].map(n=>({id:'K0'+n,nome:'Caiaque de exemplo '+n,tipo:n===4?'duplo':'individual',capacidade:n===4?2:1,preco_sem_instrutor:n===4?80:50,preco_com_instrutor:n===4?110:80,status:'livre',dono:null,mensalista_id:null,created_at:now,updated_at:now}));
+ db.lockers=[1,2,3].map(n=>({id:'L0'+n,nome:'Armário '+n,numero:n,status:'Livre',created_at:now}));
  db.agendamentos=[{id:'30000000-0000-4000-8000-000000000001',mensalista_id:ALUNO,mensalista_nome:'Aluno de demonstração',caiaque_id:'K01',locker_id:null,data_reserva:tomorrow(),horario_reserva:'08:00',hora_reserva:'08:00',status:'confirmado',tipo:'remada',is_evento:false,manual:false,avaliado:false,fotos_enviadas:false,vistoria_pulada:false,created_at:now,updated_at:now}];
+ // Exemplos historicos locais para revisar filtros, avaliacoes e eventos.
+ const priorDate=days=>new Date(Date.now()-days*86400000).toISOString().slice(0,10);
+ db.agendamentos.push(
+  {id:'30000000-0000-4000-8000-000000000002',mensalista_id:ALUNO,mensalista_nome:'Aluno de demonstração',caiaque_id:'K02',data_reserva:priorDate(20),horario_reserva:'08:00',status:'concluido',titulo:'Remada do clube',is_evento:false,avaliado:false,created_at:now},
+  {id:'30000000-0000-4000-8000-000000000003',mensalista_id:ALUNO,mensalista_nome:'Aluno de demonstração',caiaque_id:'K01',data_reserva:priorDate(18),horario_reserva:'06:00',status:'cancelado_clima',titulo:'Remada do clube',motivo_cancelamento:'Condições do mar — exemplo de cancelamento.',is_evento:false,reagendado:false,created_at:now},
+  {id:'30000000-0000-4000-8000-000000000004',mensalista_id:ALUNO,mensalista_nome:'Aluno de demonstração',data_reserva:priorDate(15),horario_reserva:'07:00',status:'concluido',titulo_evento:'Remada em grupo — exemplo',evento_id:'40000000-0000-4000-8000-000000000001',is_evento:true,created_at:now}
+ );
  db.configuracoes=[{id:'clubes',chave:'tabela_clubes',valor:{mensalista:150,guardaria:150,combo:250,remadas_semanais:2,horario_corte:'19:00',dia_manutencao:'Segunda-feira'}},{id:'tarifas',chave:'tabela_precos',valor:{individual:50,duplo:80,com_instrutor:30}}];
  db.estado_sistema=[{id:1,clima:'favoravel',status_mar:'liberado',mar_liberado:true,vento:8,observacoes:'Condição ilustrativa. Não utilizar para decisões de navegação.'}];
- db.eventos=[{id:'40000000-0000-4000-8000-000000000001',titulo:'Remada ao nascer do sol · exemplo',nome:'Remada ao nascer do sol',descricao:'Evento fictício para conferir a apresentação e a navegação.',data_evento:tomorrow(),horario:'07:00',horario_evento:'07:00',hora_evento:'07:00',status:'aberto',vagas_totais:12,vagas_ocupadas:2,vagas_disponiveis:10,valor:60,valor_por_pessoa:60,local:'Base Remoterapia',instrutor:'Equipe de demonstração',foto_url:null,created_at:now}];
+ db.eventos=[{id:'40000000-0000-4000-8000-000000000001',titulo:'Remada ao nascer do sol · exemplo',nome:'Remada ao nascer do sol',descricao:'Evento fictício para conferir a apresentação e a navegação.',data_evento:tomorrow(),horario:'07:00',horario_evento:'07:00',hora_evento:'07:00',status:'aberto',vagas_totais:12,vagas_ocupadas:2,vagas_disponiveis:10,preco:60,valor:60,valor_por_pessoa:60,local:'Base Remoterapia',instrutor:'Equipe de demonstração',foto_url:null,created_at:now}];
  return {ok:true};
 }
 reset();
-if(process.env.RT_LOCAL_SNAPSHOT){
- try{const snapshot=JSON.parse(Buffer.from(process.env.RT_LOCAL_SNAPSHOT,'base64').toString('utf8'));rejectUnsafe(snapshot);if(snapshot.fictionalData===true&&snapshot.tables&&tables.every(table=>Array.isArray(snapshot.tables[table]))){db=structuredClone(snapshot.tables);changes=Array.isArray(snapshot.changes)?structuredClone(snapshot.changes):[];}}
+if(process.env.RT_LOCAL_SNAPSHOT||process.env.RT_LOCAL_SNAPSHOT_FILE){
+ try{const raw=process.env.RT_LOCAL_SNAPSHOT_FILE?require('node:fs').readFileSync(process.env.RT_LOCAL_SNAPSHOT_FILE,'utf8'):Buffer.from(process.env.RT_LOCAL_SNAPSHOT,'base64').toString('utf8');const snapshot=JSON.parse(raw.replace(/^\uFEFF/,''));rejectUnsafe(snapshot);if(snapshot.fictionalData===true&&snapshot.tables&&tables.every(table=>Array.isArray(snapshot.tables[table]))){db=structuredClone(snapshot.tables);changes=Array.isArray(snapshot.changes)?structuredClone(snapshot.changes):[];}}
  catch{/* An invalid transfer restores the known examples. */}
  delete process.env.RT_LOCAL_SNAPSHOT;
+ delete process.env.RT_LOCAL_SNAPSHOT_FILE;
 }
 const result=(data,count)=>({data,error:null,count:count??null,status:200,statusText:'OK'});
 const error=message=>({data:null,error:{message,code:'LOCAL_PREVIEW'},count:null,status:400,statusText:'Local preview'});

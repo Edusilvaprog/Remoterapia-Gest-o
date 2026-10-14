@@ -14,7 +14,7 @@ assert(execute({op:'rpc',rpc:'mp_criar_pedido',payload:{}}).error);
 assert(execute({op:'select',table:'auth.users',filters:[]}).error);
 assert(execute(JSON.parse('{"op":"update","table":"mensalistas","payload":{"__proto__":{"admin":true}},"filters":[]}')).error);
 assert.equal(exportSnapshot().fictionalData,true);assert(exportSnapshot().changes.length>=3);
-reset();assert.equal(execute({table:'agendamentos',op:'select',filters:[]}).data.length,1);
+reset();assert.equal(execute({table:'agendamentos',op:'select',filters:[]}).data.length,4);
 for(const app of ['Remoterapia-Gestão','Remoterapia-Portal']){
  const env=fs.readFileSync(path.join(root,app,'.env.local'),'utf8');assert.equal(env.trim(),'NEXT_PUBLIC_LOCAL_PREVIEW=1');
  const adapter=fs.readFileSync(path.join(root,app,'lib/local-preview-client.ts'),'utf8');assert(adapter.includes("process.env.NODE_ENV==='development'"));assert(adapter.includes("fetch('http://localhost:3010/api/local-data'"));
