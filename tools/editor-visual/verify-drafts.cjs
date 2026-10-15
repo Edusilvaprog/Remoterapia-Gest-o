@@ -18,7 +18,13 @@ try{
  const protectedId=Object.keys(catalog().gestao).find(id=>catalog().gestao[id].kind==='area'&&!catalog().gestao[id].canHide);
  const unsafe=emptyState();unsafe.gestao.desktop.elements={[protectedId]:{hidden:true}};
  assert.throws(()=>store.mutate('save',store.get().revision,unsafe));
- const sized=emptyState();sized.portal.desktop.elements={[Object.keys(catalog().portal).find(id=>catalog().portal[id].kind==='area')]:{width:75,minHeight:200,font:'arial'}};
+ const sized=emptyState();sized.portal.desktop.elements={[Object.keys(catalog().portal).find(id=>catalog().portal[id].kind==='area')]:{width:75,minHeight:200,font:'arial',paddingX:24,paddingY:16,marginTop:12,marginBottom:20}};
  const result=store.mutate('save',store.get().revision,sized);assert.match(generateCss(result.state.portal),/width:75%/);assert.match(generateCss(result.state.portal),/min-height:200px/);
- console.log('OK: reinício, isolamento, desfazer, restaurar, conflito de abas, validação e dimensões.');
+ const css=generateCss(result.state.portal);assert.match(css,/margin-inline:auto!important/);assert.match(css,/justify-self:center!important/);assert.match(css,/padding-inline:24px/);assert.match(css,/padding-block:16px/);assert.match(css,/margin-top:12px/);assert.match(css,/margin-bottom:20px/);
+ const control=Object.keys(catalog().portal).find(id=>id.startsWith('control-')),target=emptyState();target.portal.desktop.elements={[control]:{width:70,paddingX:8}};
+ assert.match(generateCss(store.mutate('save',store.get().revision,target).state.portal),new RegExp(`data-rt-control-id="${control}"`));
+ target.portal.desktop.elements[control].paddingX=-1;assert.throws(()=>store.mutate('save',store.get().revision,target));
+ target.portal.desktop.elements[control]={hidden:true};assert.throws(()=>store.mutate('save',store.get().revision,target));
+ const unknown=emptyState();unknown.portal.desktop.elements={'control-000000000000':{width:70}};assert.throws(()=>store.mutate('save',store.get().revision,unknown));
+ console.log('OK: rascunho, isolamento, histórico, centralização, espaçamentos, controles e validação.');
 }finally{fs.rmSync(file,{force:true});fs.rmdirSync(directory);}

@@ -2,11 +2,15 @@
 
 Abra `Abrir-Previa.cmd` nesta pasta. Editor: http://localhost:3010/; Gestão: http://localhost:3015/gestao/painel; Portal: http://localhost:3016/.
 
-Escolha site, tela e versão. Clique em texto/bloco na prévia; dois cliques permitem escrever diretamente em textos cadastrados. Os campos laterais alteram palavras, fonte, tamanho e cores. Para blocos, também ajustam largura e altura mínima. O conteúdo nunca é cortado para forçar uma altura menor.
+Escolha site, tela e versão na barra superior. Use Navegar para operar o aplicativo e Editar para ajustar o layout. Clique em texto/bloco na prévia; dois cliques permitem escrever diretamente em textos cadastrados. Os campos laterais alteram palavras, fonte, tamanho e cores. Para blocos, também ajustam largura e altura mínima. O conteúdo nunca é cortado para forçar uma altura menor.
+
+No campo Selecionar neste ponto, alterne entre texto, botão, bloco menor e seção. Clique nas palavras para selecionar o texto; no fundo ou ícone do botão para selecionar sua caixa. O destaque azul acompanha somente o alvo sob o mouse; rosa identifica a seleção.
+
+A largura diminui dos dois lados, mantendo o bloco centralizado. Os campos de espaçamento ajustam laterais internas, espaço acima/abaixo do conteúdo e distância antes/depois do bloco. Digite uma medida ou use o controle deslizante. A largura percentual continua sendo relativa ao espaço reservado ao item pelo layout.
 
 Selecione uma área para adicionar um bloco de texto, aviso, botão ou SVG. Selecione o bloco para editar ou remover. Blocos adicionados são removíveis; áreas que mantêm funções do sistema ficam protegidas. As listas Área e Texto permitem selecionar o trecho quando ele estiver pequeno ou sobreposto.
 
-Use Zoom para aproximar. Segure Alt ao clicar se quiser navegar por um menu interno. As ações normais são interceptadas no modo de edição para evitar executar funções ao selecionar. Campos de formulário ficam protegidos no editor; os aplicativos diretos permitem testar os exemplos de negócio.
+Use Zoom para aproximar. Escolha Navegar para abrir menus internos ou testar formulários. Alt + clique continua disponível como atalho. As ações normais são interceptadas no modo de edição para evitar executar funções ao selecionar. Campos de formulário ficam protegidos no editor; os aplicativos diretos permitem testar os exemplos de negócio.
 
 O rascunho salva automaticamente neste computador em `tools/editor-visual/.editor-draft.json`, excluído do Git. Existe recuperação adicional no navegador enquanto uma edição ainda está sendo salva. Aguarde “Rascunho salvo” antes de fechar. Outra aba não pode sobrescrever silenciosamente uma revisão mais recente.
 

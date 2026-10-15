@@ -2,7 +2,7 @@
 
 - Trabalhar em work/versao-preview; originais preservados.
 - Editor: http://localhost:3010/; Gestão 3015; Portal 3016. Abrir-Previa.cmd inicia a prévia.
-- Editor simplificado: seleção, texto/fonte/tamanho/cor, dimensões, adicionar/remover, zoom, desfazer/restaurar.
+- Editor 15/10: Navegar/Editar; seleção de texto, botão e cartão menor com hierarquia; largura centralizada e espaçamentos internos/externos, com entrada numérica. Rascunhos anteriores preservados.
 - Salvamento automático somente em rascunho local; sem aplicação/publicação e sem endpoints antigos de gravação nos aplicativos.
 - Base e ajustes anteriores preservados. Cinco reservas fictícias e histórico local recuperados do snapshot.
 - Testes do rascunho, seleção, proxy, assistentes e tipos dos dois aplicativos passaram; painel financeiro celular conferido em 390 px sem transbordamento horizontal.
