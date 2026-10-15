@@ -10,7 +10,7 @@ const origins=new Set(['http://127.0.0.1:3010','http://localhost:3010']);
 function readState(){return fs.existsSync(STATE_FILE)?validateState(JSON.parse(fs.readFileSync(STATE_FILE,'utf8'))):emptyState();}
 const drafts=createDraftStore(path.join(__dirname,'.editor-draft.json'),readState);
 function reply(res,status,data){res.writeHead(status,{'Content-Type':'application/json; charset=utf-8'});res.end(JSON.stringify(data));}
-const assets={'/':['index.html','text/html; charset=utf-8'],'/editor.js':['editor.js','text/javascript; charset=utf-8'],'/editor.css':['editor.css','text/css; charset=utf-8']};
+const assets={'/':['index.html','text/html; charset=utf-8'],'/editor.js':['editor.js','text/javascript; charset=utf-8'],'/move-geometry.js':['move-geometry.js','text/javascript; charset=utf-8'],'/move-editor.js':['move-editor.js','text/javascript; charset=utf-8'],'/editor.css':['editor.css','text/css; charset=utf-8']};
 const server=http.createServer(async(req,res)=>{
   res.setHeader('Cache-Control','no-store');res.setHeader('X-Content-Type-Options','nosniff');res.setHeader('X-Frame-Options','DENY');res.setHeader('Referrer-Policy','no-referrer');
   res.setHeader('Content-Security-Policy',"default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; frame-src http://localhost:3015 http://localhost:3016; frame-ancestors 'none'; object-src 'none'; base-uri 'none'");

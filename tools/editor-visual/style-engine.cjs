@@ -46,6 +46,17 @@ function validateContent(key,value,entries){
  return clean;
 }
 function emptyState(){return {gestao:{mobile:{},desktop:{}},portal:{mobile:{},desktop:{}}};}
+function validateOrders(groups,entries,slots){
+ if(!Array.isArray(groups)||groups.length>30)throw Error('Grupos de blocos inválidos.');
+ const extra=new Set(Object.values(slots||{}).flat().map(block=>block.id)),used=new Set();
+ return groups.map(ids=>{
+  if(!Array.isArray(ids)||ids.length<2||ids.length>60)throw Error('Ordem de blocos inválida.');
+  return ids.map(id=>{
+   if(typeof id!=='string'||used.has(id)||!(extra.has(id)||(entries[id]?.kind==='area'&&!id.startsWith('control-'))))throw Error('Bloco não permitido nesta ordem.');
+   used.add(id);return id;
+  });
+ });
+}
 function validateState(input){
   if(!input || typeof input!=='object' || Array.isArray(input)) throw Error('Configuração inválida.');
   const clean=emptyState(),registry=catalog();
@@ -61,8 +72,10 @@ function validateState(input){
         else if(Object.hasOwn(NUMBERS,key)){const [min,max]=NUMBERS[key];if(typeof value!=='number'|| !Number.isFinite(value)||value<min||value>max) throw Error('Medida fora do limite.');clean[app][view][key]=Math.round(value);}
         else if(key==='font'){if(typeof value!=='string'||!Object.hasOwn(FONTS,value)) throw Error('Fonte inválida.');if(value!=='original') clean[app][view].font=value;}
         else if(['texts','elements','slots'].includes(key))clean[app][view][key]=validateContent(key,value,registry[app]);
+        else if(key==='orders')continue;
         else throw Error('Opção não reconhecida.');
       }
+      if(style.orders!==undefined)clean[app][view].orders=validateOrders(style.orders,registry[app],clean[app][view].slots);
     }
   }
   return clean;
@@ -108,6 +121,9 @@ function generateView(s){
     if(style.color)inherited.push('color:inherit!important');
     if(inherited.length)rule(`${selector} :is(h1,h2,h3,h4,p,label)`,inherited.join(';'));
    }
+  }
+  for(const ids of s.orders||[]){
+   ids.forEach((id,index)=>rule(`[${id.startsWith('block-')?'data-rt-extra-id':id.startsWith('part-')?'data-rt-part-id':'data-rt-area'}="${id}"]`,`order:${index+1}!important`));
   }
   return out.join('\n');
 }

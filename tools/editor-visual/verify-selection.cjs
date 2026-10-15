@@ -10,9 +10,9 @@ class Element {
 }
 function load(file){
  const documentEvents={},windowEvents={},sent=[],input={disabled:false};
- const doc={styleSheets:[],querySelectorAll:selector=>selector==='input,select,textarea'?[input]:[],documentElement:{toggleAttribute(){}},head:{appendChild(){}},body:{},getElementById:()=>null,createElement:()=>({}),createRange:()=>({selectNodeContents(){}}),addEventListener:(type,fn)=>documentEvents[type]=fn,removeEventListener(){}};
+ const doc={styleSheets:[],querySelector:()=>null,querySelectorAll:selector=>selector==='input,select,textarea'?[input]:[],documentElement:{toggleAttribute(){}},head:{appendChild(){}},body:{},getElementById:()=>null,createElement:()=>({}),createRange:()=>({selectNodeContents(){}}),addEventListener:(type,fn)=>documentEvents[type]=fn,removeEventListener(){}};
  const win={location:{pathname:'/',search:'',hash:''},parent:{postMessage:data=>sent.push(data)},addEventListener:(type,fn)=>windowEvents[type]=fn,getSelection:()=>({removeAllRanges(){},addRange(){}})};
- const exports={};vm.runInNewContext(ts.transpileModule(fs.readFileSync(file,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2020}}).outputText,{exports,require:()=>({useEffect:callback=>callback()}),process:{env:{NODE_ENV:'development'}},window:win,document:doc,Element,HTMLElement:Element,HTMLLinkElement:Element,MutationObserver:class{observe(){} disconnect(){}},getComputedStyle:()=>({display:'block'}),setTimeout,clearTimeout});
+ const exports={};vm.runInNewContext(ts.transpileModule(fs.readFileSync(file,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2020}}).outputText,{exports,require:name=>name==='react'?{useEffect:callback=>callback()}:{inspectMoveLayout:()=>({id:'',items:[]})},process:{env:{NODE_ENV:'development'}},window:win,document:doc,Element,HTMLElement:Element,HTMLLinkElement:Element,MutationObserver:class{observe(){} disconnect(){}},getComputedStyle:()=>({display:'block'}),setTimeout,clearTimeout});
  exports.default();windowEvents.message({source:win.parent,origin:'http://localhost:3010',data:{type:'rt-visual-preview',css:'',editing:true}});
  return {events:documentEvents,sent,input,mode:editing=>windowEvents.message({source:win.parent,origin:'http://localhost:3010',data:{type:'rt-editor-mode',editing}})};
 }

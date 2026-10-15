@@ -2,6 +2,7 @@
 
 - Trabalhar em work/versao-preview; originais preservados.
 - Editor: http://localhost:3010/; Gestão 3015; Portal 3016. Abrir-Previa.cmd inicia a prévia.
+- Arraste 15/10: alça Mover, encaixe no mesmo grupo sem sobreposição, réguas em pixels, guias centrais e posição pelo teclado. Ordem separada por site/versão; desfazer e rascunho mantidos.
 - Editor 15/10: Navegar/Editar; seleção de texto, botão e cartão menor com hierarquia; largura centralizada e espaçamentos internos/externos, com entrada numérica. Rascunhos anteriores preservados.
 - Salvamento automático somente em rascunho local; sem aplicação/publicação e sem endpoints antigos de gravação nos aplicativos.
 - Base e ajustes anteriores preservados. Cinco reservas fictícias e histórico local recuperados do snapshot.
