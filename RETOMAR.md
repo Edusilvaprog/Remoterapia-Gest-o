@@ -31,7 +31,7 @@ Retomada autorizada em 14/10/2026. Prioridade atendida: editor simples, com rasc
 - Uma alteração por soltura; autosave no rascunho, desfazer, recuperação e isolamento por site/versão mantidos.
 - Provas: reordenação e recuperação na Gestão; Portal reorganizado sem exceder os 1440 px de largura; celular independente; blocos adicionados reordenados e testes temporários desfeitos. Estado anterior e dados fictícios comparados integralmente.
 - Testes: verify-move.cjs e verify-move-editor.cjs cobrem grupo, zoom, ponteiro, destino, posições fixas, Esc, cancelamento, modo e réguas.
-- Gesto físico no navegador ainda não comprovado pela automação: o adaptador nativo retornou alvo indisponível/fora da área ativa. Testes de eventos isolados e do resultado na interface passaram. Conferência manual deve arrastar pela alça, testar Esc e soltar fora do grupo.
+- A tentativa nativa mudou uma posição, mas retornou erro de alvo/área ativa; foi desfeita e o rascunho anterior foi comparado integralmente. A precisão do gesto físico ainda não está homologada pelo adaptador. Testes de eventos isolados e do resultado na interface passaram. Conferência manual deve arrastar pela alça, testar Esc e soltar fora do grupo.
 - Antes de produção, converter a ordem visual aprovada em estrutura/ordem de foco apropriada. Não publicar CSS de reordenação como substituto dessa revisão.
 
 ## Limitações ainda abertas
