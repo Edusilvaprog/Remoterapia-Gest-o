@@ -7231,6 +7231,48 @@
       "file": "components/FinancialAssistant.tsx",
       "canHide": false,
       "canAdd": true
+    },
+    "copy-88f9ad521888": {
+      "kind": "text",
+      "label": "Portal de alunos",
+      "defaultText": "Portal de alunos",
+      "file": "components/desktop/GestaoOverview.tsx"
+    },
+    "copy-941bf6462554": {
+      "kind": "text",
+      "label": "Diário",
+      "defaultText": "Diário",
+      "file": "components/desktop/GestaoOverview.tsx"
+    },
+    "copy-ee4a1105df23": {
+      "kind": "text",
+      "label": "Pagamentos",
+      "defaultText": "Pagamentos",
+      "file": "components/desktop/GestaoOverview.tsx"
+    },
+    "copy-f19c29be1b9a": {
+      "kind": "text",
+      "label": "Administrador",
+      "defaultText": "Administrador",
+      "file": "components/desktop/GestaoOverview.tsx"
+    },
+    "copy-b5be25eeaa4c": {
+      "kind": "text",
+      "label": "Configurações",
+      "defaultText": "Configurações",
+      "file": "components/desktop/GestaoOverview.tsx"
+    },
+    "copy-0a0d5409655e": {
+      "kind": "text",
+      "label": "Clima",
+      "defaultText": "Clima",
+      "file": "components/desktop/GestaoOverview.tsx"
+    },
+    "copy-6fc5150e2af1": {
+      "kind": "text",
+      "label": "Segurança",
+      "defaultText": "Segurança",
+      "file": "components/desktop/GestaoOverview.tsx"
     }
   },
   "portal": {
@@ -10618,6 +10660,30 @@
       "label": "Use a opção de recuperação de senha disponível na tela de entrada. Se já estiver conecta",
       "defaultText": "Use a opção de recuperação de senha disponível na tela de entrada. Se já estiver conectado, confira a opção de mudar senha no perfil. Se não conseguir concluir pela interface, peça orientação à equipe. Não informe sua senha no atendimento nem nesta busca.",
       "file": "lib/assistants/faq.ts"
+    },
+    "copy-d8a008249767": {
+      "kind": "text",
+      "label": "Todas",
+      "defaultText": "Todas",
+      "file": "components/PortalHistoryLayout.tsx"
+    },
+    "copy-e1d15b945d65": {
+      "kind": "text",
+      "label": "Concluídas",
+      "defaultText": "Concluídas",
+      "file": "components/PortalHistoryLayout.tsx"
+    },
+    "copy-ba0ce420971d": {
+      "kind": "text",
+      "label": "Canceladas",
+      "defaultText": "Canceladas",
+      "file": "components/PortalHistoryLayout.tsx"
+    },
+    "copy-179b116ef4a5": {
+      "kind": "text",
+      "label": "Eventos",
+      "defaultText": "Eventos",
+      "file": "components/PortalHistoryLayout.tsx"
     }
   }
 }

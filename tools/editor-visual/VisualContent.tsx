@@ -7,12 +7,11 @@ type Content={mobile:View;desktop:View}
 const Context=createContext<Content>(saved as Content)
 export function VisualContentProvider({children}:{children:ReactNode}){
  const [content,setContent]=useState<Content>(saved as Content)
- useEffect(()=>{setContent(saved as Content)},[])
  useEffect(()=>{
-  if(process.env.NODE_ENV!=='development')return
+  if(process.env.NODE_ENV!=='development'||window.parent===window)return
   const handle=(event:MessageEvent)=>{
    if(event.source!==window.parent||window.parent===window||!['http://127.0.0.1:3010','http://localhost:3010'].includes(event.origin))return
-   if(event.data?.type==='rt-content-preview'&&event.data.content?.mobile&&event.data.content?.desktop)setContent(event.data.content)
+   if(event.data?.type==='rt-content-preview'&&event.data.content?.mobile&&event.data.content?.desktop)setContent(current=>JSON.stringify(current)===JSON.stringify(event.data.content)?current:event.data.content)
   }
   window.addEventListener('message',handle);return()=>window.removeEventListener('message',handle)
  },[])

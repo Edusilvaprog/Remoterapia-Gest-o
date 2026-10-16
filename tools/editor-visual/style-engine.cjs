@@ -4,12 +4,15 @@ const COLORS = ['primary', 'accent', 'canvas', 'surface', 'ink', 'muted'];
 const NUMBERS = { textSize:[10,22], headingSize:[20,48], cardRadius:[0,32], buttonRadius:[0,28], buttonHeight:[32,64], pagePadding:[8,48], rowPadding:[6,24], iconSize:[14,28] };
 const FONTS = { original:null, system:"ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif", arial:'Arial,sans-serif', segoe:"'Segoe UI',sans-serif" };
 const fs=require('node:fs'),path=require('node:path');
+let cachedCatalog,catalogStamp;
 function catalog(){
- const file=path.join(__dirname,'catalog.json'),entries=fs.existsSync(file)?JSON.parse(fs.readFileSync(file,'utf8')):{gestao:{},portal:{}};
+ const file=path.join(__dirname,'catalog.json'),stat=fs.statSync(file,{throwIfNoEntry:false}),stamp=stat?`${stat.mtimeMs}:${stat.size}`:'missing';
+ if(cachedCatalog&&stamp===catalogStamp)return cachedCatalog;
+ const entries=stat?JSON.parse(fs.readFileSync(file,'utf8')):{gestao:{},portal:{}};
  for(const app of APPS)for(const [id,meta] of Object.entries(entries[app]))if(meta.kind==='text'){
   for(const [prefix,label] of [['control','Botão'],['part','Bloco']])entries[app][`${prefix}-${id.slice(5)}`]={kind:'area',label:`${label} · ${meta.defaultText||meta.label}`,canAdd:false,canHide:false};
  }
- return entries;
+ catalogStamp=stamp;cachedCatalog=entries;return entries;
 }
 function record(value){return value&&typeof value==='object'&&!Array.isArray(value)}
 function safeLink(value){return typeof value==='string'&&value.length<=1000&&((/^\/(?!\/)/.test(value)&&!/[\\\r\n]/.test(value))||(/^https:\/\//.test(value)&&!/[\r\n]/.test(value)))}

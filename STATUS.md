@@ -2,6 +2,8 @@
 
 - Trabalhar em work/versao-preview; originais preservados.
 - Editor: http://localhost:3010/; Gestão 3015; Portal 3016. Abrir-Previa.cmd inicia a prévia.
+- Revisão 16/10: conector inativo fora do iframe; Navegar sem inspeção de blocos; catálogo em cache e CSS apenas do site ativo; conteúdo idêntico não é reenviado. Painel recolhe em Navegar; zoom automático mínimo 75%.
+- Cadastradas para edição: abas desktop da Gestão/Administração, menu desktop do Portal, filtros do histórico e atalhos da Gestão. Ações preservadas. Pesquisa/editor/skills/podcast: EDITOR-DECISOES.md.
 - Revisão funcional 15/10: editor inicia em Navegar; lista ampliada para 22 telas da Gestão. Água, recepção e fechamento recuperados no desktop; novo embarque continua no celular.
 - Conferência: 22 rotas sem erro de compilação; 13 abas de administração/Portal/Guardaria, menus, formulários de fila/eventos e relatório por período. Navegação por perfil e tipos passaram. Rascunho e dados fictícios preservados.
 - Arraste 15/10: alça Mover, encaixe no mesmo grupo sem sobreposição, réguas em pixels, guias centrais e posição pelo teclado. Ordem separada por site/versão; desfazer e rascunho mantidos.

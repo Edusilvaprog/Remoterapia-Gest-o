@@ -4,6 +4,8 @@ Retomada autorizada em 14/10/2026. Prioridade atendida: editor simples, com rasc
 
 ## Concluído
 
+- Revisão 16/10: detalhes em `EDITOR-DECISOES.md`. Conector isolado, varreduras suspensas em Navegar, prévia apenas do aplicativo ativo e cache do catálogo; menu desktop do Portal, filtros de histórico, atalhos e abas administrativas cadastrados para edição. Rascunho anterior mantido; nenhuma migração de editor instalada.
+
 - Editor: somente selecionar site/tela/versão, editar palavras/fonte/tamanho/cor, redimensionar blocos, adicionar/remover, zoom, desfazer e restaurar tudo. Navegar/Editar restaurados a pedido em 15/10; sem exportação, ajustes globais ou aplicação na nova versão.
 - Rascunho automático persistente em `.editor-draft.json`, ignorado pelo Git; recuperação de edição pendente no navegador; controle de revisão impede sobrescrita silenciosa por outra aba; até 30 etapas para desfazer. Restaurar volta à base visual, mantendo os aplicativos. Os endpoints antigos de aplicação foram desativados.
 - Seleção por texto/bloco e listas; duplo clique para edição inline; Alt + clique para navegar. Área funcional protegida contra remoção; blocos novos removíveis. Largura/altura mínima não cortam conteúdo.

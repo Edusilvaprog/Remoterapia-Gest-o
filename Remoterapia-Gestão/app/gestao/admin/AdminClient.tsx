@@ -497,7 +497,7 @@ export default function AdminClient() {
        <article><span><VisualText id="copy-b6c408c4a004" defaultText="Guarda-volumes"/></span><strong>{carregandoDados||erroCarga?'—':lockers.length}</strong></article>
        <article><span><VisualText id="copy-b6c408c4a005" defaultText="Registros de auditoria"/></span><strong>{carregandoDados||erroCarga?'—':auditoria.length}</strong></article><VisualContentSlot id="area-b6c408c4a001"/>
       </section>
-      <nav className="rt-base-management-sections rt-base-desktop" aria-label="Seções da administração">{[{id:'usuarios',label:'Usuários'},{id:'frota',label:'Frota e preços'},{id:'lockers',label:'Guarda-volumes'},{id:'auditoria',label:'Auditoria'}].map(section=><button key={section.id} type="button" aria-pressed={tab===section.id} onClick={()=>setTab(section.id as typeof tab)}>{section.label}</button>)}</nav>
+      <nav className="rt-base-management-sections rt-base-desktop" aria-label="Seções da administração">{[{id:'usuarios',label:'Usuários',copy:'copy-558cc1ffd2af'},{id:'frota',label:'Frota e preços',copy:'copy-18274b7d5cde'},{id:'lockers',label:'Guarda-volumes',copy:'copy-4f4bccf3777e'},{id:'auditoria',label:'Auditoria',copy:'copy-958980b31298'}].map(section=><button key={section.id} type="button" aria-pressed={tab===section.id} onClick={()=>setTab(section.id as typeof tab)}><VisualText id={section.copy} defaultText={section.label}/></button>)}</nav>
 
 
       {/* CONTEÚDO PRINCIPAL (COM SCROLL INTERNO) */}

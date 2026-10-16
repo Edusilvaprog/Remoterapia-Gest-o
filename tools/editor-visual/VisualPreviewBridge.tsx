@@ -3,15 +3,20 @@ import { useEffect } from 'react'
 import {inspectMoveLayout} from './VisualMoveLayout'
 export default function VisualPreviewBridge() {
   useEffect(() => {
-    if (process.env.NODE_ENV !== 'development') return
+    if (process.env.NODE_ENV !== 'development' || window.parent === window) return
     const editorOrigins = new Set(['http://127.0.0.1:3010', 'http://localhost:3010'])
-    let editing=false,origin='',lastAreas='',selectedId='',timer:ReturnType<typeof setTimeout>,hovered:HTMLElement|null=null
+    let editing=false,origin='',lastAreas='',lastPage='',selectedId='',observing=false,timer:ReturnType<typeof setTimeout>,hovered:HTMLElement|null=null
     const marker='[data-rt-copy-id],[data-rt-control-id],[data-rt-part-id],[data-rt-extra-id],[data-rt-area]'
     const cards='.rt-base-panel,.rt-base-metrics>*,.rt-base-hub-card,.rt-base-history-card,.dw-panel,.dw-metric,.rt-card,.rt-payment-option,.rt-experience-card'
     const post=(data:object)=>{if(origin)window.parent.postMessage(data,origin)}
+    const reportPage=()=>{
+      if(!origin)return
+      const page=window.location.pathname+window.location.search+window.location.hash
+      if(page!==lastPage){lastPage=page;post({type:'rt-page-changed',page})}
+    }
     const inputs=new Map<HTMLInputElement|HTMLSelectElement|HTMLTextAreaElement,boolean>()
     const protectControls=()=>{
-      if(editing)document.querySelectorAll<HTMLInputElement|HTMLSelectElement|HTMLTextAreaElement>('input,select,textarea').forEach(input=>{if(!inputs.has(input))inputs.set(input,input.disabled);input.disabled=true})
+      if(editing){inputs.forEach((_,input)=>{if(!input.isConnected)inputs.delete(input)});document.querySelectorAll<HTMLInputElement|HTMLSelectElement|HTMLTextAreaElement>('input,select,textarea').forEach(input=>{if(!inputs.has(input))inputs.set(input,input.disabled);input.disabled=true})}
       else{inputs.forEach((disabled,input)=>{input.disabled=disabled});inputs.clear()}
     }
     const guardSubmit=(event:Event)=>{if(editing){event.preventDefault();event.stopImmediatePropagation()}}
@@ -49,7 +54,7 @@ export default function VisualPreviewBridge() {
       if(origin)post({type:'rt-move-layout',layout:editing&&element?inspectMoveLayout(element,identify):null})
     }
     let moveTimer:ReturnType<typeof setTimeout>
-    const queueMove=()=>{clearTimeout(moveTimer);moveTimer=setTimeout(reportMove,40)}
+    const queueMove=()=>{if(!editing||!selectedId)return;clearTimeout(moveTimer);moveTimer=setTimeout(reportMove,40)}
     const highlight=(id:string)=>{
       document.querySelectorAll('[data-rt-selected]').forEach(element=>element.removeAttribute('data-rt-selected'))
       selectedId=/^(copy|area|block|control|part)-[a-f0-9]{12}$/.test(id)?id:''
@@ -61,6 +66,7 @@ export default function VisualPreviewBridge() {
       reportMove()
     }
     const areas=()=>{
+      if(!origin||!editing)return
       registerTargets()
       const visible=Array.from(document.querySelectorAll<HTMLElement>(marker)).filter(element=>element.getClientRects().length>0)
       const ids=visible.filter(element=>element.dataset.rtArea||element.dataset.rtControlId||element.dataset.rtPartId).map(element=>identify(element)?.id),texts=visible.filter(element=>element.dataset.rtCopyId).map(element=>element.dataset.rtCopyId)
@@ -102,29 +108,34 @@ export default function VisualPreviewBridge() {
     const handle = (event: MessageEvent) => {
       if (window.parent === window || event.source !== window.parent || !editorOrigins.has(event.origin)) return
       const payload = event.data
+      if(!['rt-editor-mode','rt-select-element','rt-visual-preview'].includes(payload?.type))return
       origin=event.origin
+      if(!observing){observer.observe(document.body,{childList:true,subtree:true});headObserver.observe(document.head,{childList:true,subtree:true});observing=true}
+      reportPage()
       if(payload?.type==='rt-editor-mode'){
         editing=payload.editing===true;protectControls();document.documentElement.toggleAttribute('data-rt-editing',editing)
         if(!editing){selectedId='';hovered?.removeAttribute('data-rt-hovered');hovered=null;document.querySelectorAll('[data-rt-selected]').forEach(element=>element.removeAttribute('data-rt-selected'))}
+        if(editing){lastAreas='';areas()}else clearTimeout(timer)
         reportMove()
         return
       }
-      if(payload?.type==='rt-select-element'&&typeof payload.id==='string'){highlight(payload.id);return}
+      if(payload?.type==='rt-select-element'&&typeof payload.id==='string'){if(editing)highlight(payload.id);return}
       if (!payload || payload.type !== 'rt-visual-preview' || typeof payload.css !== 'string' || payload.css.length > 200000) return
       editing=payload.editing===true
       protectControls()
       document.documentElement.toggleAttribute('data-rt-editing',editing)
       let style = document.getElementById('rt-local-visual-preview')
       if (!style) { style = document.createElement('style'); style.id = 'rt-local-visual-preview'; document.head.appendChild(style) }
-      style.textContent = payload.css+'\n[data-rt-editing] [data-rt-hovered]{outline:1px dashed #176ab0;outline-offset:2px;cursor:crosshair}[data-rt-editing] [data-rt-selected]{outline:2px solid #dc2d85!important;outline-offset:3px}[contenteditable="plaintext-only"]{outline:2px solid #1d70b8!important;cursor:text!important}'
-      clearSavedStyles()
-      lastAreas='';areas();reportMove()
+      const css=payload.css+'\n[data-rt-editing] [data-rt-hovered]{outline:1px dashed #176ab0;outline-offset:2px;cursor:crosshair}[data-rt-editing] [data-rt-selected]{outline:2px solid #dc2d85!important;outline-offset:3px}[contenteditable="plaintext-only"]{outline:2px solid #1d70b8!important;cursor:text!important}'
+      if(style.textContent!==css){style.textContent=css;clearSavedStyles()}
+      scheduleInspection()
     }
     window.addEventListener('message', handle)
     document.addEventListener('click',pick,true);document.addEventListener('dblclick',inline,true);document.addEventListener('mouseover',hover,true)
     document.addEventListener('submit',guardSubmit,true)
-    const observer=new MutationObserver(()=>{clearTimeout(timer);timer=setTimeout(()=>{protectControls();areas();if(selectedId&&!document.querySelector('[data-rt-selected]'))highlight(selectedId);else reportMove()},200)});observer.observe(document.body,{childList:true,subtree:true})
-    const headObserver=new MutationObserver(records=>{if(records.some(record=>(record.target as Element).id!=='rt-local-visual-preview'&&(record.target as Element).parentElement?.id!=='rt-local-visual-preview'))clearSavedStyles()});headObserver.observe(document.head,{childList:true,subtree:true})
+    const scheduleInspection=()=>{clearTimeout(timer);if(!editing||!origin)return;timer=setTimeout(()=>{protectControls();areas();if(selectedId&&!document.querySelector('[data-rt-selected]'))highlight(selectedId);else reportMove()},200)}
+    const observer=new MutationObserver(()=>{reportPage();scheduleInspection()})
+    const headObserver=new MutationObserver(records=>{if(records.some(record=>(record.target as Element).id!=='rt-local-visual-preview'&&(record.target as Element).parentElement?.id!=='rt-local-visual-preview'))clearSavedStyles()})
     const onStyleLoad=(event:Event)=>{if(event.target instanceof HTMLLinkElement)clearSavedStyles()};document.addEventListener('load',onStyleLoad,true)
     const announce=()=>{if(window.parent!==window)window.parent.postMessage({type:'rt-editor-ready'},'*')}
     window.addEventListener('hashchange',announce)

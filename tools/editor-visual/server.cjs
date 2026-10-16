@@ -53,8 +53,9 @@ const server=http.createServer(async(req,res)=>{
   req.setEncoding('utf8');
   let raw='';try{for await(const chunk of req){raw+=chunk;if(Buffer.byteLength(raw)>200000){return reply(res,413,{error:'Envio excedeu o limite.'});}}
     const data=JSON.parse(raw||'{}');
+    if(data.app!==undefined&&!APPS.includes(data.app))return reply(res,400,{error:'Site inválido.'});
     const state=validateState(data.state);
-    return reply(res,200,{state,css:Object.fromEntries(APPS.map(app=>[app,generateCss(state[app])]))});
+    return reply(res,200,{state,css:Object.fromEntries((data.app?[data.app]:APPS).map(app=>[app,generateCss(state[app])]))});
   }catch(error){return reply(res,400,{error:error.code==='ENOENT'?'Nenhum salvamento para desfazer.':error.message});}
 });
 if(require.main===module)server.listen(3010,'127.0.0.1',()=>console.log('Painel visual: http://127.0.0.1:3010'));
