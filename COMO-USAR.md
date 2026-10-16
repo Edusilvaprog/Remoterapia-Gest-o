@@ -2,7 +2,9 @@
 
 Abra `Abrir-Previa.cmd` nesta pasta. Editor: http://localhost:3010/; Gestão: http://localhost:3015/gestao/painel; Portal: http://localhost:3016/.
 
-Escolha site, tela e versão na barra superior. Use Navegar para operar o aplicativo e Editar para ajustar o layout. Clique em texto/bloco na prévia; dois cliques permitem escrever diretamente em textos cadastrados. Os campos laterais alteram palavras, fonte, tamanho e cores. Para blocos, também ajustam largura e altura mínima. O conteúdo nunca é cortado para forçar uma altura menor.
+Escolha site, tela e versão na barra superior. O editor inicia em Navegar, com menus e formulários liberados. Use Editar somente para ajustar o layout; nesse modo, os cliques selecionam elementos e não executam as ações dos botões. Clique em texto/bloco na prévia; dois cliques permitem escrever diretamente em textos cadastrados. Os campos laterais alteram palavras, fonte, tamanho e cores. Para blocos, também ajustam largura e altura mínima. O conteúdo nunca é cortado para forçar uma altura menor.
+
+A lista Tela inclui também fechamento, clientes/agendamentos/eventos da recepção, feedback, mídia da direção e segurança. No computador, o menu da Gestão oferece Equipe de areia, Equipe de água e Fechamento. As abas da recepção abrem os cadastros existentes. Novo embarque continua reservado ao celular.
 
 No campo Selecionar neste ponto, alterne entre texto, botão, bloco menor e seção. Clique nas palavras para selecionar o texto; no fundo ou ícone do botão para selecionar sua caixa. O destaque azul acompanha somente o alvo sob o mouse; rosa identifica a seleção.
 

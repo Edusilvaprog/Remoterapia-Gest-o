@@ -34,6 +34,16 @@ Retomada autorizada em 14/10/2026. Prioridade atendida: editor simples, com rasc
 - A tentativa nativa mudou uma posição, mas retornou erro de alvo/área ativa; foi desfeita e o rascunho anterior foi comparado integralmente. A precisão do gesto físico ainda não está homologada pelo adaptador. Testes de eventos isolados e do resultado na interface passaram. Conferência manual deve arrastar pela alça, testar Esc e soltar fora do grupo.
 - Antes de produção, converter a ordem visual aprovada em estrutura/ordem de foco apropriada. Não publicar CSS de reordenação como substituto dessa revisão.
 
+## Revisão funcional da Gestão — 15/10/2026
+
+- Causa geral no editor: abertura em Editar interceptava links, abas e formulários. Agora inicia em Navegar; o título e a orientação deixam explícita a diferença. Navegar/Editar conferidos por campos habilitados/desabilitados, mantendo o rascunho.
+- Restrição de desktop excessiva: a camada principal escondia água e recepção junto com novo embarque. Recuperadas as duas telas existentes e seus controles, mantendo somente novo embarque no celular. Links por perfil preservados; sem duplicar as entradas do menu móvel.
+- Recuperados no menu: Equipe de areia, Equipe de água, Fechamento. Na recepção, abas de clientes, agendamentos e eventos acessíveis no computador. Seletor do editor ampliado de 14 para 22 telas.
+- Comando legado Resetar PIN removido da recepção: o servidor já recusava essa operação após a migração para e-mail/senha. Substituído por orientação de recuperação no Portal; não altera credenciais nem envia mensagens.
+- Verificação: 22 rotas internas responderam sem erro de compilação; 13 abas (administração, Portal e Guardaria) alternaram. Conferidos planos em edição/cancelamento, fila, clientes, eventos, caixa, diário, resultados, feedback, mídia, configurações, clima, pagamentos e segurança. Formulários de fila/eventos e relatório por período abriram e fecharam. Não executar publicação, pagamentos, exclusões ou troca de credenciais para testar interface.
+- Testes locais: `scripts/verify-management-navigation.cjs` cobre telas recuperadas, menus por perfil e separação celular/computador. Seleção, rascunho, arraste, dados locais, proxy e tipos passaram. Dados e histórico comparados ao snapshot de retomada; arquivo do rascunho permaneceu intacto.
+- Limite da prova: não foi homologado todo efeito de gravação de todos os botões. O clique automatizado dentro do iframe continua falhando no adaptador; seleção de tela, troca de modo e liberação dos campos foram comprovadas. Cliques e formulários nas abas diretas da Gestão funcionaram. Integrações reais continuam dependendo das configurações externas já registradas.
+
 ## Limitações ainda abertas
 
 1. Clique humano dentro do iframe: a ferramenta de navegador retorna “Click target is no longer available” para alvos visíveis da prévia. Isso também ocorre com coordenadas. Os handlers reais de texto, ícone, bloco, duplo clique, edição inline e Alt passaram nos testes isolados; seleção por campos funcionou no navegador. Não considerar a automação do clique como aprovada. A próxima conferência manual deve selecionar título, botão com ícone, espaço de bloco e editar com dois cliques nos dois sites.

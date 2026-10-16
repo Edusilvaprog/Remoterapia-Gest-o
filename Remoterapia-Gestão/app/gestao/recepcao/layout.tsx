@@ -24,6 +24,15 @@ export default async function RecepcaoLayout({
       </div>
 
       <AppBottomNav 
+        desktopItems={[
+          { label: 'MAR', href: '/gestao/recepcao/dashboard', icon: '🌊' },
+          { label: 'CLIENTES', href: '/gestao/recepcao/clientes', icon: '👥' },
+          { label: 'AGENDAMENTOS', href: '/gestao/recepcao/agendamentos', icon: '📅' },
+          { label: 'EVENTOS', href: '/gestao/recepcao/eventos', icon: '🎟️' },
+          { label: 'REGISTRO', href: '/gestao/diario', icon: '📋' },
+          { label: 'FECHAMENTO', href: '/gestao/fechamento', icon: '🔒' },
+          { label: 'CLIMA', href: '/gestao/clima', icon: '☀️' },
+        ]}
         items={[
           { label: 'MAR', href: '/gestao/recepcao/dashboard', icon: '🌊' },
           { label: 'REGISTRO', href: '/gestao/diario', icon: '📋' },

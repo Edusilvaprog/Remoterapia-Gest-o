@@ -3,7 +3,7 @@
 import BrandLabel from '@/components/ui/BrandLabel'
 import BrandIcon from '@/components/ui/BrandIcon'
 import { useState, useTransition } from 'react'
-import { criarMensalista, bloquearMensalista, resetarPinMensalista } from '@/lib/actions/mensalistas'
+import { criarMensalista, bloquearMensalista } from '@/lib/actions/mensalistas'
 import { Mensalista } from '@/lib/types'
 import {VisualText} from '@/components/ui/VisualContent'
 import VisualLabel from '@/components/ui/VisualLabel'
@@ -76,22 +76,8 @@ export default function ClientesClient({ mensalistasIniciais }: { mensalistasIni
     })
   }
 
-  const handleResetPin = (m: Mensalista) => {
-    if (!confirm(`Deseja resetar o PIN de ${m.nome}? O PIN atual deixará de funcionar imediatamente.`)) return
-    
-    startTransition(async () => {
-      const res = await resetarPinMensalista(m.id)
-      if (res.ok && res.data) {
-        showToast(`Novo PIN gerado: ${res.data}. Redirecionando para WhatsApp...`, 'success')
-        if (m.telefone) {
-          const num = m.telefone.replace(/\D/g, '')
-          const msg = encodeURIComponent(`Olá ${m.nome}, seu novo PIN de acesso ao app da Remoterapia é: ${res.data}`)
-          window.open(`https://wa.me/55${num}?text=${msg}`, '_blank')
-        }
-      } else {
-        showToast(res.error || 'Erro ao resetar PIN.', 'error')
-      }
-    })
+  const orientarRecuperacao = () => {
+    showToast('O acesso usa e-mail e senha. Para recuperar, o aluno deve selecionar Recuperar acesso na entrada do Portal.', 'info')
   }
 
   return (
@@ -213,6 +199,7 @@ export default function ClientesClient({ mensalistasIniciais }: { mensalistasIni
                 <button 
                   disabled={isPending}
                   onClick={() => toggleBlock(m.id, m.bloqueado)}
+                  aria-label={`${m.bloqueado ? 'Desbloquear' : 'Bloquear'} ${m.nome}`}
                   className={`w-10 h-10 flex items-center justify-center rounded-xl transition-all active:scale-95 cursor-pointer ${m.bloqueado ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'}`}
                 >
                   <BrandLabel text={m.bloqueado ? '🔓' : '🔒'}/>
@@ -221,10 +208,10 @@ export default function ClientesClient({ mensalistasIniciais }: { mensalistasIni
               <div className="mt-2 pt-2 border-t border-slate-100 dark:border-slate-700/50">
                 <button 
                   disabled={isPending}
-                  onClick={() => handleResetPin(m)}
+                  onClick={orientarRecuperacao}
                   className="w-full py-2 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-300 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all active:scale-95 flex justify-center items-center gap-2 disabled:opacity-50 cursor-pointer"
                 >
-                  <BrandIcon name="key"/><VisualText id="copy-9bd36ad45adf" defaultText={" Resetar PIN de Acesso"}/></button>
+                  <BrandIcon name="key"/>Como recuperar o acesso</button>
               </div>
             </div>
           )
