@@ -1,13 +1,14 @@
 # Estado atual — Remoterapia — prévia retomada
 
 - Trabalhar em work/versao-preview; originais preservados.
+- Prévia PC 18/10: zoom automático considera largura/altura e réguas; iframe aproveita a altura livre, sem rolagem externa no ajuste automático. Ampliar ocupa a área do editor; Voltar/Esc retorna. Zoom manual preservado; rascunho intacto. Testes de tamanho e arraste passaram; conferido no navegador.
 - Ajuste móvel 18/10: margens laterais de 18 px, botões organizados em linhas próprias, acesso direto Água/Areia no início conforme perfis e barra inferior com embarque central elevado. Destaques do editor ficam dentro do alvo. Ajuste antigo do botão Novo embarque corrigido no rascunho com histórico de desfazer.
 - Corrigida diferença entre Navegar/Editar: controles estilizados pelo rascunho recebem identificadores também em Navegar, sem medições de layout; cache evita recadastro repetido. Prova na interface: botão com 354 × 48 px, fonte 14 px e margens de 18 px nos dois modos, em tela de 390 px.
 - Portal móvel recupera cinco abas originais: Início, Agendar, Eventos, Histórico e Perfil; planos/pagamentos continuam acessíveis pelo perfil e pelo desktop.
 - Revisão 18/10 com backup de Music: Água/Areia/Embarque ficam no celular; desktop mantém cadastros/consultas/financeiro. Editor filtra 19 telas PC/22 celular. Ordem das abas antigas preservada; seletor recupera ordem de referência; visibilidade desktop no celular corrigida. Detalhes: COMPARACAO-BACKUP-NAVEGACAO.md.
 - Pesquisa 18/10: PESQUISA-EDICAO-VISUAL.md propõe camadas, alinhamento de grupos, medidas e encaixe. Pesquisa concluída; implementação dessas propostas aguarda definição do próximo escopo.
 - Editor: http://localhost:3010/; Gestão 3015; Portal 3016. Abrir-Previa.cmd inicia a prévia.
-- Revisão 16/10: conector inativo fora do iframe; Navegar sem inspeção de blocos; catálogo em cache e CSS apenas do site ativo; conteúdo idêntico não é reenviado. Painel recolhe em Navegar; zoom automático mínimo 75%.
+- Revisão 16/10: conector inativo fora do iframe; Navegar sem inspeção de blocos; catálogo em cache e CSS apenas do site ativo; conteúdo idêntico não é reenviado. Painel recolhe em Navegar; zoom automático atualizado em 18/10 para caber na área disponível.
 - Cadastradas para edição: abas desktop da Gestão/Administração, menu desktop do Portal, filtros do histórico e atalhos da Gestão. Ações preservadas. Pesquisa/editor/skills/podcast: EDITOR-DECISOES.md.
 - Revisão funcional 15/10: editor inicia em Navegar; lista ampliada para 22 telas da Gestão. Água, recepção e fechamento recuperados no desktop; novo embarque continua no celular.
 - Conferência: 22 rotas sem erro de compilação; 13 abas de administração/Portal/Guardaria, menus, formulários de fila/eventos e relatório por período. Navegação por perfil e tipos passaram. Rascunho e dados fictícios preservados.

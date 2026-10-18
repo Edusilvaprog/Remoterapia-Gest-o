@@ -15,7 +15,29 @@ function saveDraft(){clearTimeout(saveTimer);queue=queue.then(async()=>{if(!dirt
 function change(){storeRecovery();status();clearTimeout(saveTimer);saveTimer=setTimeout(saveDraft,500);clearTimeout(previewTimer);previewTimer=setTimeout(preview,90);}
 function send(message){if(frameReady)$('preview').contentWindow.postMessage(message,`http://localhost:${apps[app].port}`);}
 async function preview(){if(!draft||!frameReady)return;const request=++previewRequest,currentApp=app;try{const data=await api('/api/preview',{app,state:{[app]:clone(draft[app])}});if(request!==previewRequest||currentApp!==app)return;send({type:'rt-visual-preview',css:data.css[app],editing});const content=Object.fromEntries(['mobile','desktop'].map(mode=>[mode,{texts:data.state[app][mode].texts||{},slots:data.state[app][mode].slots||{}}])),serialized=JSON.stringify(content);if(serialized!==lastContent){lastContent=serialized;send({type:'rt-content-preview',content});}$('preview-status').textContent=editing?'Editando o rascunho':'Navegação ativa';}catch(error){$('preview-status').textContent=error.message;}}
-function size(){const width=view==='mobile'?390:1440,height=view==='mobile'?844:900;const scale=$('zoom').value==='auto'?Math.max(.75,Math.min(1,($('canvas').clientWidth-48-(moveUI?.gutter()||0))/width)):Number($('zoom').value);Object.assign($('preview').style,{width:width+'px',height:height+'px',transform:`scale(${scale})`});Object.assign($('stage').style,{width:width*scale+'px',height:height*scale+'px'});moveUI?.resize({width,height,scale});$('size').textContent=`${view==='mobile'?'Celular':'Computador'} · ${Math.round(scale*100)}%`;}
+function size(){
+ const width=view==='mobile'?390:1440,baseHeight=view==='mobile'?844:900,canvas=$('canvas'),padding=getComputedStyle(canvas),gutter=moveUI?.gutter()||0;
+ const availableWidth=Math.max(1,canvas.clientWidth-parseFloat(padding.paddingLeft)-parseFloat(padding.paddingRight)-gutter);
+ const availableHeight=Math.max(1,canvas.clientHeight-parseFloat(padding.paddingTop)-parseFloat(padding.paddingBottom)-gutter);
+ const auto=$('zoom').value==='auto';
+ const scale=auto?Math.min(1,availableWidth/width,...(view==='desktop'?[availableHeight/baseHeight]:[])):Number($('zoom').value);
+ // Keep the desktop breakpoint and use the remaining height instead of an empty canvas.
+ const height=auto&&view==='desktop'?Math.max(baseHeight,Math.floor(availableHeight/scale)):baseHeight;
+ Object.assign($('preview').style,{width:width+'px',height:height+'px',transform:`scale(${scale})`});
+ Object.assign($('stage').style,{width:width*scale+'px',height:height*scale+'px'});
+ moveUI?.resize({width,height,scale});$('size').textContent=`${view==='mobile'?'Celular':'Computador'} · ${Math.round(scale*100)}%`;
+}
+function expandPreview(expanded){
+ document.body.classList.toggle('preview-expanded',expanded);
+ $('expand-preview').setAttribute('aria-pressed',String(expanded));
+ $('expand-label').textContent=expanded?'Voltar':'Ampliar';
+ $('expand-preview').title=expanded?'Voltar ao editor (Esc)':'Ampliar a prévia';
+ size();
+}
+$('expand-preview').addEventListener('click',()=>expandPreview(!document.body.classList.contains('preview-expanded')));
+window.addEventListener('keydown',event=>{if(event.key==='Escape'&&document.body.classList.contains('preview-expanded')){expandPreview(false);$('expand-preview').focus();}});
+let sizeFrame;
+new ResizeObserver(()=>{cancelAnimationFrame(sizeFrame);sizeFrame=requestAnimationFrame(size);}).observe($('canvas'));
 function context(){try{localStorage.setItem(contextKey,JSON.stringify({app,view,page:$('page').value,zoom:$('zoom').value,rulers:$('guides').checked}));}catch{}}
 function loadPage(){moveUI?.reset();send({type:'rt-select-element',id:''});const url=`http://localhost:${apps[app].port}${$('page').value}`,previous=new URL($('preview').src||'about:blank'),next=new URL(url);const hashOnly=previous.origin===next.origin&&previous.pathname===next.pathname&&previous.hash!==next.hash;if(!hashOnly)frameReady=false;$('preview').src=url;selection=null;selectionPath=[];targetArea='';inspector();size();context();if(hashOnly)preview();}
 function options(control,items,prompt){const select=$(control);select.replaceChildren();for(const [value,label] of [['',prompt],...items]){const option=document.createElement('option');option.value=value;option.textContent=label;select.append(option);}}

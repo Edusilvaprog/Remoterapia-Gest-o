@@ -4,7 +4,7 @@ Abra `Abrir-Previa.cmd` nesta pasta. Editor: http://localhost:3010/; Gestão: ht
 
 Escolha site, tela e versão na barra superior. O editor inicia em Navegar, com menus e formulários liberados. Use Editar somente para ajustar o layout; nesse modo, os cliques selecionam elementos e não executam as ações dos botões. Clique em texto/bloco na prévia; dois cliques permitem escrever diretamente em textos cadastrados. Os campos laterais alteram palavras, fonte, tamanho e cores. Para blocos, também ajustam largura e altura mínima. O conteúdo nunca é cortado para forçar uma altura menor.
 
-Em Navegar, o painel lateral recolhe para dar espaço ao aplicativo. Em Editar, reaparece. O zoom automático mantém pelo menos 75% para facilitar os cliques; use as barras de rolagem quando a tela não couber. O zoom manual permite reduzir mais, se necessário.
+Em Navegar, o painel lateral recolhe para dar espaço ao aplicativo. Em Editar, reaparece. No computador, Zoom > Ajustar encaixa a prévia na largura e altura disponíveis. Ampliar ocupa a área do editor; Voltar ou Esc retorna aos controles. A versão de celular mantém seu formato de 390 px. O zoom manual permite ampliar os detalhes, com rolagem quando necessário.
 
 A lista Tela inclui fechamento, clientes/agendamentos/eventos da recepção, feedback, mídia da direção e segurança. No computador, o menu mantém cadastros, consultas e financeiro. Equipe de areia, Equipe de água e Novo embarque aparecem somente na versão de celular. O editor filtra essa lista conforme a versão; ao sair de uma tela operacional para computador, abre a visão geral.
 
