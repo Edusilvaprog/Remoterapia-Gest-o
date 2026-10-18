@@ -6,7 +6,7 @@ Escolha site, tela e versão na barra superior. O editor inicia em Navegar, com 
 
 Em Navegar, o painel lateral recolhe para dar espaço ao aplicativo. Em Editar, reaparece. O zoom automático mantém pelo menos 75% para facilitar os cliques; use as barras de rolagem quando a tela não couber. O zoom manual permite reduzir mais, se necessário.
 
-A lista Tela inclui também fechamento, clientes/agendamentos/eventos da recepção, feedback, mídia da direção e segurança. No computador, o menu da Gestão oferece Equipe de areia, Equipe de água e Fechamento. As abas da recepção abrem os cadastros existentes. Novo embarque continua reservado ao celular.
+A lista Tela inclui fechamento, clientes/agendamentos/eventos da recepção, feedback, mídia da direção e segurança. No computador, o menu mantém cadastros, consultas e financeiro. Equipe de areia, Equipe de água e Novo embarque aparecem somente na versão de celular. O editor filtra essa lista conforme a versão; ao sair de uma tela operacional para computador, abre a visão geral.
 
 No campo Selecionar neste ponto, alterne entre texto, botão, bloco menor e seção. Clique nas palavras para selecionar o texto; no fundo ou ícone do botão para selecionar sua caixa. O destaque azul acompanha somente o alvo sob o mouse; rosa identifica a seleção.
 

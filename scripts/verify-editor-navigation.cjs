@@ -36,4 +36,11 @@ const Overview=load('Remoterapia-Gestão','components/desktop/GestaoOverview.tsx
 const data={reservas:0,naAgua:0,frota:0,alunos:0,agenda:[],failed:false,dateLabel:'Hoje'};
 const overview=Overview({nome:'Teste',role:'admin',data});const shortcuts=find(overview,node=>node.props?.['aria-label']==='Acesso rápido da Gestão');
 const links=editableControls(shortcuts,'gestao',6);assert.deepEqual(links.map(link=>link.props.href),['/gestao/portal','/gestao/diario','/gestao/pagamentos','/gestao/admin','/gestao/admin/configuracoes','/gestao/clima']);
-console.log('OK: menu desktop do Portal, filtros do histórico e atalhos da Gestão editáveis; ações e acesso preservados.');
+const editor=ts.createSourceFile('editor.js',fs.readFileSync(path.join(root,'tools/editor-visual/editor.js'),'utf8'),ts.ScriptTarget.Latest,true,ts.ScriptKind.JS);
+const pageCode=editor.statements.filter(node=>ts.isVariableStatement(node)&&node.declarationList.declarations.some(declaration=>['apps','mobilePages'].includes(declaration.name.getText(editor)))||ts.isFunctionDeclaration(node)&&node.name?.text==='availablePages').map(node=>node.getText(editor)).join('\n');
+const context=vm.createContext({app:'gestao',view:'desktop'});vm.runInContext(pageCode,context);
+const pagePaths=()=>Array.from(vm.runInContext('availablePages()',context),item=>item[1]);
+for(const route of ['/gestao/agua','/gestao/recepcao/dashboard','/gestao/recepcao/novo-embarque'])assert(!pagePaths().includes(route),'Desktop editor excludes '+route);
+context.view='mobile';for(const route of ['/gestao/agua','/gestao/recepcao/dashboard','/gestao/recepcao/novo-embarque'])assert(pagePaths().includes(route),'Phone editor keeps '+route);
+context.app='portal';assert.equal(pagePaths().length,7);context.view='desktop';assert.equal(pagePaths().length,7);
+console.log('OK: menu/filtros/atalhos editáveis, ações preservadas e telas do editor filtradas por dispositivo.');

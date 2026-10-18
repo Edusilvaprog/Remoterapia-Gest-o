@@ -4,6 +4,8 @@ Retomada autorizada em 14/10/2026. Prioridade atendida: editor simples, com rasc
 
 ## Concluído
 
+- Revisão 18/10: comparação com `C:\Users\Admin\Music\remoterapia-v2` somente por leitura. Nova orientação do usuário substitui a revisão de 15/10: Água, Areia e Novo embarque voltam a ser exclusivos do celular. Desktop mantém as consultas e áreas administrativas; editor filtra telas por versão. Detalhes e lista: `COMPARACAO-BACKUP-NAVEGACAO.md`.
+
 - Revisão 16/10: detalhes em `EDITOR-DECISOES.md`. Conector isolado, varreduras suspensas em Navegar, prévia apenas do aplicativo ativo e cache do catálogo; menu desktop do Portal, filtros de histórico, atalhos e abas administrativas cadastrados para edição. Rascunho anterior mantido; nenhuma migração de editor instalada.
 
 - Editor: somente selecionar site/tela/versão, editar palavras/fonte/tamanho/cor, redimensionar blocos, adicionar/remover, zoom, desfazer e restaurar tudo. Navegar/Editar restaurados a pedido em 15/10; sem exportação, ajustes globais ou aplicação na nova versão.

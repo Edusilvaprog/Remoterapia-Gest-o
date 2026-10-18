@@ -34,23 +34,24 @@ const render=(Component,props)=>renderToStaticMarkup(React.createElement(Compone
 for(const route of ['/gestao/agua','/gestao/recepcao/dashboard','/gestao/fechamento']){
  currentPath=route;
  const html=render(Shell,{perfil:profile('admin'),children:React.createElement('p',{'data-test-screen':'true'},'Tela funcional')});
- assert(html.includes('class="rt-workspace-body"><p data-test-screen="true"'),'Desktop must render '+route);
- assert(html.includes('href="'+route+'"'));
+ const phoneOnly=route!=='/gestao/fechamento';
+ assert(html.includes(phoneOnly?'class="rt-mobile-only"><p data-test-screen="true"':'class="rt-workspace-body"><p data-test-screen="true"'),'Correct device scope for '+route);
+ assert.equal(html.includes('href="'+route+'"'),!phoneOnly,'Desktop links follow the requested device scope');
  const mobileItems=html.match(/data-mobile-links="([^"]*)"/)[1];
  assert(!mobileItems.includes('/gestao/agua')&&!mobileItems.includes('/gestao/recepcao/dashboard'),'Operation links already belong to the mobile operation menu');
 }
 currentPath='/gestao/recepcao/novo-embarque';
 assert(render(Shell,{perfil:profile('admin'),children:'Embarque'}).includes('<div class="rt-mobile-only">Embarque</div>'),'New boarding remains mobile-only');
 for(const [role,present,absent] of [
- ['recepcao','/gestao/recepcao/dashboard','/gestao/agua'],
- ['instrutor','/gestao/agua','/gestao/fechamento'],
+ ['recepcao','/gestao/portal','/gestao/agua'],
+ ['instrutor','/gestao/clima','/gestao/fechamento'],
  ['guardaria','/gestao/guardaria','/gestao/admin'],
 ]){
  const html=render(Shell,{perfil:profile(role),children:'Tela'});
  assert(html.includes('href="'+present+'"'));assert(!html.includes('href="'+absent+'"'),'Role-filtered navigation: '+role);
 }
 const nav=render(Section,{pathname:'/gestao/agua',items:[{label:'Água',href:'/gestao/agua'},{label:'Areia',href:'/gestao/recepcao/dashboard'},{label:'Novo embarque',href:'/gestao/recepcao/novo-embarque'}]});
-assert(nav.includes('href="/gestao/agua"')&&nav.includes('href="/gestao/recepcao/dashboard"'));assert(!nav.includes('novo-embarque'));
+assert(!nav.includes('href="/gestao/agua"')&&!nav.includes('href="/gestao/recepcao/dashboard"'));assert(!nav.includes('novo-embarque'));
 const bottom=render(Bottom,{items:[{label:'Mar',href:'/gestao/recepcao/dashboard'}],desktopItems:[{label:'Eventos',href:'/gestao/recepcao/eventos'}]});
 assert(bottom.split('rt-mobile-tabs-wrap')[0].includes('/gestao/recepcao/eventos'));
 assert(!bottom.split('rt-mobile-tabs-wrap')[1].includes('/gestao/recepcao/eventos'));
@@ -65,4 +66,8 @@ vm.runInNewContext(ts.transpileModule(`export default function Tabs({tab,setTab}
 let active='usuarios';const adminTabs=tabModule.exports.default({tab:active,setTab:value=>active=value});
 assert.equal((renderToStaticMarkup(adminTabs).match(/data-rt-copy-id=/g)||[]).length,4,'Every visible admin tab is editable');
 for(const [index,id] of ['usuarios','frota','lockers','auditoria'].entries()){adminTabs.props.children[index].props.onClick();assert.equal(active,id,'Original tab action preserved')}
-console.log('OK: telas operacionais no desktop, novo embarque no celular, menus por perfil e abas exclusivas do computador.');
+const Mobile=load('components/desktop/GestaoMobileNav.tsx',{'react':{useEffect:empty,useState:()=>[true,empty],useRef:()=>({current:null})}});
+for(const [role,available,forbidden] of [['recepcao','/gestao/recepcao/dashboard','/gestao/agua'],['instrutor','/gestao/agua','/gestao/recepcao/dashboard']]){
+ const html=render(Mobile,{nome:'Teste',roles:[role],path:'/gestao/painel',items:[]});assert(html.includes('href="'+available+'"'));assert(!html.includes('href="'+forbidden+'"'),'Phone operation remains role-filtered');
+}
+console.log('OK: água/areia/embarque só no celular; consultas e fechamento no computador; perfis e abas preservados.');

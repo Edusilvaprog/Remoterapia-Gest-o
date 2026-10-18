@@ -1,6 +1,7 @@
 # Estado atual — Remoterapia — prévia retomada
 
 - Trabalhar em work/versao-preview; originais preservados.
+- Revisão 18/10 com backup de Music: Água/Areia/Embarque ficam no celular; desktop mantém cadastros/consultas/financeiro. Editor filtra 19 telas PC/22 celular. Ordem das abas antigas preservada; seletor recupera ordem de referência; visibilidade desktop no celular corrigida. Detalhes: COMPARACAO-BACKUP-NAVEGACAO.md.
 - Pesquisa 18/10: PESQUISA-EDICAO-VISUAL.md propõe camadas, alinhamento de grupos, medidas e encaixe. Pesquisa concluída; implementação dessas propostas aguarda definição do próximo escopo.
 - Editor: http://localhost:3010/; Gestão 3015; Portal 3016. Abrir-Previa.cmd inicia a prévia.
 - Revisão 16/10: conector inativo fora do iframe; Navegar sem inspeção de blocos; catálogo em cache e CSS apenas do site ativo; conteúdo idêntico não é reenviado. Painel recolhe em Navegar; zoom automático mínimo 75%.

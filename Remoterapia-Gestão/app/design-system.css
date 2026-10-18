@@ -8,6 +8,7 @@ button:not(:disabled):active{transform:translateY(1px)}button:disabled{cursor:no
 :where(button,a,summary,input,select,textarea):focus-visible{outline:3px solid var(--rt-focus);outline-offset:3px}
 .rt-brand-icon{display:inline-block;vertical-align:middle;flex-shrink:0}
 .rt-mobile-only{display:block}.rt-desktop-only{display:none}
+@media(max-width:1023px){.rt-desktop-only{display:none!important}}
 [data-rt-modal]{isolation:isolate}
 [data-rt-modal]>div{animation:rt-dialog-in .2s ease-out;overscroll-behavior:contain}
 [data-rt-modal] button,[data-rt-modal] input,[data-rt-modal] select{min-height:40px}
