@@ -1,6 +1,7 @@
 # Estado atual — Remoterapia — prévia retomada
 
 - Trabalhar em work/versao-preview; originais preservados.
+- Pesquisa 18/10: PESQUISA-EDICAO-VISUAL.md propõe camadas, alinhamento de grupos, medidas e encaixe. Pesquisa concluída; implementação dessas propostas aguarda definição do próximo escopo.
 - Editor: http://localhost:3010/; Gestão 3015; Portal 3016. Abrir-Previa.cmd inicia a prévia.
 - Revisão 16/10: conector inativo fora do iframe; Navegar sem inspeção de blocos; catálogo em cache e CSS apenas do site ativo; conteúdo idêntico não é reenviado. Painel recolhe em Navegar; zoom automático mínimo 75%.
 - Cadastradas para edição: abas desktop da Gestão/Administração, menu desktop do Portal, filtros do histórico e atalhos da Gestão. Ações preservadas. Pesquisa/editor/skills/podcast: EDITOR-DECISOES.md.
