@@ -55,6 +55,9 @@ assert(!nav.includes('href="/gestao/agua"')&&!nav.includes('href="/gestao/recepc
 const bottom=render(Bottom,{items:[{label:'Mar',href:'/gestao/recepcao/dashboard'}],desktopItems:[{label:'Eventos',href:'/gestao/recepcao/eventos'}]});
 assert(bottom.split('rt-mobile-tabs-wrap')[0].includes('/gestao/recepcao/eventos'));
 assert(!bottom.split('rt-mobile-tabs-wrap')[1].includes('/gestao/recepcao/eventos'));
+const phoneBar=render(Bottom,{items:[{label:'MAR',href:'/gestao/recepcao/dashboard'},{label:'REGISTRO',href:'/gestao/diario'},{label:'FECHAMENTO',href:'/gestao/fechamento'},{label:'CLIMA',href:'/gestao/clima'}],centerAction:{href:'/gestao/recepcao/novo-embarque',label:'Novo embarque'}}).split('rt-mobile-tabs-wrap')[1];
+assert(phoneBar.includes('rt-mobile-tabs--with-action'),'Phone action bar has its own layout');
+const positions=['>MAR<','>REGISTRO<','>Novo embarque<','>FECHAMENTO<','>CLIMA<'].map(label=>phoneBar.indexOf(label));assert(positions.every((position,index)=>position>=0&&(index===0||position>positions[index-1])),'Original phone order keeps boarding in the center');
 const editable=render(Section,{pathname:'/gestao/admin',items:[{label:'FROTA & PREÇOS',onClick:empty},{label:'ALUNOS',onClick:empty}]});
 assert(editable.includes('data-rt-copy-id="copy-18274b7d5cde"')&&editable.includes('data-rt-copy-id="copy-368e8054259d"'),'Desktop tabs use the existing editable labels');
 // Render the separate Admin tab strip too: it does not use GestaoSectionNav.

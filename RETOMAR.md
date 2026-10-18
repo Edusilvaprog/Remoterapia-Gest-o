@@ -4,6 +4,9 @@ Retomada autorizada em 14/10/2026. Prioridade atendida: editor simples, com rasc
 
 ## Concluído
 
+- Refinamento móvel 18/10: corrigidas margens e ações da base visual dos dois sites; início da Gestão prioriza Água/Areia conforme os perfis, mantendo a operação somente no celular. Barra da recepção preserva Mar → Registro → Novo embarque → Fechamento → Clima com ação central elevada. No rascunho, somente o ajuste antigo de tamanho/espaçamento do botão principal de embarque foi normalizado pela API com revisão e desfazer; demais personalizações mantidas.
+- Conector 18/10: estilos de botões/partes dependiam de identificadores que só eram cadastrados em Editar. Agora cadastra os alvos necessários ao CSS do rascunho também em Navegar, com cache e sem leitura geométrica. Mutação de conteúdo atualiza esses identificadores; sem estilos de controles/partes, Navegar continua sem a varredura. Testes cobrem a regressão e a estabilidade entre modos foi comprovada no navegador.
+
 - Revisão 18/10: comparação com `C:\Users\Admin\Music\remoterapia-v2` somente por leitura. Nova orientação do usuário substitui a revisão de 15/10: Água, Areia e Novo embarque voltam a ser exclusivos do celular. Desktop mantém as consultas e áreas administrativas; editor filtra telas por versão. Detalhes e lista: `COMPARACAO-BACKUP-NAVEGACAO.md`.
 
 - Revisão 16/10: detalhes em `EDITOR-DECISOES.md`. Conector isolado, varreduras suspensas em Navegar, prévia apenas do aplicativo ativo e cache do catálogo; menu desktop do Portal, filtros de histórico, atalhos e abas administrativas cadastrados para edição. Rascunho anterior mantido; nenhuma migração de editor instalada.

@@ -5,7 +5,7 @@ export default function VisualPreviewBridge() {
   useEffect(() => {
     if (process.env.NODE_ENV !== 'development' || window.parent === window) return
     const editorOrigins = new Set(['http://127.0.0.1:3010', 'http://localhost:3010'])
-    let editing=false,origin='',lastAreas='',lastPage='',selectedId='',observing=false,timer:ReturnType<typeof setTimeout>,hovered:HTMLElement|null=null
+    let editing=false,origin='',lastAreas='',lastPage='',selectedId='',observing=false,targetsDirty=true,styledTargets=false,timer:ReturnType<typeof setTimeout>,hovered:HTMLElement|null=null
     const marker='[data-rt-copy-id],[data-rt-control-id],[data-rt-part-id],[data-rt-extra-id],[data-rt-area]'
     const cards='.rt-base-panel,.rt-base-metrics>*,.rt-base-hub-card,.rt-base-history-card,.dw-panel,.dw-metric,.rt-card,.rt-payment-option,.rt-experience-card'
     const post=(data:object)=>{if(origin)window.parent.postMessage(data,origin)}
@@ -41,6 +41,7 @@ export default function VisualPreviewBridge() {
         })
       }
     }
+    const refreshTargets=()=>{if(targetsDirty){registerTargets();targetsDirty=false}}
     const targets=(target:Element)=>{
       const control=target.closest<HTMLElement>('button,a,summary,[role="button"]')
       if(control&&!control.dataset.rtControlId&&!target.closest('[data-rt-copy-id]')&&!target.closest('[data-rt-extra-id]'))return []
@@ -67,7 +68,7 @@ export default function VisualPreviewBridge() {
     }
     const areas=()=>{
       if(!origin||!editing)return
-      registerTargets()
+      refreshTargets()
       const visible=Array.from(document.querySelectorAll<HTMLElement>(marker)).filter(element=>element.getClientRects().length>0)
       const ids=visible.filter(element=>element.dataset.rtArea||element.dataset.rtControlId||element.dataset.rtPartId).map(element=>identify(element)?.id),texts=visible.filter(element=>element.dataset.rtCopyId).map(element=>element.dataset.rtCopyId)
       const allAreas=Array.from(document.querySelectorAll<HTMLElement>('[data-rt-area]')).map(element=>element.dataset.rtArea)
@@ -122,19 +123,21 @@ export default function VisualPreviewBridge() {
       if(payload?.type==='rt-select-element'&&typeof payload.id==='string'){if(editing)highlight(payload.id);return}
       if (!payload || payload.type !== 'rt-visual-preview' || typeof payload.css !== 'string' || payload.css.length > 200000) return
       editing=payload.editing===true
+      styledTargets=payload.css.includes('[data-rt-control-id=')||payload.css.includes('[data-rt-part-id=')
+      if(styledTargets)refreshTargets()
       protectControls()
       document.documentElement.toggleAttribute('data-rt-editing',editing)
       let style = document.getElementById('rt-local-visual-preview')
       if (!style) { style = document.createElement('style'); style.id = 'rt-local-visual-preview'; document.head.appendChild(style) }
-      const css=payload.css+'\n[data-rt-editing] [data-rt-hovered]{outline:1px dashed #176ab0;outline-offset:2px;cursor:crosshair}[data-rt-editing] [data-rt-selected]{outline:2px solid #dc2d85!important;outline-offset:3px}[contenteditable="plaintext-only"]{outline:2px solid #1d70b8!important;cursor:text!important}'
+      const css=payload.css+'\n[data-rt-editing] [data-rt-hovered]{outline:1px dashed #176ab0;outline-offset:0;cursor:pointer}[data-rt-editing] [data-rt-selected]{outline:2px solid #dc2d85!important;outline-offset:0}[contenteditable="plaintext-only"]{outline:2px solid #1d70b8!important;cursor:text!important}'
       if(style.textContent!==css){style.textContent=css;clearSavedStyles()}
       scheduleInspection()
     }
     window.addEventListener('message', handle)
     document.addEventListener('click',pick,true);document.addEventListener('dblclick',inline,true);document.addEventListener('mouseover',hover,true)
     document.addEventListener('submit',guardSubmit,true)
-    const scheduleInspection=()=>{clearTimeout(timer);if(!editing||!origin)return;timer=setTimeout(()=>{protectControls();areas();if(selectedId&&!document.querySelector('[data-rt-selected]'))highlight(selectedId);else reportMove()},200)}
-    const observer=new MutationObserver(()=>{reportPage();scheduleInspection()})
+    const scheduleInspection=()=>{clearTimeout(timer);if(!origin||(!editing&&!styledTargets))return;timer=setTimeout(()=>{if(!editing){refreshTargets();return}protectControls();areas();if(selectedId&&!document.querySelector('[data-rt-selected]'))highlight(selectedId);else reportMove()},200)}
+    const observer=new MutationObserver(()=>{targetsDirty=true;reportPage();scheduleInspection()})
     const headObserver=new MutationObserver(records=>{if(records.some(record=>(record.target as Element).id!=='rt-local-visual-preview'&&(record.target as Element).parentElement?.id!=='rt-local-visual-preview'))clearSavedStyles()})
     const onStyleLoad=(event:Event)=>{if(event.target instanceof HTMLLinkElement)clearSavedStyles()};document.addEventListener('load',onStyleLoad,true)
     const announce=()=>{if(window.parent!==window)window.parent.postMessage({type:'rt-editor-ready'},'*')}

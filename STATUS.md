@@ -1,6 +1,9 @@
 # Estado atual — Remoterapia — prévia retomada
 
 - Trabalhar em work/versao-preview; originais preservados.
+- Ajuste móvel 18/10: margens laterais de 18 px, botões organizados em linhas próprias, acesso direto Água/Areia no início conforme perfis e barra inferior com embarque central elevado. Destaques do editor ficam dentro do alvo. Ajuste antigo do botão Novo embarque corrigido no rascunho com histórico de desfazer.
+- Corrigida diferença entre Navegar/Editar: controles estilizados pelo rascunho recebem identificadores também em Navegar, sem medições de layout; cache evita recadastro repetido. Prova na interface: botão com 354 × 48 px, fonte 14 px e margens de 18 px nos dois modos, em tela de 390 px.
+- Portal móvel recupera cinco abas originais: Início, Agendar, Eventos, Histórico e Perfil; planos/pagamentos continuam acessíveis pelo perfil e pelo desktop.
 - Revisão 18/10 com backup de Music: Água/Areia/Embarque ficam no celular; desktop mantém cadastros/consultas/financeiro. Editor filtra 19 telas PC/22 celular. Ordem das abas antigas preservada; seletor recupera ordem de referência; visibilidade desktop no celular corrigida. Detalhes: COMPARACAO-BACKUP-NAVEGACAO.md.
 - Pesquisa 18/10: PESQUISA-EDICAO-VISUAL.md propõe camadas, alinhamento de grupos, medidas e encaixe. Pesquisa concluída; implementação dessas propostas aguarda definição do próximo escopo.
 - Editor: http://localhost:3010/; Gestão 3015; Portal 3016. Abrir-Previa.cmd inicia a prévia.

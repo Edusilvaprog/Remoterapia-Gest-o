@@ -13,5 +13,5 @@ export default async function PainelPage(){
   supabase.from('mensalistas').select('id',{head:true,count:'exact'}).is('arquivado_em',null),
   supabase.from('agendamentos').select('id,mensalista_nome,horario_reserva,status').eq('data_reserva',today).in('status',['pendente','confirmado']).order('horario_reserva',{ascending:true}).limit(12)
  ])
- return <GestaoOverview nome={perfil.nome} role={perfil.role} data={{reservas:reservas.error?null:reservas.count,naAgua:naAgua.error?null:naAgua.count,frota:frota.error?null:frota.count,alunos:alunos.error?null:alunos.count,agenda:agenda.data||[],failed:!!(reservas.error||naAgua.error||frota.error||alunos.error||agenda.error),dateLabel:new Intl.DateTimeFormat('pt-BR',{timeZone:'America/Sao_Paulo',weekday:'long',day:'numeric',month:'long'}).format(new Date())}}/>
+ return <GestaoOverview nome={perfil.nome} role={perfil.role} roles={perfil.roles||[]} data={{reservas:reservas.error?null:reservas.count,naAgua:naAgua.error?null:naAgua.count,frota:frota.error?null:frota.count,alunos:alunos.error?null:alunos.count,agenda:agenda.data||[],failed:!!(reservas.error||naAgua.error||frota.error||alunos.error||agenda.error),dateLabel:new Intl.DateTimeFormat('pt-BR',{timeZone:'America/Sao_Paulo',weekday:'long',day:'numeric',month:'long'}).format(new Date())}}/>
 }

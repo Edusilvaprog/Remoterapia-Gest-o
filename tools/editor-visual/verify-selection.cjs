@@ -1,28 +1,36 @@
 // Exercises the real bridge handlers without requiring browser automation inside an iframe.
 const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),assert=require('node:assert/strict');
 const ts=require('../../Remoterapia-Portal/node_modules/typescript');
+let layoutReads=0;
 class Element {
  constructor(dataset={},matches={}){this.dataset=dataset;this.matches=matches;this.children=[];this.parentElement=null;this.attributes={};this.classList={contains:()=>false};}
  closest(selector){if(this.matches[selector])return this.matches[selector];if(selector.includes('[data-rt-control-id]')&&['rtCopyId','rtControlId','rtPartId','rtExtraId','rtArea'].some(key=>this.dataset[key]))return this;return this.parentElement?.closest(selector)||null;}
  querySelectorAll(){return this.copies||[];}
- getClientRects(){return [1];}
+ getClientRects(){layoutReads++;return [1];}
  setAttribute(key,value){this.attributes[key]=value;} removeAttribute(key){delete this.attributes[key];} focus(){} addEventListener(name,fn){this[name]=fn;} blur(){this.blurHandler?.();}
 }
 function load(file,standalone=false){
- const documentEvents={},windowEvents={},sent=[],observers=[],tasks=new Map(),input={disabled:false,isConnected:true};let queries=0;
- const doc={styleSheets:[],querySelector:()=>null,querySelectorAll:selector=>selector==='input,select,textarea'?[input]:[],documentElement:{toggleAttribute(){}},head:{appendChild(){}},body:{},getElementById:()=>null,createElement:()=>({}),createRange:()=>({selectNodeContents(){}}),addEventListener:(type,fn)=>documentEvents[type]=fn,removeEventListener(){}};
+ const documentEvents={},windowEvents={},sent=[],observers=[],tasks=new Map(),controls=[],input={disabled:false,isConnected:true};let queries=0;
+ const doc={styleSheets:[],querySelector:()=>null,querySelectorAll:selector=>selector==='input,select,textarea'?[input]:selector==='button,a,summary,[role="button"]'?controls:[],documentElement:{toggleAttribute(){}},head:{appendChild(){}},body:{},getElementById:()=>null,createElement:()=>({}),createRange:()=>({selectNodeContents(){}}),addEventListener:(type,fn)=>documentEvents[type]=fn,removeEventListener(){}};
  const win={location:{pathname:'/',search:'',hash:''},parent:{postMessage:data=>sent.push(data)},addEventListener:(type,fn)=>windowEvents[type]=fn,getSelection:()=>({removeAllRanges(){},addRange(){}})};
  if(standalone)win.parent=win;
  const query=doc.querySelectorAll;doc.querySelectorAll=selector=>{queries++;return query(selector)};
  const exports={};vm.runInNewContext(ts.transpileModule(fs.readFileSync(file,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2020}}).outputText,{exports,require:name=>name==='react'?{useEffect:callback=>callback()}:{inspectMoveLayout:()=>({id:'',items:[]})},process:{env:{NODE_ENV:'development'}},window:win,document:doc,Element,HTMLElement:Element,HTMLLinkElement:Element,MutationObserver:class{constructor(callback){this.callback=callback;observers.push(this)}observe(){} disconnect(){}},getComputedStyle:()=>({display:'block'}),setTimeout:fn=>{tasks.set(fn,fn);return fn},clearTimeout:id=>tasks.delete(id)});
  exports.default();if(!standalone)windowEvents.message({source:win.parent,origin:'http://localhost:3010',data:{type:'rt-visual-preview',css:'',editing:true}});
- return {events:documentEvents,windowEvents,sent,input,observers,tasks,win,queries:()=>queries,mode:editing=>windowEvents.message({source:win.parent,origin:'http://localhost:3010',data:{type:'rt-editor-mode',editing}})};
+ return {events:documentEvents,windowEvents,sent,input,observers,tasks,controls,win,queries:()=>queries,mode:editing=>windowEvents.message({source:win.parent,origin:'http://localhost:3010',data:{type:'rt-editor-mode',editing}}),preview:(css,editing)=>windowEvents.message({source:win.parent,origin:'http://localhost:3010',data:{type:'rt-visual-preview',css,editing}})};
 }
 function event(target,altKey=false){return {target,altKey,preventDefault(){this.prevented=true},stopPropagation(){this.stopped=true}};}
 const files=['VisualPreviewBridge.tsx','../../Remoterapia-Portal/components/ui/VisualPreviewBridge.tsx','../../Remoterapia-Gestão/components/ui/VisualPreviewBridge.tsx'].map(file=>path.join(__dirname,file));
 assert.equal(fs.readFileSync(files[0],'utf8'),fs.readFileSync(files[1],'utf8'));assert.equal(fs.readFileSync(files[0],'utf8'),fs.readFileSync(files[2],'utf8'));
 for(const file of files){
  const standalone=load(file,true);assert.equal(standalone.observers.length,0);assert.equal(Object.keys(standalone.events).length,0);assert.equal(Object.keys(standalone.windowEvents).length,0,'Direct app installs no editor handlers');
+ const styled=load(file);styled.mode(false);
+ const addControl=id=>{const control=new Element(),label=new Element({rtCopyId:'copy-'+id});control.matches['button,a,summary,[role="button"]']=control;label.parentElement=control;control.copies=[label];styled.controls.push(control);return control};
+ const first=addControl('abcdef123456'),measurements=layoutReads,css='[data-rt-control-id="control-abcdef123456"]{width:100%}';
+ styled.preview(css,false);assert.equal(first.attributes['data-rt-control-id'],'control-abcdef123456','Saved button styles have a target before entering Edit');assert.equal(layoutReads,measurements,'Navigate registers styled targets without layout measurements');
+ const queriesBefore=styled.queries();styled.preview(css,false);assert.equal(styled.queries(),queriesBefore,'Unchanged targets are not rescanned on each preview');
+ const second=addControl('123456abcdef');styled.observers[0].callback([]);for(const [id,callback] of [...styled.tasks]){styled.tasks.delete(id);callback()}
+ assert.equal(second.attributes['data-rt-control-id'],'control-123456abcdef','New route controls receive saved styles in Navigate');assert.equal(layoutReads,measurements);
  const harness=load(file),{events,sent,input,mode}=harness,copy=new Element({rtCopyId:'copy-123456abcdef'}),area=new Element({rtArea:'area-123456abcdef'});
  copy.matches['[data-rt-copy-id]']=copy;copy.matches['[data-rt-area]']=area;
  let click=event(copy);events.click(click);assert.equal(sent.at(-1).id,copy.dataset.rtCopyId);assert.ok(click.prevented&&click.stopped);
@@ -42,4 +50,4 @@ for(const file of files){
  mode(true);assert.equal(input.disabled,true);click=event(icon);events.click(click);assert.equal(click.prevented,true,'editing intercepts application actions');
  assert(harness.queries()>before,'Editing discovers selectable targets');
 }
-console.log('OK: seleção/inline/modos; app direto sem handlers; Navegar sem varredura; rotas acompanhadas; bridges sincronizados.');
+console.log('OK: seleção/inline/modos; app direto sem handlers; Navegar sem medições; estilos estáveis entre modos; rotas acompanhadas; bridges sincronizados.');

@@ -12,7 +12,7 @@ interface BottomNavProps {
 }
 
 export default function BottomNav({ view, setView, alunoData }: BottomNavProps) {
-  const isSelected = (v: string) => view === v
+  const isSelected = (v: string) => view === v || (v === 'perfil' && view === 'pagamentos')
   const [waMenuOpen, setWaMenuOpen] = useState(false)
   const menuRef = useRef<HTMLDivElement>(null)
   const helpToggleRef = useRef<HTMLButtonElement>(null)
@@ -88,7 +88,6 @@ export default function BottomNav({ view, setView, alunoData }: BottomNavProps) 
           <button type="button" onClick={() => setView('historico')} aria-current={isSelected('historico') ? 'page' : undefined} className={`flex flex-col lg:flex-row items-center justify-center lg:justify-start flex-1 lg:flex-none lg:gap-3 lg:px-3 py-2 lg:py-3 rounded-2xl transition-all duration-200 active:scale-95 cursor-pointer ${isSelected('historico') ? 'bg-gradient-to-r from-[#0284c7] to-[#034480] text-white font-black shadow-md shadow-sky-600/30' : 'text-slate-400 hover:text-slate-700 dark:hover:text-white hover:bg-slate-100/60 dark:hover:bg-slate-800/60 font-bold'}`}>
             <History className="w-5 h-5" /><span className="text-[9px] lg:text-[11px] uppercase tracking-wider mt-0.5 lg:mt-0"><VisualText id="copy-529c13249804" defaultText={"Histórico"}/></span>
           </button>
-          <button type="button" aria-label="Planos e pagamentos no celular" onClick={() => setView('pagamentos')} aria-current={isSelected('pagamentos') ? 'page' : undefined} className="flex flex-col items-center justify-center flex-1 py-2 rounded-2xl transition-all cursor-pointer"><CreditCard className="w-5 h-5"/><span className="text-[9px]"><VisualText id="copy-80d4ea89ac70" defaultText={"Planos"}/></span></button>
           <button type="button" onClick={() => setView('perfil')} aria-current={isSelected('perfil') ? 'page' : undefined} className={`flex flex-col lg:flex-row items-center justify-center lg:justify-start flex-1 lg:flex-none lg:gap-3 lg:px-3 py-2 lg:py-3 rounded-2xl transition-all duration-200 active:scale-95 cursor-pointer ${isSelected('perfil') ? 'bg-gradient-to-r from-[#0284c7] to-[#034480] text-white font-black shadow-md shadow-sky-600/30' : 'text-slate-400 hover:text-slate-700 dark:hover:text-white hover:bg-slate-100/60 dark:hover:bg-slate-800/60 font-bold'}`}>
             <UserCircle2 className="w-5 h-5" /><span className="text-[9px] lg:text-[11px] uppercase tracking-wider mt-0.5 lg:mt-0"><VisualText id="copy-326bb996870a" defaultText={"Perfil"}/></span>
           </button>

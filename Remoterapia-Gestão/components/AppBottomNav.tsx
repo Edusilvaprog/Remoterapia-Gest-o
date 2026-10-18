@@ -12,7 +12,7 @@ export default function AppBottomNav({items,desktopItems,centerAction}:Props){
  const create=centerAction&&<Link href={centerAction.href} className="rt-mobile-tab-create" aria-label={centerAction.label||'Novo embarque'}><Plus size={23}/><span><VisualLabel text={centerAction.label||'Novo embarque'}/></span></Link>
  return <>
   <GestaoSectionNav items={desktopItems??items} pathname={pathname} centerAction={centerAction}/>
-  <div className="rt-mobile-tabs-wrap"><nav aria-label="Navegação da gestão" className="rt-mobile-tabs">
+  <div className="rt-mobile-tabs-wrap"><nav aria-label="Navegação da gestão" className={`rt-mobile-tabs${centerAction?' rt-mobile-tabs--with-action':''}`}>
    {items.map((item,index)=>{
     const Icon=symbol(item.label),active=item.active??(item.href===pathname)
     const content=<><Icon size={21} strokeWidth={1.8}/><span><VisualLabel text={item.label}/></span></>
