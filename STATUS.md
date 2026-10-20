@@ -1,7 +1,7 @@
 # Estado atual — Remoterapia — prévia retomada
 
 - Trabalhar em work/versao-preview; originais preservados.
-- Prévia PC 18/10: zoom automático considera largura/altura e réguas; iframe aproveita a altura livre, sem rolagem externa no ajuste automático. Ampliar ocupa a área do editor; Voltar/Esc retorna. Zoom manual preservado; rascunho intacto. Testes de tamanho e arraste passaram; conferido no navegador.
+- Editor 19/10: ferramentas agrupadas na lateral (260 px em janela larga; painel sobreposto/recolhível em janela estreita e no modo ampliado). Ferramentas permanecem acessíveis ao ampliar; seleção abre propriedades em janela estreita. Removida altura artificial: PC 1440 × 900, celular 390 × 844; zoom automático encaixa ambos nos dois eixos. Conferido em 1280 × 900 e 390 × 844; sem transbordamento externo. Testes de tamanho, arraste e seleção passaram. Rascunho preservado.
 - Ajuste móvel 18/10: margens laterais de 18 px, botões organizados em linhas próprias, acesso direto Água/Areia no início conforme perfis e barra inferior com embarque central elevado. Destaques do editor ficam dentro do alvo. Ajuste antigo do botão Novo embarque corrigido no rascunho com histórico de desfazer.
 - Corrigida diferença entre Navegar/Editar: controles estilizados pelo rascunho recebem identificadores também em Navegar, sem medições de layout; cache evita recadastro repetido. Prova na interface: botão com 354 × 48 px, fonte 14 px e margens de 18 px nos dois modos, em tela de 390 px.
 - Portal móvel recupera cinco abas originais: Início, Agendar, Eventos, Histórico e Perfil; planos/pagamentos continuam acessíveis pelo perfil e pelo desktop.

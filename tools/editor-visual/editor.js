@@ -20,22 +20,29 @@ function size(){
  const availableWidth=Math.max(1,canvas.clientWidth-parseFloat(padding.paddingLeft)-parseFloat(padding.paddingRight)-gutter);
  const availableHeight=Math.max(1,canvas.clientHeight-parseFloat(padding.paddingTop)-parseFloat(padding.paddingBottom)-gutter);
  const auto=$('zoom').value==='auto';
- const scale=auto?Math.min(1,availableWidth/width,...(view==='desktop'?[availableHeight/baseHeight]:[])):Number($('zoom').value);
- // Keep the desktop breakpoint and use the remaining height instead of an empty canvas.
- const height=auto&&view==='desktop'?Math.max(baseHeight,Math.floor(availableHeight/scale)):baseHeight;
+ const scale=auto?Math.min(1,availableWidth/width,availableHeight/baseHeight):Number($('zoom').value);
+ const height=baseHeight;
  Object.assign($('preview').style,{width:width+'px',height:height+'px',transform:`scale(${scale})`});
  Object.assign($('stage').style,{width:width*scale+'px',height:height*scale+'px'});
  moveUI?.resize({width,height,scale});$('size').textContent=`${view==='mobile'?'Celular':'Computador'} · ${Math.round(scale*100)}%`;
 }
 function expandPreview(expanded){
  document.body.classList.toggle('preview-expanded',expanded);
+ setTools(false);
  $('expand-preview').setAttribute('aria-pressed',String(expanded));
  $('expand-label').textContent=expanded?'Voltar':'Ampliar';
  $('expand-preview').title=expanded?'Voltar ao editor (Esc)':'Ampliar a prévia';
  size();
 }
+function setTools(open){
+ document.body.classList.toggle('tools-open',open);
+ $('tools-toggle').setAttribute('aria-expanded',String(open));
+ $('tools-label').textContent=open?'Fechar painel':'Ferramentas';
+ size();
+}
+$('tools-toggle').addEventListener('click',()=>setTools(!document.body.classList.contains('tools-open')));
 $('expand-preview').addEventListener('click',()=>expandPreview(!document.body.classList.contains('preview-expanded')));
-window.addEventListener('keydown',event=>{if(event.key==='Escape'&&document.body.classList.contains('preview-expanded')){expandPreview(false);$('expand-preview').focus();}});
+window.addEventListener('keydown',event=>{if(event.key!=='Escape')return;if(document.body.classList.contains('tools-open')){setTools(false);$('tools-toggle').focus();}else if(document.body.classList.contains('preview-expanded')){expandPreview(false);$('expand-preview').focus();}});
 let sizeFrame;
 new ResizeObserver(()=>{cancelAnimationFrame(sizeFrame);sizeFrame=requestAnimationFrame(size);}).observe($('canvas'));
 function context(){try{localStorage.setItem(contextKey,JSON.stringify({app,view,page:$('page').value,zoom:$('zoom').value,rulers:$('guides').checked}));}catch{}}
@@ -47,13 +54,13 @@ function style(create=false){const block=extra();if(block){if(create)block.style
 function labelFor(id){const meta=registry[app]?.[id];if(id.startsWith('control-')||id.startsWith('part-'))return (id.startsWith('control-')?'Botão · ':'Bloco · ')+labelFor('copy-'+id.slice(id.indexOf('-')+1));return meta?.kind==='text'?String(draft[app][view].texts?.[id]??meta.defaultText??meta.label).trim().slice(0,75)||'Texto vazio':meta?.label||'Bloco';}
 function range(control,value,output,suffix){const input=$(control);value=Math.max(Number(input.min),Math.min(Number(input.max),Number(value)||0));input.value=value;if($(control+'-number'))$(control+'-number').value=value;$(output).textContent=value+suffix;}
 function modeUi(){moveUI?.setMode(editing);
- $('workspace').classList.toggle('is-navigating',!editing);document.querySelector('#workspace>aside').hidden=!editing;
+ $('workspace').classList.toggle('is-navigating',!editing);
  $('mode-title').textContent=editing?'Editar layout':'Usar o aplicativo';
  $('navigate-mode').setAttribute('aria-pressed',String(!editing));$('edit-mode').setAttribute('aria-pressed',String(editing));document.querySelector('.inspector').hidden=!editing;
  $('mode-help').textContent=editing?'Clique nas palavras para editar. Clique no fundo ou ícone para selecionar o botão. Alt + clique abre a aba sem sair da edição.':'Navegação ativa: use os menus, botões e formulários do aplicativo. Volte a Editar para ajustar o layout.';
  $('interaction-help').textContent=editing?'Modo Editar · cliques selecionam o layout. Use Navegar para abrir abas e executar ações.':'Modo Navegar · os controles do aplicativo funcionam normalmente.';
 }
-function setMode(value){editing=value;if(!editing){selection=null;selectionPath=[];targetArea='';inspector();}send({type:'rt-editor-mode',editing});modeUi();size();$('preview-status').textContent=editing?'Editando o rascunho':'Navegação ativa';}
+function setMode(value){editing=value;if(!editing){selection=null;selectionPath=[];targetArea='';inspector();}send({type:'rt-editor-mode',editing});modeUi();setTools(false);size();$('preview-status').textContent=editing?'Editando o rascunho':'Navegação ativa';}
 $('navigate-mode').addEventListener('click',()=>setMode(false));$('edit-mode').addEventListener('click',()=>setMode(true));
 function inspector(){
  const meta=selection&&registry[app]?.[selection.id],block=extra(),selected=!!(meta||block),isText=meta?.kind==='text';
@@ -67,7 +74,7 @@ function inspector(){
  const area=registry[app]?.[targetArea];$('add-block').disabled=!area||area.canAdd===false;
  const blocks=draft?.[app]?.[view]?.slots?.[targetArea]||[];$('added-field').hidden=!blocks.length;options('added-list',blocks.map(item=>[item.id,item.title||'Bloco vazio']),'Selecione um bloco');if(block)$('added-list').value=block.id;
 }
-function select(id,kind,area,path){moveUI?.reset();if(Array.isArray(path))selectionPath=path.filter(item=>registry[app]?.[item.id]||item.kind==='extra');else if(!selectionPath.some(item=>item.id===id))selectionPath=id?[{id,kind,area}]:[];selection=id?{id,kind}:null;targetArea=area||targetArea;inspector();send({type:'rt-select-element',id});}
+function select(id,kind,area,path){moveUI?.reset();if(Array.isArray(path))selectionPath=path.filter(item=>registry[app]?.[item.id]||item.kind==='extra');else if(!selectionPath.some(item=>item.id===id))selectionPath=id?[{id,kind,area}]:[];selection=id?{id,kind}:null;targetArea=area||targetArea;inspector();send({type:'rt-select-element',id});if(id&&editing&&(window.innerWidth<=900||document.body.classList.contains('preview-expanded')))setTools(true);}
 $('app').addEventListener('change',()=>{app=$('app').value;options('area-list',[],'Clique em um bloco');options('text-list',[],'Clique em um texto');pages();status();});
 $('page').addEventListener('change',loadPage);
 $('view').addEventListener('change',()=>{const previousPage=$('page').value;view=$('view').value;pages(previousPage,false);if(previousPage!==$('page').value){loadPage();status();return;}moveUI?.reset();selection=null;selectionPath=[];targetArea='';inspector();send({type:'rt-select-element',id:''});size();context();status();preview();});
