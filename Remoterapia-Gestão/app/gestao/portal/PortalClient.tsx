@@ -125,7 +125,8 @@ function handleMoedaInput(e: React.ChangeEvent<HTMLInputElement>, setter: (v: st
 
 const ROTEIRO_NASCERSOL: RoteiroPasso[] = []
 
-export default function PortalClient() {
+export type ManagementSection='agendamentos'|'bloqueios'|'clientes'|'eventos'|'planos'
+export default function PortalClient({section}:{section?:ManagementSection}={}) {
   const [planosEditando, setPlanosEditando] = useState(false)
   const scrollRefAg = useRef<HTMLDivElement>(null)
   const [isDownAg, setIsDownAg] = useState(false)
@@ -169,7 +170,8 @@ export default function PortalClient() {
     scrollRefCl.current.scrollLeft = scrollLeftCl - walk
   }
 
-  const [tab, setTab] = useState<'agendamentos' | 'bloqueios' | 'clientes' | 'eventos' | 'planos'>('agendamentos')
+  const [legacyTab, setTab] = useState<'agendamentos' | 'bloqueios' | 'clientes' | 'eventos' | 'planos'>('agendamentos')
+  const tab=section??legacyTab
   const [toast, setToast] = useState<{ msg: string; tipo: 'success' | 'warning' | 'error' | 'info' } | null>(null)
 
   // ── AGENDAMENTOS ──────────────────────────────────────────────────────────
@@ -493,7 +495,7 @@ export default function PortalClient() {
 
   return (
     <>
-      <div className="dw-only"><WorkspaceHeading eyebrow="Relacionamento com os alunos" title="Alunos e reservas" description="Consulte as reservas, organize os alunos e configure os serviços publicados no Portal."/></div><AppBottomNav
+      {!section&&<><div className="dw-only"><WorkspaceHeading eyebrow="Relacionamento com os alunos" title="Alunos e reservas" description="Consulte as reservas, organize os alunos e configure os serviços publicados no Portal."/></div><AppBottomNav
         items={[
           { label: 'AGENDAMENTOS', icon: '📅', active: tab === 'agendamentos', onClick: () => setTab('agendamentos') },
           { label: 'BLOQUEIOS', icon: '🚫', active: tab === 'bloqueios', onClick: () => setTab('bloqueios') },
@@ -501,7 +503,7 @@ export default function PortalClient() {
           { label: 'EVENTOS', icon: '🎟️', active: tab === 'eventos', onClick: () => setTab('eventos') },
           { label: 'PLANOS', icon: '💳', active: tab === 'planos', onClick: () => setTab('planos') },
         ]}
-      />
+      /></>}
       {/* TOAST */}
       {toast && (
         <div className="fixed top-5 left-1/2 -translate-x-1/2 z-[9999] w-full max-w-sm px-4 pointer-events-none animate-fade-in slide-in-from-top-4 duration-300 ease-out">

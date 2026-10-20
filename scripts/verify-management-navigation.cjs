@@ -43,7 +43,7 @@ for(const route of ['/gestao/agua','/gestao/recepcao/dashboard','/gestao/fechame
 currentPath='/gestao/recepcao/novo-embarque';
 assert(render(Shell,{perfil:profile('admin'),children:'Embarque'}).includes('<div class="rt-mobile-only">Embarque</div>'),'New boarding remains mobile-only');
 for(const [role,present,absent] of [
- ['recepcao','/gestao/portal','/gestao/agua'],
+ ['recepcao','/gestao/clientes','/gestao/agua'],
  ['instrutor','/gestao/clima','/gestao/fechamento'],
  ['guardaria','/gestao/guardaria','/gestao/admin'],
 ]){

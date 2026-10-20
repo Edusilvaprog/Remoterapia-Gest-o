@@ -2,6 +2,10 @@
 
 Referência somente para leitura: `C:\Users\Admin\Music\remoterapia-v2`, com `site-gestao` e `site-agendamento`. O backup não foi executado nem alterado. Ajustes feitos exclusivamente em `work/versao-preview`.
 
+## Atualização de escopo — 20/10/2026
+
+O usuário optou por áreas independentes, substituindo o agrupamento antigo do Portal descrito abaixo. Clientes, Agendamentos, Eventos, Bloqueios e Planos agora têm rotas e títulos próprios. As demais ordens internas de Água, Areia, Guardaria, Direção e Administração continuam preservadas. O registro abaixo é a comparação histórica com o backup, não a organização atual do antigo Portal.
+
 ## O que a comparação mostrou
 
 A ordem das abas internas principais continua igual à do backup. O problema não era uma inversão geral dessas abas: surgiram novos acessos gerais, opções operacionais no computador e diferenças de apresentação entre dispositivos.

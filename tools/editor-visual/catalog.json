@@ -605,8 +605,8 @@
     },
     "copy-529da3d56364": {
       "kind": "text",
-      "label": "Alunos, reservas e eventos",
-      "defaultText": "Alunos, reservas e eventos",
+      "label": "Planos e mensalidades",
+      "defaultText": "Planos e mensalidades",
       "file": "app/gestao/admin/configuracoes/ConfiguracoesClient.tsx"
     },
     "area-3bff2f6aacc6": {
@@ -7234,8 +7234,8 @@
     },
     "copy-88f9ad521888": {
       "kind": "text",
-      "label": "Portal de alunos",
-      "defaultText": "Portal de alunos",
+      "label": "Clientes",
+      "defaultText": "Clientes",
       "file": "components/desktop/GestaoOverview.tsx"
     },
     "copy-941bf6462554": {
@@ -7273,6 +7273,36 @@
       "label": "Segurança",
       "defaultText": "Segurança",
       "file": "components/desktop/GestaoOverview.tsx"
+    },
+    "copy-d2cbf70d2c8a": {
+      "kind": "text",
+      "label": "Clientes",
+      "defaultText": "Clientes",
+      "file": "components/ui/VisualLabel.tsx"
+    },
+    "copy-be76e757ce5b": {
+      "kind": "text",
+      "label": "Agendamentos",
+      "defaultText": "Agendamentos",
+      "file": "components/ui/VisualLabel.tsx"
+    },
+    "copy-474243e652dc": {
+      "kind": "text",
+      "label": "Bloqueios",
+      "defaultText": "Bloqueios",
+      "file": "components/ui/VisualLabel.tsx"
+    },
+    "copy-7c3b5ff65f3c": {
+      "kind": "text",
+      "label": "Clientes, agenda e eventos",
+      "defaultText": "Clientes, agenda e eventos",
+      "file": "components/ui/VisualLabel.tsx"
+    },
+    "copy-ecc8d9f84496": {
+      "kind": "text",
+      "label": "Regras da operação",
+      "defaultText": "Regras da operação",
+      "file": "components/ui/VisualLabel.tsx"
     }
   },
   "portal": {

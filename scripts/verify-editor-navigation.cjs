@@ -42,7 +42,7 @@ const filters=editableControls(segments,'portal',4);for(const [index,value] of [
 const Overview=load('Remoterapia-Gestão','components/desktop/GestaoOverview.tsx').default;
 const data={reservas:0,naAgua:0,frota:0,alunos:0,agenda:[],failed:false,dateLabel:'Hoje'};
 const overview=Overview({nome:'Teste',role:'admin',data});const shortcuts=find(overview,node=>node.props?.['aria-label']==='Acesso rápido da Gestão');
-const links=editableControls(shortcuts,'gestao',6);assert.deepEqual(links.map(link=>link.props.href),['/gestao/portal','/gestao/diario','/gestao/pagamentos','/gestao/admin','/gestao/admin/configuracoes','/gestao/clima']);
+const links=editableControls(shortcuts,'gestao',6);assert.deepEqual(links.map(link=>link.props.href),['/gestao/clientes','/gestao/diario','/gestao/pagamentos','/gestao/admin','/gestao/admin/configuracoes','/gestao/clima']);
 for(const [role,paths] of [['admin',['/gestao/agua','/gestao/recepcao/dashboard']],['recepcao',['/gestao/recepcao/dashboard']],['instrutor',['/gestao/agua']]]){
  const home=Overview({nome:'Teste',role,data}),operations=find(home,node=>node.props?.['aria-label']==='Operação na base');assert(operations.props.className.includes('rt-mobile-only'));
  const actual=React.Children.toArray(operations.props.children).map(link=>link.props.href);assert.deepEqual(actual,paths,'Phone shortcuts follow profile '+role);
@@ -54,6 +54,7 @@ const pageCode=editor.statements.filter(node=>ts.isVariableStatement(node)&&node
 const context=vm.createContext({app:'gestao',view:'desktop'});vm.runInContext(pageCode,context);
 const pagePaths=()=>Array.from(vm.runInContext('availablePages()',context),item=>item[1]);
 for(const route of ['/gestao/agua','/gestao/recepcao/dashboard','/gestao/recepcao/novo-embarque'])assert(!pagePaths().includes(route),'Desktop editor excludes '+route);
+for(const route of ['/gestao/clientes','/gestao/agendamentos','/gestao/eventos','/gestao/bloqueios','/gestao/planos'])assert.equal(pagePaths().filter(path=>path===route).length,1,'Each independent area appears once');assert(!pagePaths().includes('/gestao/portal'),'Combined area is absent from the editor');
 context.view='mobile';for(const route of ['/gestao/agua','/gestao/recepcao/dashboard','/gestao/recepcao/novo-embarque'])assert(pagePaths().includes(route),'Phone editor keeps '+route);
 context.app='portal';assert.equal(pagePaths().length,7);context.view='desktop';assert.equal(pagePaths().length,7);
 console.log('OK: menu/filtros/atalhos editáveis, ações preservadas e telas do editor filtradas por dispositivo.');
