@@ -162,7 +162,7 @@ export default function EmbarqueClient({
   }
 
   return (
-    <div className="rt-boarding-workspace fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+    <div className="rt-legacy-refresh rt-boarding-workspace fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
       
       <form 
         onSubmit={handleSubmit} 
@@ -173,7 +173,7 @@ export default function EmbarqueClient({
         <div className="bg-gradient-to-r from-blue-600 to-cyan-500 px-5 py-4 flex justify-between items-center text-white shrink-0">
           <div className="flex items-center gap-2">
             <span className="text-base"><BrandIcon name="ship"/></span>
-            <h3 className="text-xs font-black uppercase tracking-wider"><VisualText id="copy-c9385c9ef932" defaultText={"REGISTRO DE EMBARQUE"}/></h3>
+            <h3 className="rt-legacy-type text-xs font-black uppercase tracking-wider"><VisualText id="copy-c9385c9ef932" defaultText={"REGISTRO DE EMBARQUE"}/></h3>
           </div>
           <Link 
             href="/gestao/recepcao/dashboard" 
@@ -195,8 +195,8 @@ export default function EmbarqueClient({
           {/* SELEÇÃO DO CAIAQUE */}
           <div>
             <div className="flex justify-between items-center mb-1">
-              <label className="text-[9px] font-black text-slate-500 uppercase ml-1 block tracking-wider"><VisualText id="copy-4a19237705a0" defaultText={"EMBARCAÇÃO"}/></label>
-              <span className="text-[8px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-cyan-300 border border-blue-200 dark:border-blue-900"><VisualText id="copy-894d58751798" defaultText={"CAPACIDADE: ATÉ "}/>{capacidadeMaxima} <VisualLabel text={capacidadeMaxima > 1 ? 'PESSOAS' : 'PESSOA'}/>
+              <label className="rt-legacy-type rt-legacy-caption text-[9px] font-black text-slate-500 uppercase ml-1 block tracking-wider"><VisualText id="copy-4a19237705a0" defaultText={"EMBARCAÇÃO"}/></label>
+              <span className="rt-legacy-type rt-legacy-caption text-[8px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-cyan-300 border border-blue-200 dark:border-blue-900"><VisualText id="copy-894d58751798" defaultText={"CAPACIDADE: ATÉ "}/>{capacidadeMaxima} <VisualLabel text={capacidadeMaxima > 1 ? 'PESSOAS' : 'PESSOA'}/>
               </span>
             </div>
             
@@ -205,10 +205,10 @@ export default function EmbarqueClient({
                 onClick={() => { const wasOpen = cDropOpen; closeAllDrops(); setCDropOpen(!wasOpen); }}
                 className="py-2.5 px-3 rounded-xl bg-[#f8fafc] dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex justify-between items-center cursor-pointer shadow-sm min-h-[40px]"
               >
-                <span className="text-xs font-black truncate text-blue-700 dark:text-cyan-400">
+                <span className="rt-legacy-type text-xs font-black truncate text-blue-700 dark:text-cyan-400">
                   #{caiaqueAtual.id} · {caiaqueAtual.nome || caiaqueAtual.tipo}
                 </span>
-                <span className="text-blue-500 text-[9px] font-black ml-1">▼</span>
+                <span className="rt-legacy-type rt-legacy-caption text-blue-500 text-[9px] font-black ml-1">▼</span>
               </div>
 
               {cDropOpen && (
@@ -238,14 +238,14 @@ export default function EmbarqueClient({
             
             {/* TITULAR */}
             <div>
-              <label className="text-[9px] font-black text-blue-700 dark:text-cyan-400 uppercase ml-1 mb-1 block tracking-wider"><VisualText id="copy-8e8efd21efbf" defaultText={"1º TRIPULANTE (TITULAR / RESPONSÁVEL)"}/></label>
+              <label className="rt-legacy-type rt-legacy-caption text-[9px] font-black text-blue-700 dark:text-cyan-400 uppercase ml-1 mb-1 block tracking-wider"><VisualText id="copy-8e8efd21efbf" defaultText={"1º TRIPULANTE (TITULAR / RESPONSÁVEL)"}/></label>
               <input 
                 type="text" 
                 value={titular}
                 onChange={e => setTitular(e.target.value)}
                 placeholder="Nome do cliente responsável"
                 required
-                className="w-full py-2 px-3 rounded-xl bg-white dark:bg-slate-800 border border-blue-200 dark:border-slate-700 text-slate-900 dark:text-white font-bold text-xs outline-none focus:border-blue-500 shadow-sm"
+                className="rt-legacy-fields w-full py-2 px-3 rounded-xl bg-white dark:bg-slate-800 border border-blue-200 dark:border-slate-700 text-slate-900 dark:text-white font-bold text-xs outline-none focus:border-blue-500 shadow-sm"
               />
             </div>
 
@@ -253,15 +253,15 @@ export default function EmbarqueClient({
             {capacidadeMaxima >= 2 && (
               <div>
                 <div className="flex justify-between items-center mb-1 ml-1">
-                  <label className="text-[9px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-wider"><VisualText id="copy-1a7166247554" defaultText={"2º TRIPULANTE (OPCIONAL)"}/></label>
-                  <span className="text-[7.5px] font-bold text-slate-400 uppercase"><VisualText id="copy-e9516f8edaaf" defaultText={"Se sozinho, deixe vazio"}/></span>
+                  <label className="rt-legacy-type rt-legacy-caption text-[9px] font-black text-slate-600 dark:text-slate-400 uppercase tracking-wider"><VisualText id="copy-1a7166247554" defaultText={"2º TRIPULANTE (OPCIONAL)"}/></label>
+                  <span className="rt-legacy-caption text-[7.5px] font-bold text-slate-400 uppercase"><VisualText id="copy-e9516f8edaaf" defaultText={"Se sozinho, deixe vazio"}/></span>
                 </div>
                 <input 
                   type="text" 
                   value={segundoTripulante}
                   onChange={e => setSegundoTripulante(e.target.value)}
                   placeholder="Nome do 2º passageiro (ou em branco)"
-                  className="w-full py-2 px-3 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-bold text-xs outline-none focus:border-blue-500 shadow-sm"
+                  className="rt-legacy-fields w-full py-2 px-3 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-bold text-xs outline-none focus:border-blue-500 shadow-sm"
                 />
               </div>
             )}
@@ -271,14 +271,14 @@ export default function EmbarqueClient({
               const num = idx + 3
               return (
                 <div key={num}>
-                  <label className="text-[9px] font-black text-slate-600 dark:text-slate-400 uppercase ml-1 mb-1 block tracking-wider">
+                  <label className="rt-legacy-type rt-legacy-caption text-[9px] font-black text-slate-600 dark:text-slate-400 uppercase ml-1 mb-1 block tracking-wider">
                     {num}<VisualText id="copy-7c5c93509a10" defaultText={"º TRIPULANTE (OPCIONAL)"}/></label>
                   <input 
                     type="text" 
                     value={demaisTripulantes[num] || ''}
                     onChange={e => setDemaisTripulantes({ ...demaisTripulantes, [num]: e.target.value })}
                     placeholder={`Nome do ${num}º passageiro`}
-                    className="w-full py-2 px-3 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-bold text-xs outline-none focus:border-blue-500 shadow-sm"
+                    className="rt-legacy-fields w-full py-2 px-3 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-900 dark:text-white font-bold text-xs outline-none focus:border-blue-500 shadow-sm"
                   />
                 </div>
               )
@@ -288,15 +288,15 @@ export default function EmbarqueClient({
           {/* GUARDA-VOLUMES & PAGAMENTO */}
           <div className="grid grid-cols-2 gap-2.5">
             <div className="relative">
-              <label className="text-[9px] font-black text-slate-500 uppercase ml-1 mb-1 block tracking-wider"><VisualText id="copy-9d59b98be5ec" defaultText={"GUARDA-VOLUMES"}/></label>
+              <label className="rt-legacy-type rt-legacy-caption text-[9px] font-black text-slate-500 uppercase ml-1 mb-1 block tracking-wider"><VisualText id="copy-9d59b98be5ec" defaultText={"GUARDA-VOLUMES"}/></label>
               <div 
                 onClick={() => { const wasOpen = lDropOpen; closeAllDrops(); setLDropOpen(!wasOpen); }}
                 className="py-2.5 px-3 rounded-xl bg-[#f8fafc] dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex justify-between items-center cursor-pointer shadow-sm min-h-[40px]"
               >
-                <span className={`text-xs font-black truncate ${lockersSel.length === 0 ? 'text-slate-400' : 'text-amber-600'}`}>
+                <span className={`rt-legacy-type text-xs font-black truncate ${lockersSel.length === 0 ? 'text-slate-400' : 'text-amber-600'}`}>
                   <VisualLabel text={lockersSel.length === 0 ? 'Nenhum' : lockersSel.map(id => 'GV ' + id).join(', ')}/>
                 </span>
-                <span className="text-slate-400 text-[9px] font-black ml-1">▼</span>
+                <span className="rt-legacy-type rt-legacy-caption text-slate-400 text-[9px] font-black ml-1">▼</span>
               </div>
 
               {lDropOpen && (
@@ -321,15 +321,15 @@ export default function EmbarqueClient({
             </div>
 
             <div className="relative">
-              <label className="text-[9px] font-black text-slate-500 uppercase ml-1 mb-1 block tracking-wider"><VisualText id="copy-473401812ea2" defaultText={"PAGAMENTO"}/></label>
+              <label className="rt-legacy-type rt-legacy-caption text-[9px] font-black text-slate-500 uppercase ml-1 mb-1 block tracking-wider"><VisualText id="copy-473401812ea2" defaultText={"PAGAMENTO"}/></label>
               <div 
                 onClick={() => { const wasOpen = pDropOpen; closeAllDrops(); setPDropOpen(!wasOpen); }}
                 className="py-2.5 px-3 rounded-xl bg-[#f8fafc] dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex justify-between items-center cursor-pointer shadow-sm min-h-[40px]"
               >
-                <span className="text-xs font-black truncate text-slate-900 dark:text-white">
+                <span className="rt-legacy-type text-xs font-black truncate text-slate-900 dark:text-white">
                   {pagamento || 'Selecione'}
                 </span>
-                <span className="text-slate-400 text-[9px] font-black ml-1">▼</span>
+                <span className="rt-legacy-type rt-legacy-caption text-slate-400 text-[9px] font-black ml-1">▼</span>
               </div>
 
               {pDropOpen && (
@@ -357,15 +357,15 @@ export default function EmbarqueClient({
           {/* INSTRUTOR & TEMPO */}
           <div className="grid grid-cols-2 gap-2.5">
             <div className="relative">
-              <label className="text-[9px] font-black text-slate-500 uppercase ml-1 mb-1 block tracking-wider"><VisualText id="copy-9aa916a1790d" defaultText={"INSTRUTOR"}/></label>
+              <label className="rt-legacy-type rt-legacy-caption text-[9px] font-black text-slate-500 uppercase ml-1 mb-1 block tracking-wider"><VisualText id="copy-9aa916a1790d" defaultText={"INSTRUTOR"}/></label>
               <div 
                 onClick={() => { const wasOpen = iDropOpen; closeAllDrops(); setIDropOpen(!wasOpen); }}
                 className="py-2.5 px-3 rounded-xl bg-[#f8fafc] dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex justify-between items-center cursor-pointer shadow-sm min-h-[40px]"
               >
-                <span className="text-xs font-black truncate text-slate-900 dark:text-white">
+                <span className="rt-legacy-type text-xs font-black truncate text-slate-900 dark:text-white">
                   <BrandLabel text={instrutor ? `👤 Inst. ${instrutor}` : 'Nenhum (Autônomo)'}/>
                 </span>
-                <span className="text-slate-400 text-[9px] font-black ml-1">▼</span>
+                <span className="rt-legacy-type rt-legacy-caption text-slate-400 text-[9px] font-black ml-1">▼</span>
               </div>
 
               {iDropOpen && (
@@ -399,15 +399,15 @@ export default function EmbarqueClient({
             </div>
 
             <div className="relative">
-              <label className="text-[9px] font-black text-slate-500 uppercase ml-1 mb-1 block tracking-wider"><VisualText id="copy-fa4ee93faa3e" defaultText={"TEMPO TOTAL"}/></label>
+              <label className="rt-legacy-type rt-legacy-caption text-[9px] font-black text-slate-500 uppercase ml-1 mb-1 block tracking-wider"><VisualText id="copy-fa4ee93faa3e" defaultText={"TEMPO TOTAL"}/></label>
               <div 
                 onClick={() => { const wasOpen = tDropOpen; closeAllDrops(); setTDropOpen(!wasOpen); }}
                 className="py-2.5 px-3 rounded-xl bg-[#f8fafc] dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex justify-between items-center cursor-pointer shadow-sm min-h-[40px]"
               >
-                <span className="text-xs font-black truncate text-slate-900 dark:text-white">
+                <span className="rt-legacy-type text-xs font-black truncate text-slate-900 dark:text-white">
                   <VisualLabel text={tempo === 30 ? '30 Minutos' : tempo === 60 ? '1 Hora (60 min)' : tempo === 120 ? '2 Horas' : '3 Horas'}/>
                 </span>
-                <span className="text-slate-400 text-[9px] font-black ml-1">▼</span>
+                <span className="rt-legacy-type rt-legacy-caption text-slate-400 text-[9px] font-black ml-1">▼</span>
               </div>
 
               {tDropOpen && (
@@ -439,8 +439,8 @@ export default function EmbarqueClient({
 
           {/* INDICADOR DINÂMICO DE TRIPULAÇÃO NA ÁGUA */}
           <div className="flex items-center justify-between px-3.5 py-2 rounded-xl bg-[#eaf4fc] dark:bg-slate-800 border border-blue-200 dark:border-slate-700">
-            <span className="text-[9px] font-black uppercase text-blue-900 dark:text-cyan-400 tracking-wider"><VisualText id="copy-e9d9b73b00fa" defaultText={"TRIPULANTES DETECTADOS:"}/></span>
-            <span className="text-xs font-black text-blue-700 dark:text-white bg-white dark:bg-slate-900 px-2.5 py-0.5 rounded-lg border border-blue-100 dark:border-slate-700 shadow-sm">
+            <span className="rt-legacy-type rt-legacy-caption text-[9px] font-black uppercase text-blue-900 dark:text-cyan-400 tracking-wider"><VisualText id="copy-e9d9b73b00fa" defaultText={"TRIPULANTES DETECTADOS:"}/></span>
+            <span className="rt-legacy-type text-xs font-black text-blue-700 dark:text-white bg-white dark:bg-slate-900 px-2.5 py-0.5 rounded-lg border border-blue-100 dark:border-slate-700 shadow-sm">
               {qtdEfetiva} <VisualLabel text={qtdEfetiva > 1 ? 'Pessoas' : 'Pessoa'}/>
             </span>
           </div>
@@ -450,8 +450,8 @@ export default function EmbarqueClient({
         {/* RODAPÉ DO POP-UP */}
         <div className="p-4 bg-[#f8fafc] dark:bg-slate-800/90 border-t border-slate-100 dark:border-slate-700 flex items-center justify-between gap-3 shrink-0">
           <div>
-            <span className="text-[7.5px] font-black text-slate-400 uppercase tracking-widest block"><VisualText id="copy-6dbba48be8bf" defaultText={"VALOR TOTAL"}/></span>
-            <span className="text-xl font-black text-emerald-600 dark:text-emerald-400 leading-none tabular-nums">
+            <span className="rt-legacy-type rt-legacy-caption text-[7.5px] font-black text-slate-400 uppercase tracking-widest block"><VisualText id="copy-6dbba48be8bf" defaultText={"VALOR TOTAL"}/></span>
+            <span className="rt-legacy-type text-xl font-black text-emerald-600 dark:text-emerald-400 leading-none tabular-nums">
               R$ {valorTotal.toFixed(2).replace('.', ',')}
             </span>
           </div>
@@ -459,7 +459,7 @@ export default function EmbarqueClient({
           <button 
             type="submit"
             disabled={isPending}
-            className="flex-1 py-3 bg-blue-600 hover:bg-blue-500 active:scale-95 text-white font-black text-xs uppercase tracking-wider rounded-xl shadow-md shadow-blue-500/20 transition-all cursor-pointer text-center disabled:opacity-50"
+            className="rt-legacy-type rt-legacy-control flex-1 py-3 bg-blue-600 hover:bg-blue-500 active:scale-95 text-white font-black text-xs uppercase tracking-wider rounded-xl shadow-md shadow-blue-500/20 transition-all cursor-pointer text-center disabled:opacity-50"
           >
             <VisualLabel text={isPending ? 'Liberando...' : 'VALIDAR E LIBERAR SAÍDA'}/>
           </button>

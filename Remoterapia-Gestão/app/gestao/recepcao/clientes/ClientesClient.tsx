@@ -1,5 +1,7 @@
 'use client'
 
+import {Plus,X} from 'lucide-react'
+import ReceptionClientsTable from '@/components/desktop/ReceptionClientsTable'
 import BrandLabel from '@/components/ui/BrandLabel'
 import BrandIcon from '@/components/ui/BrandIcon'
 import { useState, useTransition } from 'react'
@@ -81,7 +83,7 @@ export default function ClientesClient({ mensalistasIniciais }: { mensalistasIni
   }
 
   return (
-    <div className="relative space-y-4">
+    <div className="rt-reception-renewed rt-legacy-refresh relative space-y-4">
       {/* TOAST NÁUTICO */}
       {toast && (
         <div className="fixed top-5 left-1/2 -translate-x-1/2 z-[9999] max-w-sm w-[90%] pointer-events-none animate-in fade-in slide-in-from-top-4 duration-300">
@@ -101,28 +103,28 @@ export default function ClientesClient({ mensalistasIniciais }: { mensalistasIni
       )}
 
       {/* BARRA DE BUSCA + BOTÃO ADICIONAR */}
-      <div className="flex gap-2">
+      <div className="rt-legacy-toolbar">
         <input 
           type="text" 
-          placeholder="🔍 Buscar nome ou telefone..." 
+          placeholder="Buscar nome ou telefone..." aria-label="Buscar mensalista por nome ou telefone"
           value={busca}
           onChange={e => setBusca(e.target.value)}
-          className="flex-1 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-white/60 dark:border-slate-700 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+          className="rt-legacy-search"
         />
         <button 
-          onClick={() => setShowForm(!showForm)}
-          className="bg-blue-600 hover:bg-blue-500 text-white rounded-2xl px-4 font-black text-xl active:scale-95 transition-transform shadow-sm cursor-pointer"
+          type="button" aria-expanded={showForm} aria-controls="recepcao-novo-cliente" onClick={() => setShowForm(!showForm)}
+          className="rt-base-primary"
         >
-          {showForm ? '×' : '+'}
+          <>{showForm?<X size={18}/>:<Plus size={18}/>}<VisualLabel text={showForm?'Fechar cadastro':'Novo Cadastro'}/></>
         </button>
       </div>
 
       {showForm && (
-        <div className="glass-card backdrop-blur-md bg-white/95 dark:bg-slate-800/95 border border-white/60 dark:border-slate-700 rounded-3xl p-5 shadow-lg animate-fade-down">
-          <h3 className="text-sm font-black uppercase italic tracking-tighter text-slate-800 dark:text-white mb-4"><VisualText id="copy-ec9bf8fd7f1d" defaultText={"Novo Cadastro"}/></h3>
+        <div id="recepcao-novo-cliente" className="rt-legacy-form">
+          <h3 className="rt-legacy-type text-sm font-black uppercase italic tracking-tighter text-slate-800 dark:text-white mb-4"><VisualText id="copy-ec9bf8fd7f1d" defaultText={"Novo Cadastro"}/></h3>
           <form onSubmit={handleSubmit} className="rt-reception-clients space-y-3">
-            <input required type="text" placeholder="Nome Completo" value={nome} onChange={e => setNome(e.target.value)} className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500 outline-none font-bold" />
-            <input required type="text" placeholder="WhatsApp (ex: 13999999999)" value={telefone} onChange={e => setTelefone(e.target.value)} className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500 outline-none font-bold" />
+            <input required type="text" aria-label="Nome completo" placeholder="Nome Completo" value={nome} onChange={e => setNome(e.target.value)} className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500 outline-none font-bold" />
+            <input required type="text" aria-label="WhatsApp" placeholder="WhatsApp (ex: 13999999999)" value={telefone} onChange={e => setTelefone(e.target.value)} className="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-blue-500 outline-none font-bold" />
             <div className="relative">
               <div 
                 onClick={() => setTipoPlanoDrop(!tipoPlanoDrop)}
@@ -155,7 +157,7 @@ export default function ClientesClient({ mensalistasIniciais }: { mensalistasIni
                 </div>
               )}
             </div>
-            <button disabled={isPending} className="w-full mt-2 py-3 bg-[#10b981] text-white rounded-2xl text-[10px] font-black uppercase tracking-wider shadow-sm transition-all active:scale-95 disabled:opacity-50 cursor-pointer">
+            <button disabled={isPending} className="rt-legacy-control rt-legacy-type w-full mt-2 py-3 bg-[#10b981] text-white rounded-2xl text-[10px] font-black uppercase tracking-wider shadow-sm transition-all active:scale-95 disabled:opacity-50 cursor-pointer">
               <VisualLabel text={isPending ? 'SALVANDO...' : 'CRIAR MENSALISTA'}/>
             </button>
           </form>
@@ -163,22 +165,22 @@ export default function ClientesClient({ mensalistasIniciais }: { mensalistasIni
       )}
 
       {/* FILTROS */}
-      <div className="flex gap-2 overflow-x-auto no-scrollbar pb-1">
-        <button onClick={() => setFiltro('todos')} className={`shrink-0 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider border-2 transition-all cursor-pointer ${filtro === 'todos' ? 'bg-slate-800 border-slate-800 text-white' : 'bg-transparent border-slate-300 text-slate-500'}`}><VisualText id="copy-08d7fd9fc981" defaultText={"TODOS"}/></button>
-        <button onClick={() => setFiltro('em_dia')} className={`shrink-0 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider border-2 transition-all cursor-pointer ${filtro === 'em_dia' ? 'bg-emerald-500 border-emerald-500 text-white' : 'bg-transparent border-slate-300 text-slate-500'}`}><VisualText id="copy-75d9fa18e78f" defaultText={"EM DIA"}/></button>
-        <button onClick={() => setFiltro('vencidos')} className={`shrink-0 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider border-2 transition-all cursor-pointer ${filtro === 'vencidos' ? 'bg-amber-500 border-amber-500 text-white' : 'bg-transparent border-slate-300 text-slate-500'}`}><VisualText id="copy-bb0e23d705ff" defaultText={"VENCIDOS"}/></button>
-        <button onClick={() => setFiltro('bloqueados')} className={`shrink-0 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider border-2 transition-all cursor-pointer ${filtro === 'bloqueados' ? 'bg-red-500 border-red-500 text-white' : 'bg-transparent border-slate-300 text-slate-500'}`}><VisualText id="copy-abeaa61c1cf8" defaultText={"BLOQUEADOS"}/></button>
+      <div className="rt-legacy-segments" role="group" aria-label="Situação dos mensalistas">
+        <button type="button" aria-pressed={filtro==='todos'} onClick={() => setFiltro('todos')} className={`rt-legacy-control shrink-0 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider border-2 transition-all cursor-pointer ${filtro === 'todos' ? 'bg-slate-800 border-slate-800 text-white' : 'bg-transparent border-slate-300 text-slate-500'}`}><VisualText id="copy-08d7fd9fc981" defaultText={"TODOS"}/></button>
+        <button type="button" aria-pressed={filtro==='em_dia'} onClick={() => setFiltro('em_dia')} className={`rt-legacy-control shrink-0 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider border-2 transition-all cursor-pointer ${filtro === 'em_dia' ? 'bg-emerald-500 border-emerald-500 text-white' : 'bg-transparent border-slate-300 text-slate-500'}`}><VisualText id="copy-75d9fa18e78f" defaultText={"EM DIA"}/></button>
+        <button type="button" aria-pressed={filtro==='vencidos'} onClick={() => setFiltro('vencidos')} className={`rt-legacy-control shrink-0 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider border-2 transition-all cursor-pointer ${filtro === 'vencidos' ? 'bg-amber-500 border-amber-500 text-white' : 'bg-transparent border-slate-300 text-slate-500'}`}><VisualText id="copy-bb0e23d705ff" defaultText={"VENCIDOS"}/></button>
+        <button type="button" aria-pressed={filtro==='bloqueados'} onClick={() => setFiltro('bloqueados')} className={`rt-legacy-control shrink-0 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-wider border-2 transition-all cursor-pointer ${filtro === 'bloqueados' ? 'bg-red-500 border-red-500 text-white' : 'bg-transparent border-slate-300 text-slate-500'}`}><VisualText id="copy-abeaa61c1cf8" defaultText={"BLOQUEADOS"}/></button>
       </div>
 
       {/* LISTA */}
-      <div className="space-y-3">
+      <ReceptionClientsTable clientes={filteredList} busy={isPending} onBlock={toggleBlock} onRecovery={orientarRecuperacao}/><div className="rt-legacy-mobile space-y-3">
         {filteredList.map(m => {
           const isVencido = new Date(m.data_vencimento || 0) < new Date()
           return (
-            <div key={m.id} className={`glass-card backdrop-blur-md bg-white/80 dark:bg-slate-800/80 border border-white/60 dark:border-slate-700 rounded-3xl p-4 transition-all ${m.bloqueado ? 'opacity-60 grayscale' : ''} ${isVencido && !m.bloqueado ? 'border-l-4 border-l-amber-500' : ''}`}>
+            <div key={m.id} className={`rt-legacy-card glass-card backdrop-blur-md bg-white/80 dark:bg-slate-800/80 border border-white/60 dark:border-slate-700 rounded-3xl p-4 transition-all ${m.bloqueado ? 'opacity-60 grayscale' : ''} ${isVencido && !m.bloqueado ? 'border-l-4 border-l-amber-500' : ''}`}>
               <div className="flex justify-between items-start mb-2">
                 <div>
-                  <h4 className="text-sm font-black text-slate-800 dark:text-white uppercase tracking-tighter truncate">{m.nome}</h4>
+                  <h4 className="rt-legacy-type text-sm font-black text-slate-800 dark:text-white uppercase tracking-tighter truncate">{m.nome}</h4>
                   <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-0.5">{m.telefone}</p>
                 </div>
                 <span className={`text-[9px] font-black px-2 py-0.5 rounded-md uppercase tracking-wider ${m.tipo_plano === 'guardaria' ? 'bg-emerald-100 text-emerald-700' : 'bg-blue-100 text-blue-700'}`}>
@@ -188,7 +190,7 @@ export default function ClientesClient({ mensalistasIniciais }: { mensalistasIni
               <div className="flex gap-2 mt-3 pt-3 border-t border-slate-100 dark:border-slate-700">
                 <div className="flex-1">
                   <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest"><VisualText id="copy-e65c2ff1c527" defaultText={"Créditos"}/></p>
-                  <p className="text-xs font-black text-slate-700 dark:text-slate-200">{m.creditos} <span className="text-[9px]"><VisualText id="copy-3fffaaeb2f41" defaultText={"restantes"}/></span></p>
+                  <p className="rt-legacy-type text-xs font-black text-slate-700 dark:text-slate-200">{m.creditos} <span className="text-[9px]"><VisualText id="copy-3fffaaeb2f41" defaultText={"restantes"}/></span></p>
                 </div>
                 <div className="flex-1">
                   <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest"><VisualText id="copy-e0258586d419" defaultText={"Vencimento"}/></p>
@@ -200,7 +202,7 @@ export default function ClientesClient({ mensalistasIniciais }: { mensalistasIni
                   disabled={isPending}
                   onClick={() => toggleBlock(m.id, m.bloqueado)}
                   aria-label={`${m.bloqueado ? 'Desbloquear' : 'Bloquear'} ${m.nome}`}
-                  className={`w-10 h-10 flex items-center justify-center rounded-xl transition-all active:scale-95 cursor-pointer ${m.bloqueado ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'}`}
+                  className={`rt-legacy-control w-10 h-10 flex items-center justify-center rounded-xl transition-all active:scale-95 cursor-pointer ${m.bloqueado ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'}`}
                 >
                   <BrandLabel text={m.bloqueado ? '🔓' : '🔒'}/>
                 </button>
@@ -209,7 +211,7 @@ export default function ClientesClient({ mensalistasIniciais }: { mensalistasIni
                 <button 
                   disabled={isPending}
                   onClick={orientarRecuperacao}
-                  className="w-full py-2 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-300 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all active:scale-95 flex justify-center items-center gap-2 disabled:opacity-50 cursor-pointer"
+                  className="rt-legacy-control rt-legacy-type w-full py-2 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-300 rounded-xl text-[10px] font-black uppercase tracking-wider transition-all active:scale-95 flex justify-center items-center gap-2 disabled:opacity-50 cursor-pointer"
                 >
                   <BrandIcon name="key"/>Como recuperar o acesso</button>
               </div>

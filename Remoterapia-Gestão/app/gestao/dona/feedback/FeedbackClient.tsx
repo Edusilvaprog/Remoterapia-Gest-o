@@ -61,17 +61,17 @@ export default function FeedbackClient() {
   })
 
   return (
-    <div className="rt-feedback-workspace space-y-4 dw-feedback"><div className="dw-only"><WorkspaceHeading eyebrow="Remoterapia · Gestão" title="Experiência dos alunos" description="Acompanhe as avaliações e leia os comentários recebidos."/></div>
+    <div className="rt-legacy-refresh rt-feedback-workspace space-y-4 dw-feedback"><div className="dw-only"><WorkspaceHeading eyebrow="Remoterapia · Gestão" title="Experiência dos alunos" description="Acompanhe as avaliações e leia os comentários recebidos."/></div>
       <div className="bg-white/95 dark:bg-slate-900/95 p-6 rounded-[2.2rem] shadow-xl border-t-4 !border-t-amber-400 border border-white/60 dark:border-slate-800 flex items-center justify-between dw-feedback-summary">
         <div>
-          <span className="text-[9px] font-black text-amber-500 uppercase tracking-widest block"><VisualText id="copy-397311043859" defaultText={"GERAL"}/></span>
-          <h4 className="text-sm font-black text-slate-800 dark:text-white leading-tight uppercase"><VisualText id="copy-05b5d13df4e8" defaultText={"Média"}/></h4>
+          <span className="rt-legacy-type rt-legacy-caption text-[9px] font-black text-amber-500 uppercase tracking-widest block"><VisualText id="copy-397311043859" defaultText={"GERAL"}/></span>
+          <h4 className="rt-legacy-type text-sm font-black text-slate-800 dark:text-white leading-tight uppercase"><VisualText id="copy-05b5d13df4e8" defaultText={"Média"}/></h4>
         </div>
         <div className="flex items-center gap-2">
-          <span className="text-3xl font-black text-amber-500">{media}</span>
+          <span className="rt-legacy-type text-3xl font-black text-amber-500">{media}</span>
           <div className="flex flex-col">
             <span className="text-amber-400 text-xs tracking-widest"><VisualText id="copy-322719df8cac" defaultText={"★★★★★"}/></span>
-            <span className="text-[9px] font-bold text-slate-400">{avaliacoes.length}<VisualText id="copy-82a9e2f9f792" defaultText={" avaliações"}/></span>
+            <span className="rt-legacy-caption text-[9px] font-bold text-slate-400">{avaliacoes.length}<VisualText id="copy-82a9e2f9f792" defaultText={" avaliações"}/></span>
           </div>
         </div>
       </div>
@@ -83,7 +83,7 @@ export default function FeedbackClient() {
           const pct = avaliacoes.length > 0 ? (count / avaliacoes.length) * 100 : 0
           return (
             <div key={nota} className="flex items-center gap-2 text-[10px]">
-              <span className="w-4 font-black text-slate-600 dark:text-slate-400">{nota}★</span>
+              <span className="rt-legacy-type w-4 font-black text-slate-600 dark:text-slate-400">{nota}★</span>
               <div className="flex-1 h-2.5 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
                 <div className="h-full bg-amber-400 rounded-full" style={{ width: `${pct}%` }} />
               </div>
@@ -94,22 +94,22 @@ export default function FeedbackClient() {
       </div>
 
       <div className="flex gap-2 overflow-x-auto no-scrollbar py-1 dw-feedback-filters">
-        <button onClick={() => setFiltro('todas')} className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase whitespace-nowrap transition-all ${filtro === 'todas' ? 'bg-amber-100 text-amber-700 border border-amber-200' : 'bg-white dark:bg-slate-900 text-slate-500 border border-slate-200 dark:border-slate-800'}`}><VisualText id="copy-0f416656b60f" defaultText={"Todas"}/></button>
-        <button onClick={() => setFiltro('5')} className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase whitespace-nowrap transition-all ${filtro === '5' ? 'bg-amber-100 text-amber-700 border border-amber-200' : 'bg-white dark:bg-slate-900 text-slate-500 border border-slate-200 dark:border-slate-800'}`}><VisualText id="copy-e62f67325a00" defaultText={"5 Estrelas"}/></button>
-        <button onClick={() => setFiltro('comentario')} className={`px-4 py-2 rounded-xl text-[10px] font-black uppercase whitespace-nowrap transition-all ${filtro === 'comentario' ? 'bg-amber-100 text-amber-700 border border-amber-200' : 'bg-white dark:bg-slate-900 text-slate-500 border border-slate-200 dark:border-slate-800'}`}><VisualText id="copy-8b67aeeb9d58" defaultText={"Com Comentário"}/></button>
+        <button onClick={() => setFiltro('todas')} className={`rt-legacy-type rt-legacy-control px-4 py-2 rounded-xl text-[10px] font-black uppercase whitespace-nowrap transition-all ${filtro === 'todas' ? 'bg-amber-100 text-amber-700 border border-amber-200' : 'bg-white dark:bg-slate-900 text-slate-500 border border-slate-200 dark:border-slate-800'}`}><VisualText id="copy-0f416656b60f" defaultText={"Todas"}/></button>
+        <button onClick={() => setFiltro('5')} className={`rt-legacy-type rt-legacy-control px-4 py-2 rounded-xl text-[10px] font-black uppercase whitespace-nowrap transition-all ${filtro === '5' ? 'bg-amber-100 text-amber-700 border border-amber-200' : 'bg-white dark:bg-slate-900 text-slate-500 border border-slate-200 dark:border-slate-800'}`}><VisualText id="copy-e62f67325a00" defaultText={"5 Estrelas"}/></button>
+        <button onClick={() => setFiltro('comentario')} className={`rt-legacy-type rt-legacy-control px-4 py-2 rounded-xl text-[10px] font-black uppercase whitespace-nowrap transition-all ${filtro === 'comentario' ? 'bg-amber-100 text-amber-700 border border-amber-200' : 'bg-white dark:bg-slate-900 text-slate-500 border border-slate-200 dark:border-slate-800'}`}><VisualText id="copy-8b67aeeb9d58" defaultText={"Com Comentário"}/></button>
       </div>
 
       <div className="space-y-3 pt-2 dw-feedback-list">
         {filtradas.length === 0 && (
-          <div className="text-center p-8 bg-white/50 rounded-3xl border border-dashed border-slate-300">
-            <p className="text-[10px] font-bold text-slate-500 uppercase"><VisualText id="copy-14a0eddd57e7" defaultText={"Nenhuma avaliação encontrada."}/></p>
+          <div className="rt-legacy-card text-center p-8 bg-white/50 rounded-3xl border border-dashed border-slate-300">
+            <p className="rt-legacy-caption text-[10px] font-bold text-slate-500 uppercase"><VisualText id="copy-14a0eddd57e7" defaultText={"Nenhuma avaliação encontrada."}/></p>
           </div>
         )}
         
         {filtradas.map(av => (
-          <div key={av.id} className="bg-white/95 dark:bg-slate-900/95 p-4 rounded-[1.8rem] shadow-sm border border-slate-200 dark:border-slate-800 space-y-2">
+          <div key={av.id} className="rt-legacy-card bg-white/95 dark:bg-slate-900/95 p-4 rounded-[1.8rem] shadow-sm border border-slate-200 dark:border-slate-800 space-y-2">
             <div className="flex justify-between items-center">
-              <span className="text-[11px] font-black text-slate-800 dark:text-white uppercase truncate pr-2">
+              <span className="rt-legacy-type rt-legacy-caption text-[11px] font-black text-slate-800 dark:text-white uppercase truncate pr-2">
                 {av.mensalistas?.nome || 'Aluno Remoterapia'}
               </span>
               <div className="flex text-amber-400 text-xs">
@@ -118,11 +118,11 @@ export default function FeedbackClient() {
               </div>
             </div>
             {av.comentario && (
-              <p className="text-[11px] text-slate-600 dark:text-slate-300 font-medium italic border-l-2 border-amber-200 dark:border-amber-900/60 pl-2 ml-0.5"><VisualText id="copy-b1bdb36e5f63" defaultText={"&ldquo;"}/>{av.comentario}<VisualText id="copy-ceb771a0a97e" defaultText={"&rdquo;"}/></p>
+              <p className="rt-legacy-caption text-[11px] text-slate-600 dark:text-slate-300 font-medium italic border-l-2 border-amber-200 dark:border-amber-900/60 pl-2 ml-0.5"><VisualText id="copy-b1bdb36e5f63" defaultText={"&ldquo;"}/>{av.comentario}<VisualText id="copy-ceb771a0a97e" defaultText={"&rdquo;"}/></p>
             )}
             <div className="flex justify-between items-center pt-1 border-t border-slate-100 dark:border-slate-800/80">
-              <span className="text-[8.5px] font-bold text-blue-500 uppercase"><VisualText id="copy-793749bb3a5e" defaultText={"Remada Avulsa"}/></span>
-              <span className="text-[8.5px] font-bold text-slate-400 uppercase">
+              <span className="rt-legacy-caption text-[8.5px] font-bold text-blue-500 uppercase"><VisualText id="copy-793749bb3a5e" defaultText={"Remada Avulsa"}/></span>
+              <span className="rt-legacy-caption text-[8.5px] font-bold text-slate-400 uppercase">
                 {new Date(av.created_at).toLocaleDateString('pt-BR')}
               </span>
             </div>

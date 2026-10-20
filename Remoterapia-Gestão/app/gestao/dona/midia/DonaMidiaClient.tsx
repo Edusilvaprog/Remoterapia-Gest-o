@@ -133,11 +133,11 @@ export default function DonaMidiaClient() {
   }
 
   return (
-    <div className="rt-director-media space-y-4 dw-director-media"><div className="dw-only"><WorkspaceHeading eyebrow="Acervo da base" title="Galeria e registros" description="Consulte as fotos publicadas pela equipe e organize o acervo por categoria e período."/></div>
+    <div className="rt-legacy-refresh rt-director-media space-y-4 dw-director-media"><div className="dw-only"><WorkspaceHeading eyebrow="Acervo da base" title="Galeria e registros" description="Consulte as fotos publicadas pela equipe e organize o acervo por categoria e período."/></div>
       
       {toast && (
         <div className="fixed top-5 left-1/2 -translate-x-1/2 z-[9999] w-full max-w-sm px-4 pointer-events-none animate-bounce">
-          <div className={`p-4 rounded-2xl shadow-2xl backdrop-blur-xl border bg-white/95 dark:bg-slate-900/95 flex items-center justify-between gap-3 border-l-[6px] ${
+          <div className={`rt-legacy-card p-4 rounded-2xl shadow-2xl backdrop-blur-xl border bg-white/95 dark:bg-slate-900/95 flex items-center justify-between gap-3 border-l-[6px] ${
             toast.tipo === 'success' ? '!border-l-emerald-500 border-emerald-100 dark:border-slate-800' :
             toast.tipo === 'warning' ? '!border-l-amber-500 border-amber-100 dark:border-slate-800' :
             toast.tipo === 'error' ? '!border-l-red-500 border-red-100 dark:border-slate-800' :
@@ -147,7 +147,7 @@ export default function DonaMidiaClient() {
               <span className="text-lg shrink-0">
                 <BrandLabel text={toast.tipo === 'success' ? '✅' : toast.tipo === 'warning' ? '⚠️' : toast.tipo === 'error' ? '❌' : '🛶'}/>
               </span>
-              <p className="text-[11px] font-black leading-snug text-slate-900 dark:text-white">
+              <p className="rt-legacy-type rt-legacy-caption text-[11px] font-black leading-snug text-slate-900 dark:text-white">
                 {toast.msg}
               </p>
             </div>
@@ -159,7 +159,7 @@ export default function DonaMidiaClient() {
       <div className="flex justify-center">
         <div className="bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm rounded-full py-2 px-5 inline-flex items-center gap-2 border border-white/60 dark:border-slate-800 shadow-sm">
           <span className="text-base"><BrandIcon name="camera"/></span>
-          <p className="text-[10px] font-black text-blue-950 dark:text-white uppercase tracking-wider italic leading-none"><VisualText id="copy-ba801959ac9d" defaultText={"MARKETING (EQUIPE ÁGUA)"}/></p>
+          <p className="rt-legacy-type rt-legacy-caption text-[10px] font-black text-blue-950 dark:text-white uppercase tracking-wider italic leading-none"><VisualText id="copy-ba801959ac9d" defaultText={"MARKETING (EQUIPE ÁGUA)"}/></p>
         </div>
       </div>
 
@@ -176,7 +176,7 @@ export default function DonaMidiaClient() {
               key={cat.id}
               type="button"
               onClick={() => setTipoFiltro(cat.id as any)}
-              className={`px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-wider transition-all shadow-sm cursor-pointer ${
+              className={`rt-legacy-type rt-legacy-control px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-wider transition-all shadow-sm cursor-pointer ${
                 active
                   ? 'bg-blue-600 text-white shadow-blue-500/25 scale-105'
                   : 'bg-white/95 dark:bg-slate-900/95 text-slate-700 dark:text-slate-300 border border-white/60 dark:border-slate-800'
@@ -193,7 +193,7 @@ export default function DonaMidiaClient() {
         <button
           type="button"
           onClick={() => setDataFiltro('all')}
-          className={`px-3.5 py-1.5 rounded-full text-[9px] font-black uppercase tracking-wider transition-all shadow-sm cursor-pointer ${
+          className={`rt-legacy-type rt-legacy-control px-3.5 py-1.5 rounded-full text-[9px] font-black uppercase tracking-wider transition-all shadow-sm cursor-pointer ${
             dataFiltro === 'all'
               ? 'bg-cyan-500 text-white shadow-cyan-500/20'
               : 'bg-white/95 dark:bg-slate-900/95 text-slate-600 dark:text-slate-300 border border-white/60 dark:border-slate-800'
@@ -203,7 +203,7 @@ export default function DonaMidiaClient() {
         <button
           type="button"
           onClick={() => setDataFiltro('hoje')}
-          className={`px-3.5 py-1.5 rounded-full text-[9px] font-black uppercase tracking-wider transition-all shadow-sm cursor-pointer ${
+          className={`rt-legacy-type rt-legacy-control px-3.5 py-1.5 rounded-full text-[9px] font-black uppercase tracking-wider transition-all shadow-sm cursor-pointer ${
             dataFiltro === 'hoje'
               ? 'bg-cyan-500 text-white shadow-cyan-500/20'
               : 'bg-white/95 dark:bg-slate-900/95 text-slate-600 dark:text-slate-300 border border-white/60 dark:border-slate-800'
@@ -217,7 +217,7 @@ export default function DonaMidiaClient() {
               className="py-1.5 px-3 rounded-full text-[9px] font-black uppercase bg-white/95 dark:bg-slate-900/95 text-slate-700 dark:text-slate-300 border border-white/60 dark:border-slate-800 outline-none shadow-sm cursor-pointer flex items-center gap-1.5"
             >
               <span><VisualLabel text={autorFiltro === 'all' ? 'TODOS INSTRUTORES' : autorFiltro}/></span>
-              <span className="text-[7px]">▼</span>
+              <span className="rt-legacy-caption text-[7px]">▼</span>
             </div>
 
             {autorFiltroDrop && (
@@ -254,18 +254,18 @@ export default function DonaMidiaClient() {
 
       {/* 4. CARDS DE CONTAGEM ELEVADOS */}
       <div className="grid grid-cols-2 gap-3">
-        <div className="bg-white/95 dark:bg-slate-900/95 p-4 rounded-[1.8rem] border-t-4 !border-t-cyan-500 border border-white/60 dark:border-slate-800 shadow-xl shadow-blue-500/5 flex items-center justify-between">
+        <div className="rt-legacy-card bg-white/95 dark:bg-slate-900/95 p-4 rounded-[1.8rem] border-t-4 !border-t-cyan-500 border border-white/60 dark:border-slate-800 shadow-xl shadow-blue-500/5 flex items-center justify-between">
           <div>
-            <p className="text-[9px] font-black text-slate-400 uppercase tracking-wider"><VisualText id="copy-7e4325371ce7" defaultText={"PAISAGENS"}/></p>
-            <p className="text-3xl font-black text-cyan-600 dark:text-cyan-400 mt-0.5">{totalPaisagem}</p>
+            <p className="rt-legacy-type rt-legacy-caption text-[9px] font-black text-slate-400 uppercase tracking-wider"><VisualText id="copy-7e4325371ce7" defaultText={"PAISAGENS"}/></p>
+            <p className="rt-legacy-type text-3xl font-black text-cyan-600 dark:text-cyan-400 mt-0.5">{totalPaisagem}</p>
           </div>
           <span className="text-3xl select-none"><BrandIcon name="umbrella"/></span>
         </div>
 
-        <div className="bg-white/95 dark:bg-slate-900/95 p-4 rounded-[1.8rem] border-t-4 !border-t-orange-500 border border-white/60 dark:border-slate-800 shadow-xl shadow-blue-500/5 flex items-center justify-between">
+        <div className="rt-legacy-card bg-white/95 dark:bg-slate-900/95 p-4 rounded-[1.8rem] border-t-4 !border-t-orange-500 border border-white/60 dark:border-slate-800 shadow-xl shadow-blue-500/5 flex items-center justify-between">
           <div>
-            <p className="text-[9px] font-black text-slate-400 uppercase tracking-wider"><VisualText id="copy-5147e41a2145" defaultText={"SEGURANÇA"}/></p>
-            <p className="text-3xl font-black text-orange-500 dark:text-orange-400 mt-0.5">{totalSeguranca}</p>
+            <p className="rt-legacy-type rt-legacy-caption text-[9px] font-black text-slate-400 uppercase tracking-wider"><VisualText id="copy-5147e41a2145" defaultText={"SEGURANÇA"}/></p>
+            <p className="rt-legacy-type text-3xl font-black text-orange-500 dark:text-orange-400 mt-0.5">{totalSeguranca}</p>
           </div>
           <span className="text-3xl select-none"><BrandIcon name="warning"/></span>
         </div>
@@ -278,7 +278,7 @@ export default function DonaMidiaClient() {
           return (
             <div 
               key={f.id} 
-              className="bg-white/95 dark:bg-slate-900/95 rounded-[1.8rem] p-2.5 border border-white/60 dark:border-slate-800 shadow-xl shadow-blue-500/5 flex flex-col justify-between group hover:scale-[1.02] transition-all"
+              className="rt-legacy-card bg-white/95 dark:bg-slate-900/95 rounded-[1.8rem] p-2.5 border border-white/60 dark:border-slate-800 shadow-xl shadow-blue-500/5 flex flex-col justify-between group hover:scale-[1.02] transition-all"
             >
               {/* IMAGEM COM ETIQUETA FLUTUANTE */}
               <div 
@@ -290,7 +290,7 @@ export default function DonaMidiaClient() {
                   alt={f.categoria} 
                   className="w-full h-full object-cover"
                 />
-                <span className={`absolute bottom-2 left-2 text-[8px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full backdrop-blur-md shadow-sm border ${
+                <span className={`rt-legacy-type rt-legacy-caption absolute bottom-2 left-2 text-[8px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full backdrop-blur-md shadow-sm border ${
                   isSeguranca 
                     ? 'bg-orange-500/90 text-white border-white/40' 
                     : 'bg-cyan-500/90 text-white border-white/40'
@@ -302,15 +302,15 @@ export default function DonaMidiaClient() {
               {/* RODAPÉ DO CARD: AUTOR, HORÁRIO E EXCLUIR */}
               <div className="pt-2 px-1 flex justify-between items-center text-[9px] font-black text-slate-600 dark:text-slate-300">
                 <div className="min-w-0 flex-1">
-                  <p className="truncate uppercase font-black">{f.autor.split(' ')[0]}</p>
-                  <p className="text-[8px] text-slate-400 font-bold">{formatarHora(f.criado_em)}</p>
+                  <p className="rt-legacy-type truncate uppercase font-black">{f.autor.split(' ')[0]}</p>
+                  <p className="rt-legacy-caption text-[8px] text-slate-400 font-bold">{formatarHora(f.criado_em)}</p>
                 </div>
 
                 <div className="flex items-center gap-0.5">
                   <button
                     type="button"
                     onClick={() => baixarFoto(f.url, f.id)}
-                    className="p-1.5 text-slate-300 hover:text-blue-500 rounded-lg transition-colors cursor-pointer"
+                    className="rt-legacy-control p-1.5 text-slate-300 hover:text-blue-500 rounded-lg transition-colors cursor-pointer"
                     title="Baixar foto"
                   >
                     ⬇️
@@ -318,7 +318,7 @@ export default function DonaMidiaClient() {
                   <button
                     type="button"
                     onClick={() => excluirFoto(f.id)}
-                    className="p-1.5 text-slate-300 hover:text-red-500 rounded-lg transition-colors cursor-pointer"
+                    className="rt-legacy-control p-1.5 text-slate-300 hover:text-red-500 rounded-lg transition-colors cursor-pointer"
                     title="Excluir foto"
                   >
                     <BrandIcon name="trash"/>
@@ -346,17 +346,17 @@ export default function DonaMidiaClient() {
 
             <div className="flex justify-between items-center px-1">
               <div>
-                <p className="text-xs font-black text-slate-900 dark:text-white uppercase">
+                <p className="rt-legacy-type text-xs font-black text-slate-900 dark:text-white uppercase">
                   {fotoModal.categoria}
                 </p>
-                <p className="text-[9px] font-bold text-slate-400 uppercase"><VisualText id="copy-edd12cf98b48" defaultText={"Por "}/>{fotoModal.autor} · {formatarHora(fotoModal.criado_em)}
+                <p className="rt-legacy-caption text-[9px] font-bold text-slate-400 uppercase"><VisualText id="copy-edd12cf98b48" defaultText={"Por "}/>{fotoModal.autor} · {formatarHora(fotoModal.criado_em)}
                 </p>
               </div>
 
               <button
                 type="button"
                 onClick={() => setFotoModal(null)}
-                className="px-4 py-2 bg-slate-900 text-white dark:bg-slate-800 rounded-xl text-[10px] font-black uppercase cursor-pointer"
+                className="rt-legacy-type rt-legacy-control px-4 py-2 bg-slate-900 text-white dark:bg-slate-800 rounded-xl text-[10px] font-black uppercase cursor-pointer"
               ><VisualText id="copy-947eb6f92733" defaultText={"FECHAR"}/></button>
             </div>
           </div>

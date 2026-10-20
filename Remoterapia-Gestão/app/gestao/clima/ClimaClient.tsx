@@ -110,7 +110,7 @@ export default function ClimaClient() {
   }, [])
 
   return (
-    <div className="rt-climate-workspace space-y-6 relative"><ClimateWorkspace weather={weather} loading={loading} refresh={fetchWeather} forecastClick={f=>showToast(f.dia+': '+f.temp+' — '+f.desc,'info')}/>
+    <div className="rt-legacy-refresh rt-climate-workspace space-y-6 relative"><ClimateWorkspace weather={weather} loading={loading} refresh={fetchWeather} forecastClick={f=>showToast(f.dia+': '+f.temp+' — '+f.desc,'info')}/>
       {weatherError&&<div role="alert" className="rt-error-note">{weatherError}</div>}
       {/* TOAST FLUTUANTE */}
       {toast && (
@@ -126,7 +126,7 @@ export default function ClimaClient() {
       <div className="dw-mobile"><div className="flex justify-between items-center gap-3 px-1 py-1">
         <div className="flex items-center gap-2 min-w-0">
           <span className="text-base select-none"><BrandIcon name="pin"/></span>
-          <p className="text-xs sm:text-sm font-black text-blue-950 dark:text-white uppercase tracking-wider truncate drop-shadow-sm"><VisualText id="copy-dfe1dd93748d" defaultText={"PRAIA GRANDE · "}/>{weather.atualizadoEm}
+          <p className="rt-legacy-type text-xs sm:text-sm font-black text-blue-950 dark:text-white uppercase tracking-wider truncate drop-shadow-sm"><VisualText id="copy-dfe1dd93748d" defaultText={"PRAIA GRANDE · "}/>{weather.atualizadoEm}
           </p>
         </div>
 
@@ -134,7 +134,7 @@ export default function ClimaClient() {
           type="button" 
           onClick={fetchWeather}
           disabled={loading}
-          className="px-5 py-2.5 bg-cyan-500 hover:bg-cyan-600 text-white rounded-2xl text-[10px] font-black uppercase tracking-wider active:scale-95 shadow-md shadow-cyan-500/20 transition-all disabled:opacity-50 shrink-0 cursor-pointer flex items-center gap-2"
+          className="rt-legacy-type rt-legacy-control px-5 py-2.5 bg-cyan-500 hover:bg-cyan-600 text-white rounded-2xl text-[10px] font-black uppercase tracking-wider active:scale-95 shadow-md shadow-cyan-500/20 transition-all disabled:opacity-50 shrink-0 cursor-pointer flex items-center gap-2"
         >
           <span className={`text-xs ${loading ? 'animate-spin' : ''}`}>↻</span>
           <span><VisualLabel text={loading ? 'CARREGANDO...' : 'ATUALIZAR'}/></span>
@@ -147,34 +147,34 @@ export default function ClimaClient() {
           {weather.condAtual}
         </div>
         <div className="relative z-10">
-          <p className="text-[10px] font-black uppercase text-blue-100 mb-2 tracking-wider bg-white/20 inline-block px-4 py-1.5 rounded-full backdrop-blur-sm border border-white/30 shadow-sm"><VisualText id="copy-591f907c11e9" defaultText={"Temperatura Atual · Praia Grande"}/></p>
-          <h3 className="text-7xl font-black italic tracking-tighter drop-shadow-lg my-1">
+          <p className="rt-legacy-type rt-legacy-caption text-[10px] font-black uppercase text-blue-100 mb-2 tracking-wider bg-white/20 inline-block px-4 py-1.5 rounded-full backdrop-blur-sm border border-white/30 shadow-sm"><VisualText id="copy-591f907c11e9" defaultText={"Temperatura Atual · Praia Grande"}/></p>
+          <h3 className="rt-legacy-type text-7xl font-black italic tracking-tighter drop-shadow-lg my-1">
             {weather.temp}
           </h3>
           
           <div className="grid grid-cols-3 gap-2.5 mt-6 justify-center">
             
             {/* VENTO */}
-            <div className="bg-white/20 p-3 rounded-2xl border border-white/30 backdrop-blur-md hover:bg-white/30 transition-colors shadow-sm flex flex-col items-center justify-center min-w-0">
-              <p className="text-[8px] uppercase font-black text-blue-100 mb-1 tracking-wider whitespace-nowrap"><VisualText id="copy-4f213f874998" defaultText={"Vento"}/></p>
-              <p className="text-xs sm:text-sm font-black drop-shadow-sm whitespace-nowrap leading-none">
+            <div className="rt-legacy-card bg-white/20 p-3 rounded-2xl border border-white/30 backdrop-blur-md hover:bg-white/30 transition-colors shadow-sm flex flex-col items-center justify-center min-w-0">
+              <p className="rt-legacy-type rt-legacy-caption text-[8px] uppercase font-black text-blue-100 mb-1 tracking-wider whitespace-nowrap"><VisualText id="copy-4f213f874998" defaultText={"Vento"}/></p>
+              <p className="rt-legacy-type text-xs sm:text-sm font-black drop-shadow-sm whitespace-nowrap leading-none">
                 {weather.ventoVelocidade} {weather.ventoDirecao}
               </p>
             </div>
 
             {/* MARÉ */}
-            <div className="bg-white/20 p-3 rounded-2xl border border-white/30 backdrop-blur-md hover:bg-white/30 transition-colors shadow-sm flex flex-col items-center justify-center min-w-0">
-              <p className="text-[8px] uppercase font-black text-blue-100 mb-1 tracking-wider whitespace-nowrap"><VisualText id="copy-4571ef317510" defaultText={"Maré"}/></p>
-              <p className="text-xs sm:text-sm font-black drop-shadow-sm whitespace-nowrap leading-none">
-                {weather.mareAltura} <span className="text-[9px] opacity-85 font-bold">({weather.mareStatus})</span>
+            <div className="rt-legacy-card bg-white/20 p-3 rounded-2xl border border-white/30 backdrop-blur-md hover:bg-white/30 transition-colors shadow-sm flex flex-col items-center justify-center min-w-0">
+              <p className="rt-legacy-type rt-legacy-caption text-[8px] uppercase font-black text-blue-100 mb-1 tracking-wider whitespace-nowrap"><VisualText id="copy-4571ef317510" defaultText={"Maré"}/></p>
+              <p className="rt-legacy-type text-xs sm:text-sm font-black drop-shadow-sm whitespace-nowrap leading-none">
+                {weather.mareAltura} <span className="rt-legacy-caption text-[9px] opacity-85 font-bold">({weather.mareStatus})</span>
               </p>
             </div>
 
             {/* CHUVA */}
-            <div className="bg-white/20 p-3 rounded-2xl border border-white/30 backdrop-blur-md hover:bg-white/30 transition-colors shadow-sm flex flex-col items-center justify-center min-w-0">
-              <p className="text-[8px] uppercase font-black text-blue-100 mb-1 tracking-wider whitespace-nowrap"><VisualText id="copy-545e369b7499" defaultText={"Chuva"}/></p>
-              <p className="text-xs sm:text-sm font-black drop-shadow-sm whitespace-nowrap leading-none">
-                {weather.chuvaMm} <span className="text-[9px] opacity-85 font-bold">/ {weather.chuvaProb}</span>
+            <div className="rt-legacy-card bg-white/20 p-3 rounded-2xl border border-white/30 backdrop-blur-md hover:bg-white/30 transition-colors shadow-sm flex flex-col items-center justify-center min-w-0">
+              <p className="rt-legacy-type rt-legacy-caption text-[8px] uppercase font-black text-blue-100 mb-1 tracking-wider whitespace-nowrap"><VisualText id="copy-545e369b7499" defaultText={"Chuva"}/></p>
+              <p className="rt-legacy-type text-xs sm:text-sm font-black drop-shadow-sm whitespace-nowrap leading-none">
+                {weather.chuvaMm} <span className="rt-legacy-caption text-[9px] opacity-85 font-bold">/ {weather.chuvaProb}</span>
               </p>
             </div>
 
@@ -183,8 +183,8 @@ export default function ClimaClient() {
       </div></div>
 
       {/* CARD 2: PREVISÃO DA SEMANA COM BANDEJA AZULADA DE ALTO CONTRASTE */}
-      <div className="dw-mobile"><div className="bg-white/95 dark:bg-slate-900/95 p-6 rounded-[2.2rem] shadow-xl shadow-blue-500/10 border-t-4 !border-t-cyan-500 border border-white/60 dark:border-slate-800">
-        <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-widest mb-4 text-center"><VisualText id="copy-6eeb5afa746e" defaultText={"PREVISÃO DA SEMANA"}/></h4>
+      <div className="dw-mobile"><div className="rt-legacy-card bg-white/95 dark:bg-slate-900/95 p-6 rounded-[2.2rem] shadow-xl shadow-blue-500/10 border-t-4 !border-t-cyan-500 border border-white/60 dark:border-slate-800">
+        <h4 className="rt-legacy-type text-xs font-black text-slate-900 dark:text-white uppercase tracking-widest mb-4 text-center"><VisualText id="copy-6eeb5afa746e" defaultText={"PREVISÃO DA SEMANA"}/></h4>
         
         {/* BANDEJA AZULADA SUAVE QUE DESTACA OS BLOCOS BRANCOS */}
         <div className="bg-[#eaf4fc] dark:bg-slate-800/80 p-3 rounded-2xl border border-blue-100 dark:border-slate-700/60 shadow-inner">
@@ -194,11 +194,11 @@ export default function ClimaClient() {
                 key={i}
                 type="button" 
                 onClick={() => showToast(`${f.dia}: ${f.cond} ${f.temp} — ${f.desc}`, 'info')}
-                className="text-center p-3 bg-white dark:bg-slate-800 rounded-2xl border border-white dark:border-slate-700 hover:-translate-y-1 hover:border-cyan-400 dark:hover:border-cyan-400 transition-all cursor-pointer shadow-md w-full active:scale-95"
+                className="rt-legacy-control text-center p-3 bg-white dark:bg-slate-800 rounded-2xl border border-white dark:border-slate-700 hover:-translate-y-1 hover:border-cyan-400 dark:hover:border-cyan-400 transition-all cursor-pointer shadow-md w-full active:scale-95"
               >
-                <p className="text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-wider">{f.dia}</p>
+                <p className="rt-legacy-type rt-legacy-caption text-[10px] font-black text-slate-500 dark:text-slate-400 uppercase tracking-wider">{f.dia}</p>
                 <p className="text-3xl my-2 drop-shadow-sm">{f.cond}</p>
-                <p className="text-sm font-black text-blue-600 dark:text-cyan-400 leading-none">{f.temp}</p>
+                <p className="rt-legacy-type text-sm font-black text-blue-600 dark:text-cyan-400 leading-none">{f.temp}</p>
               </button>
             ))}
           </div>
@@ -206,15 +206,15 @@ export default function ClimaClient() {
       </div></div>
 
       {/* CARD 3: RADAR WINDY COM PÍLULA AO VIVO EM DESTAQUE */}
-      <div className="dw-shared-radar"><div className="bg-white/95 dark:bg-slate-900/95 p-6 rounded-[2.2rem] shadow-xl shadow-blue-500/10 border-t-4 !border-t-blue-600 border border-white/60 dark:border-slate-800 mb-6 space-y-4">
+      <div className="dw-shared-radar"><div className="rt-legacy-card bg-white/95 dark:bg-slate-900/95 p-6 rounded-[2.2rem] shadow-xl shadow-blue-500/10 border-t-4 !border-t-blue-600 border border-white/60 dark:border-slate-800 mb-6 space-y-4">
         
         {/* PÍLULA VIBRANTE AZUL COM INDICADOR VERMELHO PULSANTE */}
         <div className="flex justify-center">
           <div className="bg-gradient-to-r from-blue-600 to-cyan-500 text-white px-5 py-2 rounded-full shadow-md shadow-blue-500/20 flex items-center gap-2 border border-white/30">
-            <span className="text-[10px] font-black uppercase tracking-wider"><VisualText id="copy-d4e30735a88a" defaultText={"RADAR WINDY"}/></span>
+            <span className="rt-legacy-type rt-legacy-caption text-[10px] font-black uppercase tracking-wider"><VisualText id="copy-d4e30735a88a" defaultText={"RADAR WINDY"}/></span>
             <div className="flex items-center gap-1 bg-black/20 px-2 py-0.5 rounded-full">
               <span className="w-2 h-2 rounded-full bg-red-400 animate-ping"></span>
-              <span className="text-[8px] font-black uppercase tracking-widest text-red-100"><VisualText id="copy-6106251d8880" defaultText={"AO VIVO"}/></span>
+              <span className="rt-legacy-type rt-legacy-caption text-[8px] font-black uppercase tracking-widest text-red-100"><VisualText id="copy-6106251d8880" defaultText={"AO VIVO"}/></span>
             </div>
           </div>
         </div>

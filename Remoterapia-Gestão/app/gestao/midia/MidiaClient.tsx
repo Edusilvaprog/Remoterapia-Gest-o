@@ -71,7 +71,7 @@ export default function MidiaClient({ perfilNome }: { perfilNome: string }) {
   }
 
   return (
-    <div className="rt-media-workspace space-y-5 relative dw-media"><div className="dw-only"><WorkspaceHeading eyebrow="Remoterapia · Gestão" title="Registros da base" description="Organize os registros de paisagens e segurança em um espaço de envio próprio para computador."/></div>
+    <div className="rt-legacy-refresh rt-media-workspace space-y-5 relative dw-media"><div className="dw-only"><WorkspaceHeading eyebrow="Remoterapia · Gestão" title="Registros da base" description="Organize os registros de paisagens e segurança em um espaço de envio próprio para computador."/></div>
       {/* TOAST NÁUTICO */}
       {toast && (
         <div className="fixed top-5 left-1/2 -translate-x-1/2 z-[9999] max-w-sm w-[90%] pointer-events-none animate-in fade-in slide-in-from-top-4 duration-300">
@@ -93,10 +93,10 @@ export default function MidiaClient({ perfilNome }: { perfilNome: string }) {
       {/* PÍLULA BRANCA TRANSLÚCIDA */}
       <div className="dw-mobile"><div className="bg-white/60 dark:bg-slate-800/50 backdrop-blur-sm rounded-full py-2 px-4 inline-flex items-center gap-2 border border-white/80 dark:border-slate-700 shadow-sm">
           <span className="text-lg"><BrandIcon name="camera"/></span> 
-          <p className="text-[10px] font-black text-blue-900 dark:text-white uppercase tracking-wider italic leading-none"><VisualText id="copy-8383144544d3" defaultText={"Registro de fotos"}/></p>
+          <p className="rt-legacy-type rt-legacy-caption text-[10px] font-black text-blue-900 dark:text-white uppercase tracking-wider italic leading-none"><VisualText id="copy-8383144544d3" defaultText={"Registro de fotos"}/></p>
       </div></div>
 
-      <div className="dw-mobile"><p className="text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider text-center"><VisualText id="copy-f3c14d10d483" defaultText={"Escolha a categoria e envie até 6 fotos de cada vez"}/></p></div>
+      <div className="dw-mobile"><p className="rt-legacy-caption text-[10px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider text-center"><VisualText id="copy-f3c14d10d483" defaultText={"Escolha a categoria e envie até 6 fotos de cada vez"}/></p></div>
 
       {/* 2 CARDS GRANDES DA TELA PRINCIPAL */}
       <div className="grid grid-cols-1 gap-4 dw-media-collections">
@@ -105,15 +105,15 @@ export default function MidiaClient({ perfilNome }: { perfilNome: string }) {
         <button 
           type="button" 
           onClick={() => { setModalCat('Paisagem'); setFotos([]); }} 
-          className="bg-white dark:bg-slate-900 p-4 rounded-[2.5rem] shadow-sm flex items-center justify-between hover:scale-[1.02] active:scale-95 transition-all group w-full text-left cursor-pointer"
+          className="rt-legacy-control bg-white dark:bg-slate-900 p-4 rounded-[2.5rem] shadow-sm flex items-center justify-between hover:scale-[1.02] active:scale-95 transition-all group w-full text-left cursor-pointer"
         >
           <div className="flex items-center gap-4">
             <div className="bg-cyan-100 dark:bg-cyan-900/50 w-16 h-16 rounded-3xl text-3xl group-hover:scale-110 transition-transform shadow-sm flex items-center justify-center shrink-0">
               <BrandIcon name="umbrella"/>
             </div>
             <div className="text-left">
-              <span className="text-[13px] font-black text-cyan-600 dark:text-cyan-400 uppercase tracking-widest block leading-tight"><VisualText id="copy-ac3083df9d07" defaultText={"PAISAGENS"}/></span>
-              <span className="text-[9px] text-slate-500 font-bold uppercase mt-1 block tracking-wider"><VisualText id="copy-fb3aec017460" defaultText={"REGISTRAR CLIMA / VISUAL"}/></span>
+              <span className="rt-legacy-type text-[13px] font-black text-cyan-600 dark:text-cyan-400 uppercase tracking-widest block leading-tight"><VisualText id="copy-ac3083df9d07" defaultText={"PAISAGENS"}/></span>
+              <span className="rt-legacy-caption text-[9px] text-slate-500 font-bold uppercase mt-1 block tracking-wider"><VisualText id="copy-fb3aec017460" defaultText={"REGISTRAR CLIMA / VISUAL"}/></span>
             </div>
           </div>
           <div className="text-cyan-500 text-xl font-black px-2 group-hover:scale-125 transition-transform">
@@ -125,15 +125,15 @@ export default function MidiaClient({ perfilNome }: { perfilNome: string }) {
         <button 
           type="button" 
           onClick={() => { setModalCat('Segurança'); setFotos([]); }} 
-          className="bg-white dark:bg-slate-900 p-4 rounded-[2.5rem] shadow-sm flex items-center justify-between hover:scale-[1.02] active:scale-95 transition-all group w-full text-left cursor-pointer"
+          className="rt-legacy-control bg-white dark:bg-slate-900 p-4 rounded-[2.5rem] shadow-sm flex items-center justify-between hover:scale-[1.02] active:scale-95 transition-all group w-full text-left cursor-pointer"
         >
           <div className="flex items-center gap-4">
             <div className="bg-orange-100 dark:bg-orange-900/50 w-16 h-16 rounded-3xl text-3xl group-hover:scale-110 transition-transform shadow-sm flex items-center justify-center shrink-0">
               <BrandIcon name="idea"/>
             </div>
             <div className="text-left">
-              <span className="text-[13px] font-black text-orange-600 dark:text-orange-400 uppercase tracking-widest block leading-tight"><VisualText id="copy-7557e11e775c" defaultText={"DICAS DE SEGURANÇA"}/></span>
-              <span className="text-[9px] text-slate-500 font-bold uppercase mt-1 block tracking-wider"><VisualText id="copy-4a7400e14880" defaultText={"REPORTAR AVARIAS OU AVISOS"}/></span>
+              <span className="rt-legacy-type text-[13px] font-black text-orange-600 dark:text-orange-400 uppercase tracking-widest block leading-tight"><VisualText id="copy-7557e11e775c" defaultText={"DICAS DE SEGURANÇA"}/></span>
+              <span className="rt-legacy-caption text-[9px] text-slate-500 font-bold uppercase mt-1 block tracking-wider"><VisualText id="copy-4a7400e14880" defaultText={"REPORTAR AVARIAS OU AVISOS"}/></span>
             </div>
           </div>
           <div className="text-orange-500 text-xl font-black px-2 group-hover:scale-125 transition-transform">
@@ -150,8 +150,8 @@ export default function MidiaClient({ perfilNome }: { perfilNome: string }) {
             {/* CABEÇALHO FLUTUANTE DO MODAL */}
             <div className="flex justify-between items-center gap-2 p-4 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-3xl shadow-lg border-2 border-white/40">
               <div className="min-w-0">
-                <p className="text-[8px] font-black text-blue-100 uppercase tracking-[0.28em] leading-none mb-1"><VisualText id="copy-ddb170a1c55a" defaultText={"ENVIAR FOTOS"}/></p>
-                <h3 className="text-sm font-black uppercase text-white leading-none tracking-tighter italic drop-shadow-sm truncate">
+                <p className="rt-legacy-type rt-legacy-caption text-[8px] font-black text-blue-100 uppercase tracking-[0.28em] leading-none mb-1"><VisualText id="copy-ddb170a1c55a" defaultText={"ENVIAR FOTOS"}/></p>
+                <h3 className="rt-legacy-type text-sm font-black uppercase text-white leading-none tracking-tighter italic drop-shadow-sm truncate">
                   {modalCat.toUpperCase()}
                 </h3>
               </div>
@@ -159,14 +159,14 @@ export default function MidiaClient({ perfilNome }: { perfilNome: string }) {
                 type="button"
                 onClick={() => setModalCat(null)}
                 aria-label="Fechar"
-                className="w-9 h-9 bg-white/20 hover:bg-white/30 text-white rounded-xl font-black text-base border border-white/40 flex items-center justify-center transition-all shadow-sm cursor-pointer"
+                className="rt-legacy-type rt-legacy-control w-9 h-9 bg-white/20 hover:bg-white/30 text-white rounded-xl font-black text-base border border-white/40 flex items-center justify-center transition-all shadow-sm cursor-pointer"
               >
                 ✕
               </button>
             </div>
 
             {/* SUBTÍTULO */}
-            <p className="text-[10px] font-bold text-slate-300 uppercase tracking-wider text-center">
+            <p className="rt-legacy-caption text-[10px] font-bold text-slate-300 uppercase tracking-wider text-center">
               <VisualLabel text={modalCat === 'Paisagem' ? 'Registe o clima e o visual da praia' : 'Reporte avarias, avisos e dicas de segurança'}/>
             </p>
 
@@ -174,40 +174,40 @@ export default function MidiaClient({ perfilNome }: { perfilNome: string }) {
             <div className="grid grid-cols-2 gap-3">
               <label className="cursor-pointer glass-card p-5 border-2 border-dashed border-cyan-400 text-center hover:bg-cyan-50/10 active:scale-[0.99] transition-all flex flex-col items-center justify-center rounded-3xl bg-white/5">
                 <span className="text-3xl block mb-1 drop-shadow-sm"><BrandIcon name="camera"/></span>
-                <span className="text-xs font-black text-white uppercase tracking-wider leading-tight"><VisualText id="copy-63fe5dc7ec0a" defaultText={"Tirar Foto"}/></span>
-                <span className="text-[8px] font-bold text-slate-400 uppercase block mt-1"><VisualText id="copy-438f1443eba8" defaultText={"Câmera Direta"}/></span>
+                <span className="rt-legacy-type text-xs font-black text-white uppercase tracking-wider leading-tight"><VisualText id="copy-63fe5dc7ec0a" defaultText={"Tirar Foto"}/></span>
+                <span className="rt-legacy-caption text-[8px] font-bold text-slate-400 uppercase block mt-1"><VisualText id="copy-438f1443eba8" defaultText={"Câmera Direta"}/></span>
                 <input 
                   type="file" 
                   accept="image/*" 
                   capture="environment" 
-                  className="hidden" 
+                  className="rt-legacy-fields hidden"
                   onChange={handleFiles} 
                 />
               </label>
 
               <label className="cursor-pointer glass-card p-5 border-2 border-dashed border-cyan-400 text-center hover:bg-cyan-50/10 active:scale-[0.99] transition-all flex flex-col items-center justify-center rounded-3xl bg-white/5">
                 <span className="text-3xl block mb-1 drop-shadow-sm"><BrandIcon name="image"/></span>
-                <span className="text-xs font-black text-white uppercase tracking-wider leading-tight"><VisualText id="copy-0c8ddffa5585" defaultText={"Galeria"}/></span>
-                <span className="text-[8px] font-bold text-slate-400 uppercase block mt-1"><VisualText id="copy-59e5fbaa1136" defaultText={"Escolher imagens"}/></span>
+                <span className="rt-legacy-type text-xs font-black text-white uppercase tracking-wider leading-tight"><VisualText id="copy-0c8ddffa5585" defaultText={"Galeria"}/></span>
+                <span className="rt-legacy-caption text-[8px] font-bold text-slate-400 uppercase block mt-1"><VisualText id="copy-59e5fbaa1136" defaultText={"Escolher imagens"}/></span>
                 <input 
                   type="file" 
                   accept="image/*" 
                   multiple 
-                  className="hidden" 
+                  className="rt-legacy-fields hidden"
                   onChange={handleFiles} 
                 />
               </label>
             </div>
 
             {/* CONTADOR DE FOTOS */}
-            <p className="text-[10px] font-black text-cyan-400 uppercase tracking-wider text-center">
+            <p className="rt-legacy-type rt-legacy-caption text-[10px] font-black text-cyan-400 uppercase tracking-wider text-center">
               {fotos.length}<VisualText id="copy-4e1bffa8ebb2" defaultText={" foto(s) selecionada(s)"}/></p>
 
             {/* ÁREA TRACEJADA OU MINIATURAS */}
             {fotos.length === 0 ? (
-              <div className="border-2 border-dashed border-slate-700/80 bg-white/5 rounded-3xl p-8 flex flex-col items-center justify-center text-center text-slate-500">
+              <div className="rt-legacy-card border-2 border-dashed border-slate-700/80 bg-white/5 rounded-3xl p-8 flex flex-col items-center justify-center text-center text-slate-500">
                 <span className="text-3xl mb-1 opacity-50"><BrandIcon name="camera"/></span>
-                <p className="text-[9px] font-black uppercase tracking-wider"><VisualText id="copy-cfdcabb9a017" defaultText={"Nenhuma foto selecionada"}/></p>
+                <p className="rt-legacy-type rt-legacy-caption text-[9px] font-black uppercase tracking-wider"><VisualText id="copy-cfdcabb9a017" defaultText={"Nenhuma foto selecionada"}/></p>
               </div>
             ) : (
               <div className="grid grid-cols-3 gap-2.5 max-h-[220px] overflow-y-auto no-scrollbar p-1">
@@ -217,7 +217,7 @@ export default function MidiaClient({ perfilNome }: { perfilNome: string }) {
                     <button aria-label="Fechar janela" 
                       type="button"
                       onClick={() => setFotos(fotos.filter((_, idx) => idx !== i))}
-                      className="absolute top-1 right-1 w-6 h-6 bg-red-600 text-white rounded-full flex items-center justify-center text-xs font-black shadow-md cursor-pointer"
+                      className="rt-legacy-type rt-legacy-control absolute top-1 right-1 w-6 h-6 bg-red-600 text-white rounded-full flex items-center justify-center text-xs font-black shadow-md cursor-pointer"
                     >
                       ✕
                     </button>
@@ -233,7 +233,7 @@ export default function MidiaClient({ perfilNome }: { perfilNome: string }) {
               type="button"
               onClick={handleGuardar}
               disabled={uploading || fotos.length === 0}
-              className="w-full py-4 bg-gradient-to-r from-blue-600 to-cyan-400 text-white font-black rounded-2xl uppercase tracking-widest text-xs shadow-[0_0_25px_rgba(14,165,233,0.4)] active:scale-95 transition-all disabled:opacity-40 border border-white/30 cursor-pointer"
+              className="rt-legacy-type rt-legacy-control w-full py-4 bg-gradient-to-r from-blue-600 to-cyan-400 text-white font-black rounded-2xl uppercase tracking-widest text-xs shadow-[0_0_25px_rgba(14,165,233,0.4)] active:scale-95 transition-all disabled:opacity-40 border border-white/30 cursor-pointer"
             >
               <VisualLabel text={uploading ? 'GUARDANDO NO SISTEMA...' : 'Guardar no sistema'}/>
             </button>

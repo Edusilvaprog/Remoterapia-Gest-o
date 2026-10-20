@@ -344,7 +344,7 @@ export default function DonaClient({
   }
 
   return (
-    <div className="rt-results-workspace space-y-4 relative"><ResultsWorkspace items={itens} total={faturamentoTotal} methods={pagamentosMetodos} values={valoresPorMetodo} hours={horas} counts={contagemHoras} date={dateStr} previous={()=>changeDate(-1)} next={()=>changeDate(1)} today={()=>setSelectedDate(new Date())} isToday={isToday} exportDay={()=>exportarRelatorioGestao()} exportMonth={handleRelatorioMes} exportPeriod={()=>setModalPeriodoOpen(true)}/>
+    <div className="rt-legacy-refresh rt-results-workspace space-y-4 relative"><ResultsWorkspace items={itens} total={faturamentoTotal} methods={pagamentosMetodos} values={valoresPorMetodo} hours={horas} counts={contagemHoras} date={dateStr} previous={()=>changeDate(-1)} next={()=>changeDate(1)} today={()=>setSelectedDate(new Date())} isToday={isToday} exportDay={()=>exportarRelatorioGestao()} exportMonth={handleRelatorioMes} exportPeriod={()=>setModalPeriodoOpen(true)}/>
       {/* TOAST FLUTUANTE */}
       {toast && (
         <div className="fixed top-5 left-1/2 -translate-x-1/2 z-[9999] max-w-sm w-[90%] pointer-events-none animate-in fade-in slide-in-from-top-4 duration-300">
@@ -364,18 +364,18 @@ export default function DonaClient({
       )}
       
                 {/* 1. SELETOR DE DATA PADRONIZADO (IDÊNTICO AO REGISTRO E FECHAMENTO) */}
-          <div className="dw-mobile"><div className="bg-white/95 dark:bg-slate-900/95 p-3.5 flex justify-between items-center rounded-2xl shadow-sm border-t-4 !border-t-cyan-400 border border-white/60 dark:border-slate-800 mb-2">
+          <div className="dw-mobile"><div className="rt-legacy-card bg-white/95 dark:bg-slate-900/95 p-3.5 flex justify-between items-center rounded-2xl shadow-sm border-t-4 !border-t-cyan-400 border border-white/60 dark:border-slate-800 mb-2">
             <button 
               type="button" 
               onClick={() => changeDate(-1)}
-              className="w-10 h-10 flex items-center justify-center text-blue-600 dark:text-cyan-400 bg-[#f2f8fc] dark:bg-slate-800 hover:bg-blue-100 rounded-xl transition-all shadow-sm text-sm font-black active:scale-90 border border-blue-100 dark:border-slate-700 cursor-pointer"
+              className="rt-legacy-type rt-legacy-control w-10 h-10 flex items-center justify-center text-blue-600 dark:text-cyan-400 bg-[#f2f8fc] dark:bg-slate-800 hover:bg-blue-100 rounded-xl transition-all shadow-sm text-sm font-black active:scale-90 border border-blue-100 dark:border-slate-700 cursor-pointer"
             ><VisualText id="copy-9a153bd3f55f" defaultText={"&lt;"}/></button>
         
         <div className="text-center flex-1 cursor-pointer" onClick={() => setSelectedDate(new Date())}>
-          <p className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] mb-0.5">
+          <p className="rt-legacy-type rt-legacy-caption text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] mb-0.5">
             {dateLabel}
           </p>
-          <p className="text-sm font-black text-blue-950 dark:text-white uppercase flex items-center justify-center gap-1.5 leading-tight">
+          <p className="rt-legacy-type text-sm font-black text-blue-950 dark:text-white uppercase flex items-center justify-center gap-1.5 leading-tight">
             <span><BrandIcon name="calendar"/></span> {dateStr}
           </p>
         </div>
@@ -384,7 +384,7 @@ export default function DonaClient({
           type="button" 
           onClick={() => changeDate(1)}
           disabled={isToday}
-          className={`w-10 h-10 flex items-center justify-center rounded-xl transition-all shadow-sm text-sm font-black active:scale-90 border cursor-pointer ${
+          className={`rt-legacy-type rt-legacy-control w-10 h-10 flex items-center justify-center rounded-xl transition-all shadow-sm text-sm font-black active:scale-90 border cursor-pointer ${
             isToday 
               ? 'text-slate-300 bg-slate-100 dark:bg-slate-800/40 border-transparent cursor-not-allowed' 
               : 'text-blue-600 dark:text-cyan-400 bg-[#f2f8fc] dark:bg-slate-800 hover:bg-blue-100 border-blue-100 dark:border-slate-700'
@@ -393,13 +393,13 @@ export default function DonaClient({
       </div></div>
 
       {/* 2. CARD FATURAMENTO DIÁRIO COM DESIGN ELEVADO */}
-      <div className="dw-mobile"><div className="bg-white/95 dark:bg-slate-900/95 p-6 rounded-[2.2rem] text-center border-t-4 !border-t-blue-600 border border-white/60 dark:border-slate-800 shadow-xl shadow-blue-500/5 space-y-4">
+      <div className="dw-mobile"><div className="rt-legacy-card bg-white/95 dark:bg-slate-900/95 p-6 rounded-[2.2rem] text-center border-t-4 !border-t-blue-600 border border-white/60 dark:border-slate-800 shadow-xl shadow-blue-500/5 space-y-4">
         
         <div className="inline-block bg-blue-50 dark:bg-blue-950/60 px-4 py-1.5 rounded-full border border-blue-200 dark:border-blue-900 shadow-sm">
-          <span className="text-[10px] font-black text-blue-700 dark:text-cyan-300 uppercase tracking-widest"><VisualText id="copy-8f335bc8a73e" defaultText={"FATURAMENTO DIÁRIO"}/></span>
+          <span className="rt-legacy-type rt-legacy-caption text-[10px] font-black text-blue-700 dark:text-cyan-300 uppercase tracking-widest"><VisualText id="copy-8f335bc8a73e" defaultText={"FATURAMENTO DIÁRIO"}/></span>
         </div>
 
-        <h3 className="text-5xl font-black text-slate-900 dark:text-white leading-none tracking-tight my-1 drop-shadow-sm tabular-nums">
+        <h3 className="rt-legacy-type text-5xl font-black text-slate-900 dark:text-white leading-none tracking-tight my-1 drop-shadow-sm tabular-nums">
           <span className="text-2xl text-blue-600 dark:text-cyan-400 mr-1 font-bold">R$</span>
           {faturamentoTotal.toFixed(2).replace('.', ',')}
         </h3>
@@ -409,7 +409,7 @@ export default function DonaClient({
           <button 
             type="button" 
             onClick={() => exportarRelatorioGestao()} 
-            className="w-full py-3.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-[10px] font-black uppercase tracking-wider active:scale-95 shadow-md shadow-blue-500/20 transition-all flex items-center justify-center gap-2 cursor-pointer"
+            className="rt-legacy-type rt-legacy-control w-full py-3.5 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-[10px] font-black uppercase tracking-wider active:scale-95 shadow-md shadow-blue-500/20 transition-all flex items-center justify-center gap-2 cursor-pointer"
           >
             <span><BrandIcon name="file"/></span><VisualText id="copy-f7950d3a21ec" defaultText={" RELATÓRIO DO DIA"}/></button>
           
@@ -417,13 +417,13 @@ export default function DonaClient({
             <button 
               type="button" 
               onClick={handleRelatorioMes} 
-              className="py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-xl text-[9px] font-black uppercase tracking-wider active:scale-95 shadow-sm transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+              className="rt-legacy-type rt-legacy-control py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-xl text-[9px] font-black uppercase tracking-wider active:scale-95 shadow-sm transition-all flex items-center justify-center gap-1.5 cursor-pointer"
             >
               <span><BrandIcon name="calendar"/></span><VisualText id="copy-2b7e427483f2" defaultText={" MÊS ATUAL"}/></button>
             <button 
               type="button" 
               onClick={() => setModalPeriodoOpen(true)} 
-              className="py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-xl text-[9px] font-black uppercase tracking-wider active:scale-95 shadow-sm transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+              className="rt-legacy-type rt-legacy-control py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-xl text-[9px] font-black uppercase tracking-wider active:scale-95 shadow-sm transition-all flex items-center justify-center gap-1.5 cursor-pointer"
             >
               <span><BrandIcon name="calendar"/></span><VisualText id="copy-c0021596bc3e" defaultText={" ESCOLHER DIAS"}/></button>
           </div>
@@ -432,8 +432,8 @@ export default function DonaClient({
       </div></div>
 
       {/* 3. CARD GRÁFICO: ENTRADAS POR MÉTODO COM BANDEJA AZULADA */}
-      <div className="dw-mobile"><div className="bg-white/95 dark:bg-slate-900/95 p-6 rounded-[2.2rem] shadow-xl shadow-blue-500/5 border-t-4 !border-t-cyan-500 border border-white/60 dark:border-slate-800 space-y-4">
-        <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-wider text-center"><VisualText id="copy-b70d5de8bbd3" defaultText={"ENTRADAS POR MÉTODO DE PAGAMENTO"}/></h4>
+      <div className="dw-mobile"><div className="rt-legacy-card bg-white/95 dark:bg-slate-900/95 p-6 rounded-[2.2rem] shadow-xl shadow-blue-500/5 border-t-4 !border-t-cyan-500 border border-white/60 dark:border-slate-800 space-y-4">
+        <h4 className="rt-legacy-type text-xs font-black text-slate-900 dark:text-white uppercase tracking-wider text-center"><VisualText id="copy-b70d5de8bbd3" defaultText={"ENTRADAS POR MÉTODO DE PAGAMENTO"}/></h4>
         
         {/* BANDEJA AZULADA QUE DESTACA OS VALORES */}
         <div className="bg-[#eaf4fc] dark:bg-slate-800/80 p-4 rounded-2xl border border-blue-100 dark:border-slate-700/60 shadow-inner">
@@ -445,7 +445,7 @@ export default function DonaClient({
 
               return (
                 <div key={m} className="flex-1 flex flex-col items-center justify-end h-full">
-                  <span className="text-[11px] font-black text-slate-800 dark:text-white mb-2 leading-none">
+                  <span className="rt-legacy-type rt-legacy-caption text-[11px] font-black text-slate-800 dark:text-white mb-2 leading-none">
                     {val > 0 ? `R$ ${val}` : '—'}
                   </span>
                   
@@ -460,7 +460,7 @@ export default function DonaClient({
                     )}
                   </div>
                   
-                  <span className="text-[9px] font-black text-slate-700 dark:text-slate-300 uppercase tracking-wider mt-3">
+                  <span className="rt-legacy-type rt-legacy-caption text-[9px] font-black text-slate-700 dark:text-slate-300 uppercase tracking-wider mt-3">
                     {m}
                   </span>
                 </div>
@@ -471,8 +471,8 @@ export default function DonaClient({
       </div></div>
 
       {/* 4. CARD GRÁFICO: MAPA DE CALOR COM BANDEJA AZULADA */}
-      <div className="dw-mobile"><div className="bg-white/95 dark:bg-slate-900/95 p-6 rounded-[2.2rem] shadow-xl shadow-blue-500/5 border-t-4 !border-t-blue-600 border border-white/60 dark:border-slate-800 space-y-4">
-        <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-wider text-center"><VisualText id="copy-f99712d4b373" defaultText={"MAPA DE CALOR DE HORÁRIOS"}/></h4>
+      <div className="dw-mobile"><div className="rt-legacy-card bg-white/95 dark:bg-slate-900/95 p-6 rounded-[2.2rem] shadow-xl shadow-blue-500/5 border-t-4 !border-t-blue-600 border border-white/60 dark:border-slate-800 space-y-4">
+        <h4 className="rt-legacy-type text-xs font-black text-slate-900 dark:text-white uppercase tracking-wider text-center"><VisualText id="copy-f99712d4b373" defaultText={"MAPA DE CALOR DE HORÁRIOS"}/></h4>
 
         <div className="bg-[#eaf4fc] dark:bg-slate-800/80 p-4 rounded-2xl border border-blue-100 dark:border-slate-700/60 shadow-inner">
           <div className="relative h-44 flex items-end pt-4 pl-6 pr-1 pb-1">
@@ -481,7 +481,7 @@ export default function DonaClient({
             <div className="absolute inset-y-4 left-0 right-0 flex flex-col justify-between pointer-events-none opacity-20">
               {[1.0, 0.5, 0].map(n => (
                 <div key={n} className="border-b border-slate-500 w-full relative">
-                  <span className="absolute -left-6 -top-2 text-[8px] font-bold text-slate-500">{n}</span>
+                  <span className="rt-legacy-caption absolute -left-6 -top-2 text-[8px] font-bold text-slate-500">{n}</span>
                 </div>
               ))}
             </div>
@@ -495,7 +495,7 @@ export default function DonaClient({
 
                 return (
                   <div key={h} className="flex-1 flex flex-col items-center justify-end h-full">
-                    <span className="text-[9px] font-black text-slate-800 dark:text-white mb-1 leading-none">
+                    <span className="rt-legacy-type rt-legacy-caption text-[9px] font-black text-slate-800 dark:text-white mb-1 leading-none">
                       {qtd > 0 ? qtd : ''}
                     </span>
                     <div className="w-full flex items-end justify-center h-24">
@@ -508,7 +508,7 @@ export default function DonaClient({
                         <div className="w-3 h-0.5 bg-slate-300 dark:bg-slate-700 rounded-full mb-1" />
                       )}
                     </div>
-                    <span className="text-[8px] font-black text-slate-500 dark:text-slate-400 uppercase mt-2 leading-none">
+                    <span className="rt-legacy-type rt-legacy-caption text-[8px] font-black text-slate-500 dark:text-slate-400 uppercase mt-2 leading-none">
                       {String(h).padStart(2, '0')}h
                     </span>
                   </div>
@@ -524,28 +524,28 @@ export default function DonaClient({
         <div data-rt-modal className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[9990] flex items-center justify-center p-4">
           <div className="bg-white dark:bg-slate-900 p-6 w-full max-w-sm border-t-4 !border-t-blue-600 shadow-2xl rounded-[2.2rem] border border-white/40 space-y-4">
             <div>
-              <p className="text-[9px] font-black text-blue-600 uppercase tracking-widest"><VisualText id="copy-46df42555a01" defaultText={"RELATÓRIO PERSONALIZADO"}/></p>
-              <h3 className="text-base font-black text-slate-900 dark:text-white uppercase"><VisualText id="copy-a15b7879e025" defaultText={"ESCOLHER DIAS"}/></h3>
+              <p className="rt-legacy-type rt-legacy-caption text-[9px] font-black text-blue-600 uppercase tracking-widest"><VisualText id="copy-46df42555a01" defaultText={"RELATÓRIO PERSONALIZADO"}/></p>
+              <h3 className="rt-legacy-type text-base font-black text-slate-900 dark:text-white uppercase"><VisualText id="copy-a15b7879e025" defaultText={"ESCOLHER DIAS"}/></h3>
             </div>
 
             <div className="space-y-3">
               <div>
-                <label className="text-[9px] font-black text-slate-500 uppercase ml-1 mb-1 block"><VisualText id="copy-a5a89417f32e" defaultText={"Data de Início"}/></label>
+                <label className="rt-legacy-type rt-legacy-caption text-[9px] font-black text-slate-500 uppercase ml-1 mb-1 block"><VisualText id="copy-a5a89417f32e" defaultText={"Data de Início"}/></label>
                 <input 
                   type="date" 
                   value={dataInicio} 
                   onChange={e => setDataInicio(e.target.value)}
-                  className="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs font-bold outline-none cursor-pointer"
+                  className="rt-legacy-fields w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs font-bold outline-none cursor-pointer"
                 />
               </div>
 
               <div>
-                <label className="text-[9px] font-black text-slate-500 uppercase ml-1 mb-1 block"><VisualText id="copy-9f2a29884ecc" defaultText={"Data de Fim"}/></label>
+                <label className="rt-legacy-type rt-legacy-caption text-[9px] font-black text-slate-500 uppercase ml-1 mb-1 block"><VisualText id="copy-9f2a29884ecc" defaultText={"Data de Fim"}/></label>
                 <input 
                   type="date" 
                   value={dataFim} 
                   onChange={e => setDataFim(e.target.value)}
-                  className="w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs font-bold outline-none cursor-pointer"
+                  className="rt-legacy-fields w-full p-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs font-bold outline-none cursor-pointer"
                 />
               </div>
             </div>
@@ -554,12 +554,12 @@ export default function DonaClient({
               <button 
                 type="button" 
                 onClick={() => setModalPeriodoOpen(false)}
-                className="flex-1 py-3 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-xl text-[10px] font-black uppercase cursor-pointer"
+                className="rt-legacy-type rt-legacy-control flex-1 py-3 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-xl text-[10px] font-black uppercase cursor-pointer"
               ><VisualText id="copy-63bfd2fe5c79" defaultText={"CANCELAR"}/></button>
               <button 
                 type="button" 
                 onClick={handleConfirmarPeriodo}
-                className="flex-1 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-[10px] font-black uppercase shadow-md cursor-pointer"
+                className="rt-legacy-type rt-legacy-control flex-1 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-[10px] font-black uppercase shadow-md cursor-pointer"
               ><VisualText id="copy-c905d9041b90" defaultText={"GERAR RELATÓRIO"}/></button>
             </div>
           </div>

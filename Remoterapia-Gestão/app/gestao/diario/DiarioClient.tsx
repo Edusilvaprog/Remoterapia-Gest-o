@@ -73,21 +73,21 @@ export default function DiarioClient() {
   }, [selectedDate])
 
   return (
-    <div className="space-y-4 dw-diary"><div className="dw-only"><WorkspaceHeading eyebrow="Remoterapia · Gestão" title="Diário da operação" description="Consulte as saídas, os retornos e a duração de cada passeio." actions={<WorkspaceDate label={dateStr} prev={()=>changeDate(-1)} next={()=>changeDate(1)} today={setToday}/>}/></div>
+    <div className="rt-legacy-refresh space-y-4 dw-diary"><div className="dw-only"><WorkspaceHeading eyebrow="Remoterapia · Gestão" title="Diário da operação" description="Consulte as saídas, os retornos e a duração de cada passeio." actions={<WorkspaceDate label={dateStr} prev={()=>changeDate(-1)} next={()=>changeDate(1)} today={setToday}/>}/></div>
       
       {/* 1. SELETOR DE DATA ELEVADO SEM BORDAS PRETAS */}
-      <div className="dw-mobile"><div className="bg-white/95 dark:bg-slate-900/95 p-3.5 flex justify-between items-center rounded-2xl shadow-sm border-t-4 !border-t-cyan-400 border border-white/60 dark:border-slate-800 mb-4">
+      <div className="dw-mobile"><div className="rt-legacy-card bg-white/95 dark:bg-slate-900/95 p-3.5 flex justify-between items-center rounded-2xl shadow-sm border-t-4 !border-t-cyan-400 border border-white/60 dark:border-slate-800 mb-4">
         <button 
           type="button" 
           onClick={() => changeDate(-1)}
-          className="w-10 h-10 flex items-center justify-center text-blue-600 dark:text-cyan-400 bg-[#f2f8fc] dark:bg-slate-800 hover:bg-blue-100 rounded-xl transition-all shadow-sm text-sm font-black active:scale-90 border border-blue-100 dark:border-slate-700 cursor-pointer"
+          className="rt-legacy-type rt-legacy-control w-10 h-10 flex items-center justify-center text-blue-600 dark:text-cyan-400 bg-[#f2f8fc] dark:bg-slate-800 hover:bg-blue-100 rounded-xl transition-all shadow-sm text-sm font-black active:scale-90 border border-blue-100 dark:border-slate-700 cursor-pointer"
         ><VisualText id="copy-0e4b2a68d63e" defaultText={"&lt;"}/></button>
         
         <div className="text-center flex-1 cursor-pointer" onClick={setToday}>
-          <p className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] mb-0.5">
+          <p className="rt-legacy-type rt-legacy-caption text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] mb-0.5">
             {relativeLabel}
           </p>
-          <p className="text-sm font-black text-blue-950 dark:text-white uppercase flex items-center justify-center gap-1.5 leading-tight">
+          <p className="rt-legacy-type text-sm font-black text-blue-950 dark:text-white uppercase flex items-center justify-center gap-1.5 leading-tight">
             <span><BrandIcon name="calendar"/></span> {dateStr}
           </p>
         </div>
@@ -95,7 +95,7 @@ export default function DiarioClient() {
         <button 
           type="button" 
           onClick={() => changeDate(1)}
-          className="w-10 h-10 flex items-center justify-center text-blue-600 dark:text-cyan-400 bg-[#f2f8fc] dark:bg-slate-800 hover:bg-blue-100 rounded-xl transition-all shadow-sm text-sm font-black active:scale-90 border border-blue-100 dark:border-slate-700 cursor-pointer"
+          className="rt-legacy-type rt-legacy-control w-10 h-10 flex items-center justify-center text-blue-600 dark:text-cyan-400 bg-[#f2f8fc] dark:bg-slate-800 hover:bg-blue-100 rounded-xl transition-all shadow-sm text-sm font-black active:scale-90 border border-blue-100 dark:border-slate-700 cursor-pointer"
         ><VisualText id="copy-968834b5240c" defaultText={"&gt;"}/></button>
       </div></div>
 
@@ -103,15 +103,15 @@ export default function DiarioClient() {
       <div className="rt-mobile-diary">
       {erro&&<p role="alert" className="rt-error-note">{erro}</p>}
       {/* 2. TÍTULO DA SEÇÃO */}
-      <h4 className="text-[11px] font-black text-blue-600 dark:text-cyan-400 uppercase tracking-widest mb-3 text-center italic"><VisualText id="copy-673377614ee0" defaultText={"REGISTRO DE EMBARQUES"}/></h4>
+      <h4 className="rt-legacy-type text-[11px] font-black text-blue-600 dark:text-cyan-400 uppercase tracking-widest mb-3 text-center italic"><VisualText id="copy-673377614ee0" defaultText={"REGISTRO DE EMBARQUES"}/></h4>
 
       {/* 3. LISTAGEM DOS EMBARQUES (CARDS MODERNOS DE ALTO PADRÃO) */}
       {loading ? (
         <p className="text-center text-xs font-bold text-slate-400 py-8 animate-pulse"><VisualText id="copy-850abbf671f9" defaultText={"Carregando registros..."}/></p>
       ) : historico.length === 0 ? (
-        <div className="text-center p-8 bg-white/80 dark:bg-slate-900/80 rounded-3xl border border-white/60 dark:border-slate-800 shadow-sm mt-2">
+        <div className="rt-legacy-card text-center p-8 bg-white/80 dark:bg-slate-900/80 rounded-3xl border border-white/60 dark:border-slate-800 shadow-sm mt-2">
           <span className="text-4xl opacity-60 block mb-2">📭</span>
-          <p className="text-[11px] font-black text-slate-400 uppercase tracking-wider"><VisualText id="copy-bbac85721648" defaultText={"Nenhuma navegação registrada nesta data."}/></p>
+          <p className="rt-legacy-type rt-legacy-caption text-[11px] font-black text-slate-400 uppercase tracking-wider"><VisualText id="copy-bbac85721648" defaultText={"Nenhuma navegação registrada nesta data."}/></p>
         </div>
       ) : (
         <div className="space-y-3">
@@ -119,7 +119,7 @@ export default function DiarioClient() {
             return (
               <div 
                 key={item.id}
-                className="flex items-center justify-between p-4 bg-white/95 dark:bg-slate-900/95 rounded-[2rem] border-l-[6px] !border-l-cyan-400 border border-white/60 dark:border-slate-800 shadow-xl shadow-blue-500/5 hover:scale-[1.01] transition-all"
+                className="rt-legacy-card flex items-center justify-between p-4 bg-white/95 dark:bg-slate-900/95 rounded-[2rem] border-l-[6px] !border-l-cyan-400 border border-white/60 dark:border-slate-800 shadow-xl shadow-blue-500/5 hover:scale-[1.01] transition-all"
               >
                 {/* LADO ESQUERDO: ÍCONE + NOME GRANDE + ETIQUETAS */}
                 <div className="flex items-center gap-3.5 min-w-0 flex-1">
@@ -129,16 +129,16 @@ export default function DiarioClient() {
                   
                   <div className="min-w-0 flex-1">
                     {/* NOME EM DESTAQUE MAIOR */}
-                    <h3 className="text-base font-black text-slate-900 dark:text-white uppercase leading-tight truncate">
+                    <h3 className="rt-legacy-type text-base font-black text-slate-900 dark:text-white uppercase leading-tight truncate">
                       {item.cliente}
                     </h3>
                     
                     {/* ETIQUETA DO CAIAQUE E STATUS */}
                     <div className="flex items-center gap-1.5 flex-wrap mt-1.5">
-                      <span className="text-[8px] font-black text-blue-700 dark:text-cyan-300 uppercase tracking-wider bg-blue-50 dark:bg-blue-950/60 px-2.5 py-0.5 rounded-md border border-blue-200 dark:border-blue-900">
+                      <span className="rt-legacy-type rt-legacy-caption text-[8px] font-black text-blue-700 dark:text-cyan-300 uppercase tracking-wider bg-blue-50 dark:bg-blue-950/60 px-2.5 py-0.5 rounded-md border border-blue-200 dark:border-blue-900">
                         #{item.caiaque} {item.caiaque_nome ? `· ${item.caiaque_nome}` : ''}
                       </span>
-                      <span className="text-[8px] font-black text-emerald-700 dark:text-emerald-300 uppercase tracking-wider bg-emerald-50 dark:bg-emerald-950/60 px-2 py-0.5 rounded-md border border-emerald-200 dark:border-emerald-800 flex items-center gap-1">
+                      <span className="rt-legacy-type rt-legacy-caption text-[8px] font-black text-emerald-700 dark:text-emerald-300 uppercase tracking-wider bg-emerald-50 dark:bg-emerald-950/60 px-2 py-0.5 rounded-md border border-emerald-200 dark:border-emerald-800 flex items-center gap-1">
                         <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span><VisualText id="copy-f03e89922a92" defaultText={"FINALIZADO"}/></span>
                     </div>
                   </div>
@@ -146,12 +146,12 @@ export default function DiarioClient() {
 
                 {/* LADO DIREITO: TURNO E DURAÇÃO */}
                 <div className="text-right border-l border-slate-100 dark:border-slate-800 pl-3.5 min-w-[85px] shrink-0">
-                  <span className="text-[8px] font-black text-slate-400 uppercase tracking-wider block mb-1"><VisualText id="copy-87a9fa7c9ebf" defaultText={"TURNO"}/></span>
+                  <span className="rt-legacy-type rt-legacy-caption text-[8px] font-black text-slate-400 uppercase tracking-wider block mb-1"><VisualText id="copy-87a9fa7c9ebf" defaultText={"TURNO"}/></span>
                   <div className="flex flex-col items-end">
-                    <span className="text-xs font-black text-slate-800 dark:text-slate-200 leading-none">
+                    <span className="rt-legacy-type text-xs font-black text-slate-800 dark:text-slate-200 leading-none">
                       {item.entrada} ➜ {item.saida}
                     </span>
-                    <span className="text-[9px] font-black text-cyan-600 dark:text-cyan-400 uppercase mt-1 bg-cyan-50 dark:bg-cyan-950/60 px-2 py-0.5 rounded-md border border-cyan-100 dark:border-cyan-900/60">
+                    <span className="rt-legacy-type rt-legacy-caption text-[9px] font-black text-cyan-600 dark:text-cyan-400 uppercase mt-1 bg-cyan-50 dark:bg-cyan-950/60 px-2 py-0.5 rounded-md border border-cyan-100 dark:border-cyan-900/60">
                       <BrandIcon name="clock"/> {item.duracaoMin ?? '—'}<VisualText id="copy-76cc91332ab1" defaultText={" MIN"}/></span>
                   </div>
                 </div>

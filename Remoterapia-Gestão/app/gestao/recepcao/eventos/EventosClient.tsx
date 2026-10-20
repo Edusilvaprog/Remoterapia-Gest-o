@@ -1,5 +1,6 @@
 'use client'
 
+import {Plus} from 'lucide-react'
 import BrandLabel from '@/components/ui/BrandLabel'
 import BrandIcon from '@/components/ui/BrandIcon'
 import { useState } from 'react'
@@ -266,7 +267,7 @@ export default function EventosClient({ eventosIniciais }: Props) {
   const totalOcupadas = eventos.reduce((acc, ev) => acc + (ev.vagas_ocupadas || 0), 0)
 
   return (
-    <div className="rt-reception-events space-y-4 pb-20">
+    <div className="rt-reception-renewed rt-legacy-refresh rt-reception-events space-y-4 pb-20">
       
       {/* TOAST FLUTUANTE */}
       {toast && (
@@ -287,53 +288,54 @@ export default function EventosClient({ eventosIniciais }: Props) {
       )}
 
       {/* CABEÇALHO DO MÓDULO */}
-      <div className="bg-white/95 dark:bg-slate-900/95 p-5 rounded-[2.2rem] shadow-xl shadow-blue-500/5 border-t-4 !border-t-cyan-500 border border-white/60 dark:border-slate-800 space-y-4">
-        <div className="flex justify-between items-start">
+      <div className="rt-legacy-event-header">
+        <div className="rt-legacy-event-heading">
           <div>
-            <span className="text-[8px] font-black text-cyan-600 dark:text-cyan-400 uppercase tracking-widest block"><VisualText id="copy-7885fedf3ba2" defaultText={"GESTÃO DE EXPERIÊNCIAS & REMADAS"}/></span>
-            <h2 className="text-lg font-black text-slate-900 dark:text-white uppercase tracking-tight italic"><VisualText id="copy-acd3e2ff5be5" defaultText={"EVENTOS NÁUTICOS"}/></h2>
+            <span className="rt-legacy-type text-[8px] font-black text-cyan-600 dark:text-cyan-400 uppercase tracking-widest block"><VisualText id="copy-7885fedf3ba2" defaultText={"GESTÃO DE EXPERIÊNCIAS & REMADAS"}/></span>
+            <h2 className="rt-legacy-type text-lg font-black text-slate-900 dark:text-white uppercase tracking-tight italic"><VisualText id="copy-acd3e2ff5be5" defaultText={"EVENTOS NÁUTICOS"}/></h2>
           </div>
 
           <button
             type="button"
             onClick={abrirCriarEvento}
-            className="py-2.5 px-4 bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white rounded-2xl font-black text-[10px] uppercase tracking-wider shadow-lg shadow-cyan-500/20 active:scale-95 transition-all cursor-pointer flex items-center gap-1.5"
+            className="rt-base-primary"
           >
-            <span>+</span><VisualText id="copy-8c6dd0bc1584" defaultText={" Novo Evento"}/></button>
+            <Plus size={18} aria-hidden="true"/><VisualText id="copy-8c6dd0bc1584" defaultText={" Novo Evento"}/></button>
         </div>
 
         {/* MÉTRICAS RÁPIDAS */}
-        <div className="grid grid-cols-3 gap-2 pt-1">
+        <div className="rt-legacy-event-metrics">
           <div className="bg-slate-50 dark:bg-slate-800/60 p-3 rounded-2xl border border-slate-200 dark:border-slate-700 text-center">
-            <span className="text-[8px] font-black text-slate-400 uppercase block"><VisualText id="copy-d520547fd6ca" defaultText={"Total"}/></span>
-            <span className="text-base font-black text-blue-600 dark:text-cyan-400 leading-none">
+            <span className="rt-legacy-type text-[8px] font-black text-slate-400 uppercase block"><VisualText id="copy-d520547fd6ca" defaultText={"Total"}/></span>
+            <span className="rt-legacy-type text-base font-black text-blue-600 dark:text-cyan-400 leading-none">
               {totalEventos}
             </span>
           </div>
 
           <div className="bg-slate-50 dark:bg-slate-800/60 p-3 rounded-2xl border border-slate-200 dark:border-slate-700 text-center">
-            <span className="text-[8px] font-black text-slate-400 uppercase block"><VisualText id="copy-71080f477835" defaultText={"Inscritos"}/></span>
-            <span className="text-base font-black text-emerald-600 dark:text-emerald-400 leading-none">
+            <span className="rt-legacy-type text-[8px] font-black text-slate-400 uppercase block"><VisualText id="copy-71080f477835" defaultText={"Inscritos"}/></span>
+            <span className="rt-legacy-type text-base font-black text-emerald-600 dark:text-emerald-400 leading-none">
               {totalOcupadas}
             </span>
           </div>
 
           <div className="bg-slate-50 dark:bg-slate-800/60 p-3 rounded-2xl border border-slate-200 dark:border-slate-700 text-center">
-            <span className="text-[8px] font-black text-slate-400 uppercase block"><VisualText id="copy-d170121d7220" defaultText={"Vagas Livres"}/></span>
-            <span className="text-base font-black text-amber-500 leading-none">
+            <span className="rt-legacy-type text-[8px] font-black text-slate-400 uppercase block"><VisualText id="copy-d170121d7220" defaultText={"Vagas Livres"}/></span>
+            <span className="rt-legacy-type text-base font-black text-amber-500 leading-none">
               {Math.max(0, totalVagas - totalOcupadas)}
             </span>
           </div>
         </div>
 
         {/* ABAS DE FILTRO */}
-        <div className="flex gap-1.5 bg-slate-100 dark:bg-slate-800 p-1.5 rounded-2xl">
+        <div className="rt-legacy-segments" role="group" aria-label="Situação dos eventos">
           {(['todos', 'ativos', 'encerrados'] as const).map(tab => (
             <button
               key={tab}
+              aria-pressed={filtro===tab}
               type="button"
               onClick={() => setFiltro(tab)}
-              className={`flex-1 py-2 rounded-xl text-[9px] font-black uppercase tracking-wider transition-all cursor-pointer ${
+              className={`rt-legacy-control flex-1 py-2 rounded-xl text-[9px] font-black uppercase tracking-wider transition-all cursor-pointer ${
                 filtro === tab
                   ? 'bg-white dark:bg-slate-900 text-blue-600 dark:text-cyan-400 shadow-sm'
                   : 'text-slate-400 hover:text-slate-600 dark:text-slate-500'
@@ -346,11 +348,11 @@ export default function EventosClient({ eventosIniciais }: Props) {
       </div>
 
       {/* LISTAGEM DE EVENTOS */}
-      <div className="space-y-4">
+      <div className="rt-legacy-event-list">
         {eventosFiltrados.length === 0 ? (
-          <div className="bg-white/90 dark:bg-slate-900/90 rounded-[2rem] p-8 text-center border border-white/60 dark:border-slate-800 shadow-sm space-y-2">
+          <div className="rt-legacy-card bg-white/90 dark:bg-slate-900/90 rounded-[2rem] p-8 text-center border border-white/60 dark:border-slate-800 shadow-sm space-y-2">
             <span className="text-3xl block"><BrandIcon name="ticket"/></span>
-            <p className="text-xs font-black text-slate-700 dark:text-slate-300 uppercase"><VisualText id="copy-2f342b6f1b9a" defaultText={"Nenhum evento encontrado"}/></p>
+            <p className="rt-legacy-type text-xs font-black text-slate-700 dark:text-slate-300 uppercase"><VisualText id="copy-2f342b6f1b9a" defaultText={"Nenhum evento encontrado"}/></p>
             <p className="text-[10px] text-slate-400 font-bold"><VisualText id="copy-fc2be894ceea" defaultText={"Clique em \"+ Novo Evento\" para cadastrar a primeira remada ou vivência."}/></p>
           </div>
         ) : (
@@ -365,7 +367,7 @@ export default function EventosClient({ eventosIniciais }: Props) {
             return (
               <div
                 key={ev.id}
-                className="bg-white/95 dark:bg-slate-900/95 rounded-[2.2rem] shadow-xl shadow-blue-500/5 border border-white/60 dark:border-slate-800 overflow-hidden transition-all hover:scale-[1.01]"
+                className="rt-legacy-card rt-legacy-event-card bg-white/95 dark:bg-slate-900/95 rounded-[2.2rem] shadow-xl shadow-blue-500/5 border border-white/60 dark:border-slate-800 overflow-hidden transition-all hover:scale-[1.01]"
               >
                 {/* BANNER / FOTO COM BADGES */}
                 <div className="relative h-36 w-full bg-gradient-to-r from-blue-900 to-slate-900 overflow-hidden">
@@ -395,14 +397,14 @@ export default function EventosClient({ eventosIniciais }: Props) {
                       <BrandLabel text={!isAtivo ? '⏸️ Encerrado' : esgotado ? '🔴 Esgotado' : '🟢 Inscrições Abertas'}/>
                     </span>
 
-                    <span className="text-xs font-black text-white px-3 py-1 rounded-full bg-blue-600/90 backdrop-blur-md border border-white/30 shadow-md">
+                    <span className="rt-legacy-type text-xs font-black text-white px-3 py-1 rounded-full bg-blue-600/90 backdrop-blur-md border border-white/30 shadow-md">
                       R$ {Number(ev.preco).toFixed(2).replace('.', ',')}
                     </span>
                   </div>
 
                   {/* TÍTULO E DATA SOBRE A IMAGEM */}
                   <div className="absolute bottom-3 left-4 right-4">
-                    <h3 className="text-sm font-black text-white uppercase tracking-tight drop-shadow-md truncate">
+                    <h3 className="rt-legacy-type text-sm font-black text-white uppercase tracking-tight drop-shadow-md truncate">
                       {ev.titulo}
                     </h3>
                     <p className="text-[10px] font-bold text-cyan-300 uppercase tracking-wider mt-0.5 drop-shadow">
@@ -420,7 +422,7 @@ export default function EventosClient({ eventosIniciais }: Props) {
                       <span className="truncate">{ev.local}</span>
                     </div>
                     {ev.nivel && (
-                      <span className="text-[8px] font-black uppercase px-2 py-0.5 rounded-md bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-cyan-300 border border-blue-200 dark:border-blue-900 shrink-0">
+                      <span className="rt-legacy-type text-[8px] font-black uppercase px-2 py-0.5 rounded-md bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-cyan-300 border border-blue-200 dark:border-blue-900 shrink-0">
                         {ev.nivel}
                       </span>
                     )}
@@ -428,7 +430,7 @@ export default function EventosClient({ eventosIniciais }: Props) {
 
                   {/* BARRA DE VAGAS */}
                   <div className="space-y-1 bg-slate-50 dark:bg-slate-800/60 p-3 rounded-2xl border border-slate-200 dark:border-slate-700">
-                    <div className="flex justify-between items-center text-[9px] font-black uppercase">
+                    <div className="rt-legacy-type flex justify-between items-center text-[9px] font-black uppercase">
                       <span className="text-slate-500 dark:text-slate-400"><VisualText id="copy-0b915b0f1e46" defaultText={"Ocupação de Vagas"}/></span>
                       <span className={esgotado ? 'text-red-500 font-black' : 'text-blue-600 dark:text-cyan-400'}>
                         {vagasOcupadas} de {vagasTotais}<VisualText id="copy-023e5bd159df" defaultText={" preenchidas ("}/>{vagasRestantes}<VisualText id="copy-3eaf7130e1cb" defaultText={" livres)"}/></span>
@@ -450,7 +452,7 @@ export default function EventosClient({ eventosIniciais }: Props) {
                     <button
                       type="button"
                       onClick={() => abrirInscritos(ev)}
-                      className="col-span-2 py-2.5 px-3 bg-blue-50 hover:bg-blue-100 dark:bg-blue-950/60 dark:hover:bg-blue-900/80 text-blue-700 dark:text-cyan-300 border border-blue-200 dark:border-blue-800 rounded-xl text-[9px] font-black uppercase tracking-wider active:scale-95 transition-all cursor-pointer flex items-center justify-center gap-1.5"
+                      className="rt-legacy-control rt-legacy-type col-span-2 py-2.5 px-3 bg-blue-50 hover:bg-blue-100 dark:bg-blue-950/60 dark:hover:bg-blue-900/80 text-blue-700 dark:text-cyan-300 border border-blue-200 dark:border-blue-800 rounded-xl text-[9px] font-black uppercase tracking-wider active:scale-95 transition-all cursor-pointer flex items-center justify-center gap-1.5"
                     >
                       <span><BrandIcon name="users"/></span><VisualText id="copy-af9f479d6e35" defaultText={" Inscritos ("}/>{vagasOcupadas})
                     </button>
@@ -459,7 +461,7 @@ export default function EventosClient({ eventosIniciais }: Props) {
                     <button
                       type="button"
                       onClick={() => abrirEditarEvento(ev)}
-                      className="py-2.5 px-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-xl text-[9px] font-black uppercase tracking-wider active:scale-95 transition-all cursor-pointer text-center"
+                      className="rt-legacy-control rt-legacy-type py-2.5 px-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-xl text-[9px] font-black uppercase tracking-wider active:scale-95 transition-all cursor-pointer text-center"
                       title="Editar informações do evento"
                     >
                       <BrandIcon name="edit"/><VisualText id="copy-050da11df011" defaultText={" Editar"}/></button>
@@ -468,7 +470,7 @@ export default function EventosClient({ eventosIniciais }: Props) {
                     <button
                       type="button"
                       onClick={() => alternarStatusAtivo(ev)}
-                      className={`py-2.5 px-2 rounded-xl text-[9px] font-black uppercase tracking-wider active:scale-95 transition-all cursor-pointer text-center border ${
+                      className={`rt-legacy-control py-2.5 px-2 rounded-xl text-[9px] font-black uppercase tracking-wider active:scale-95 transition-all cursor-pointer text-center border ${
                         isAtivo
                           ? 'bg-amber-50 hover:bg-amber-100 text-amber-700 border-amber-200 dark:bg-amber-950/40 dark:border-amber-900 dark:text-amber-300'
                           : 'bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border-emerald-200 dark:bg-emerald-950/40 dark:border-emerald-900 dark:text-emerald-300'
@@ -484,7 +486,7 @@ export default function EventosClient({ eventosIniciais }: Props) {
                     <button
                       type="button"
                       onClick={() => setModalCancelarAberto(ev)}
-                      className="text-[8.5px] font-black text-red-500 hover:text-red-700 uppercase tracking-wider cursor-pointer"
+                      className="rt-legacy-type text-[8.5px] font-black text-red-500 hover:text-red-700 uppercase tracking-wider cursor-pointer"
                     ><VisualText id="copy-d5e1d128d3d2" defaultText={"✕ Cancelar Evento Definitivamente"}/></button>
                   </div>
                 </div>
@@ -503,14 +505,14 @@ export default function EventosClient({ eventosIniciais }: Props) {
             <div className="bg-gradient-to-r from-blue-600 to-cyan-500 px-5 py-4 flex justify-between items-center text-white shrink-0">
               <div className="flex items-center gap-2">
                 <span className="text-base"><BrandIcon name="ticket"/></span>
-                <h3 className="text-xs font-black uppercase tracking-wider">
+                <h3 className="rt-legacy-type text-xs font-black uppercase tracking-wider">
                   <VisualLabel text={editandoId ? 'EDITAR EVENTO NÁUTICO' : 'CRIAR NOVO EVENTO'}/>
                 </h3>
               </div>
               <button aria-label="Fechar janela"
                 type="button"
                 onClick={() => setModalFormAberto(false)}
-                className="w-7 h-7 bg-white/20 hover:bg-white/30 text-white rounded-full flex items-center justify-center font-bold text-sm cursor-pointer"
+                className="rt-legacy-control w-7 h-7 bg-white/20 hover:bg-white/30 text-white rounded-full flex items-center justify-center font-bold text-sm cursor-pointer"
               >
                 ✕
               </button>
@@ -520,7 +522,7 @@ export default function EventosClient({ eventosIniciais }: Props) {
             <form onSubmit={salvarEvento} className="p-5 space-y-3.5 max-h-[80vh] overflow-y-auto no-scrollbar">
               {/* TÍTULO */}
               <div className="space-y-1">
-                <label className="text-[9px] font-black uppercase text-slate-500 dark:text-slate-400"><VisualText id="copy-19b43183978b" defaultText={"Título do Evento *"}/></label>
+                <label className="rt-legacy-type text-[9px] font-black uppercase text-slate-500 dark:text-slate-400"><VisualText id="copy-19b43183978b" defaultText={"Título do Evento *"}/></label>
                 <input
                   type="text"
                   required
@@ -534,7 +536,7 @@ export default function EventosClient({ eventosIniciais }: Props) {
               {/* DATA E HORÁRIO */}
               <div className="grid grid-cols-2 gap-2">
                 <div className="space-y-1">
-                  <label className="text-[9px] font-black uppercase text-slate-500 dark:text-slate-400"><VisualText id="copy-9640b2be6946" defaultText={"Data do Evento *"}/></label>
+                  <label className="rt-legacy-type text-[9px] font-black uppercase text-slate-500 dark:text-slate-400"><VisualText id="copy-9640b2be6946" defaultText={"Data do Evento *"}/></label>
                   <input
                     type="date"
                     required
@@ -545,7 +547,7 @@ export default function EventosClient({ eventosIniciais }: Props) {
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[9px] font-black uppercase text-slate-500 dark:text-slate-400"><VisualText id="copy-4288aaa5840a" defaultText={"Horário *"}/></label>
+                  <label className="rt-legacy-type text-[9px] font-black uppercase text-slate-500 dark:text-slate-400"><VisualText id="copy-4288aaa5840a" defaultText={"Horário *"}/></label>
                   <input
                     type="text"
                     required
@@ -559,7 +561,7 @@ export default function EventosClient({ eventosIniciais }: Props) {
 
               {/* LOCAL E PONTO DE SAÍDA */}
               <div className="space-y-1">
-                <label className="text-[9px] font-black uppercase text-slate-500 dark:text-slate-400"><VisualText id="copy-770bd14582c7" defaultText={"Local / Ponto de Encontro *"}/></label>
+                <label className="rt-legacy-type text-[9px] font-black uppercase text-slate-500 dark:text-slate-400"><VisualText id="copy-770bd14582c7" defaultText={"Local / Ponto de Encontro *"}/></label>
                 <input
                   type="text"
                   required
@@ -573,7 +575,7 @@ export default function EventosClient({ eventosIniciais }: Props) {
               {/* VAGAS E PREÇO */}
               <div className="grid grid-cols-2 gap-2">
                 <div className="space-y-1">
-                  <label className="text-[9px] font-black uppercase text-slate-500 dark:text-slate-400"><VisualText id="copy-aa5d52d6c8d2" defaultText={"Vagas Totais *"}/></label>
+                  <label className="rt-legacy-type text-[9px] font-black uppercase text-slate-500 dark:text-slate-400"><VisualText id="copy-aa5d52d6c8d2" defaultText={"Vagas Totais *"}/></label>
                   <input
                     type="number"
                     required
@@ -585,7 +587,7 @@ export default function EventosClient({ eventosIniciais }: Props) {
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[9px] font-black uppercase text-slate-500 dark:text-slate-400"><VisualText id="copy-33dbe31b1a0a" defaultText={"Valor por Pessoa (R$) *"}/></label>
+                  <label className="rt-legacy-type text-[9px] font-black uppercase text-slate-500 dark:text-slate-400"><VisualText id="copy-33dbe31b1a0a" defaultText={"Valor por Pessoa (R$) *"}/></label>
                   <input
                     type="number"
                     required
@@ -601,7 +603,7 @@ export default function EventosClient({ eventosIniciais }: Props) {
               {/* DURAÇÃO E NÍVEL */}
               <div className="grid grid-cols-2 gap-2">
                 <div className="space-y-1">
-                  <label className="text-[9px] font-black uppercase text-slate-500 dark:text-slate-400"><VisualText id="copy-04aa573f36f1" defaultText={"Duração Estimada"}/></label>
+                  <label className="rt-legacy-type text-[9px] font-black uppercase text-slate-500 dark:text-slate-400"><VisualText id="copy-04aa573f36f1" defaultText={"Duração Estimada"}/></label>
                   <input
                     type="text"
                     value={formDuracao}
@@ -612,7 +614,7 @@ export default function EventosClient({ eventosIniciais }: Props) {
                 </div>
 
                 <div className="space-y-1">
-                  <label className="text-[9px] font-black uppercase text-slate-500 dark:text-slate-400"><VisualText id="copy-0c86a6c75291" defaultText={"Nível de Experiência"}/></label>
+                  <label className="rt-legacy-type text-[9px] font-black uppercase text-slate-500 dark:text-slate-400"><VisualText id="copy-0c86a6c75291" defaultText={"Nível de Experiência"}/></label>
                   <select
                     value={formNivel}
                     onChange={e => setFormNivel(e.target.value)}
@@ -627,7 +629,7 @@ export default function EventosClient({ eventosIniciais }: Props) {
 
               {/* URL DA FOTO DE CAPA */}
               <div className="space-y-1">
-                <label className="text-[9px] font-black uppercase text-slate-500 dark:text-slate-400"><VisualText id="copy-37cc298b3787" defaultText={"URL da Foto de Capa (Opcional)"}/></label>
+                <label className="rt-legacy-type text-[9px] font-black uppercase text-slate-500 dark:text-slate-400"><VisualText id="copy-37cc298b3787" defaultText={"URL da Foto de Capa (Opcional)"}/></label>
                 <input
                   type="url"
                   value={formFotoUrl}
@@ -639,7 +641,7 @@ export default function EventosClient({ eventosIniciais }: Props) {
 
               {/* DESCRIÇÃO */}
               <div className="space-y-1">
-                <label className="text-[9px] font-black uppercase text-slate-500 dark:text-slate-400"><VisualText id="copy-fc7ba9761924" defaultText={"Descrição Completa"}/></label>
+                <label className="rt-legacy-type text-[9px] font-black uppercase text-slate-500 dark:text-slate-400"><VisualText id="copy-fc7ba9761924" defaultText={"Descrição Completa"}/></label>
                 <textarea
                   rows={3}
                   value={formDescricao}
@@ -651,7 +653,7 @@ export default function EventosClient({ eventosIniciais }: Props) {
 
               {/* ROTEIRO */}
               <div className="space-y-1">
-                <label className="text-[9px] font-black uppercase text-slate-500 dark:text-slate-400"><VisualText id="copy-b94beb3664d0" defaultText={"Roteiro / Cronograma (uma etapa por linha)"}/></label>
+                <label className="rt-legacy-type text-[9px] font-black uppercase text-slate-500 dark:text-slate-400"><VisualText id="copy-b94beb3664d0" defaultText={"Roteiro / Cronograma (uma etapa por linha)"}/></label>
                 <textarea
                   rows={3}
                   value={formRoteiro}
@@ -663,7 +665,7 @@ export default function EventosClient({ eventosIniciais }: Props) {
 
               {/* O QUE LEVAR */}
               <div className="space-y-1">
-                <label className="text-[9px] font-black uppercase text-slate-500 dark:text-slate-400"><VisualText id="copy-e4c47b550747" defaultText={"Recomendações (O que levar)"}/></label>
+                <label className="rt-legacy-type text-[9px] font-black uppercase text-slate-500 dark:text-slate-400"><VisualText id="copy-e4c47b550747" defaultText={"Recomendações (O que levar)"}/></label>
                 <input
                   type="text"
                   value={formOQueLevar}
@@ -678,12 +680,12 @@ export default function EventosClient({ eventosIniciais }: Props) {
                 <button
                   type="button"
                   onClick={() => setModalFormAberto(false)}
-                  className="flex-1 py-3 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-xl text-[10px] font-black uppercase tracking-wider cursor-pointer"
+                  className="rt-legacy-control rt-legacy-type flex-1 py-3 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-xl text-[10px] font-black uppercase tracking-wider cursor-pointer"
                 ><VisualText id="copy-a8119431b2c9" defaultText={"Cancelar"}/></button>
                 <button
                   type="submit"
                   disabled={salvando}
-                  className="flex-1 py-3 bg-gradient-to-r from-blue-600 to-cyan-500 text-white rounded-xl text-[10px] font-black uppercase tracking-wider shadow-lg shadow-cyan-500/20 active:scale-95 transition-all cursor-pointer disabled:opacity-50"
+                  className="rt-legacy-control rt-legacy-type flex-1 py-3 bg-gradient-to-r from-blue-600 to-cyan-500 text-white rounded-xl text-[10px] font-black uppercase tracking-wider shadow-lg shadow-cyan-500/20 active:scale-95 transition-all cursor-pointer disabled:opacity-50"
                 >
                   <VisualLabel text={salvando ? 'Salvando...' : editandoId ? 'Atualizar Evento' : 'Publicar Evento'}/>
                 </button>
@@ -701,15 +703,15 @@ export default function EventosClient({ eventosIniciais }: Props) {
             
             <div className="flex justify-between items-start border-b border-slate-100 dark:border-slate-800 pb-3">
               <div>
-                <span className="text-[8px] font-black text-cyan-600 dark:text-cyan-400 uppercase tracking-widest block"><VisualText id="copy-750fdf79fdc6" defaultText={"LISTA DE PARTICIPANTES"}/></span>
-                <h3 className="text-sm font-black text-slate-900 dark:text-white uppercase truncate max-w-[260px]">
+                <span className="rt-legacy-type text-[8px] font-black text-cyan-600 dark:text-cyan-400 uppercase tracking-widest block"><VisualText id="copy-750fdf79fdc6" defaultText={"LISTA DE PARTICIPANTES"}/></span>
+                <h3 className="rt-legacy-type text-sm font-black text-slate-900 dark:text-white uppercase truncate max-w-[260px]">
                   {eventoSelecionado.titulo}
                 </h3>
               </div>
               <button aria-label="Fechar janela"
                 type="button"
                 onClick={() => setModalInscritosAberto(false)}
-                className="w-7 h-7 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center text-xs font-bold text-slate-600 dark:text-slate-300 cursor-pointer"
+                className="rt-legacy-control w-7 h-7 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center text-xs font-bold text-slate-600 dark:text-slate-300 cursor-pointer"
               >
                 ✕
               </button>
@@ -738,10 +740,10 @@ export default function EventosClient({ eventosIniciais }: Props) {
                     >
                       <div className="min-w-0 flex-1">
                         <div className="flex items-center gap-2">
-                          <h4 className="text-xs font-black text-slate-900 dark:text-white uppercase truncate">
+                          <h4 className="rt-legacy-type text-xs font-black text-slate-900 dark:text-white uppercase truncate">
                             {insc.nome_completo}
                           </h4>
-                          <span className="text-[7.5px] font-black px-1.5 py-0.5 rounded-md bg-cyan-100 dark:bg-cyan-950 text-cyan-700 dark:text-cyan-300 border border-cyan-200 dark:border-cyan-800">
+                          <span className="rt-legacy-type text-[7.5px] font-black px-1.5 py-0.5 rounded-md bg-cyan-100 dark:bg-cyan-950 text-cyan-700 dark:text-cyan-300 border border-cyan-200 dark:border-cyan-800">
                             {insc.qtd_vagas}<VisualText id="copy-6a207b7e9dbd" defaultText={" vaga(s)"}/></span>
                         </div>
                         <p className="text-[9px] font-bold text-slate-400 truncate mt-0.5">
@@ -753,7 +755,7 @@ export default function EventosClient({ eventosIniciais }: Props) {
                         href={linkWhats}
                         target="_blank"
                         rel="noreferrer"
-                        className="py-1.5 px-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-[8.5px] font-black uppercase tracking-wider shadow-sm active:scale-95 shrink-0 flex items-center gap-1 cursor-pointer"
+                        className="rt-legacy-type py-1.5 px-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-[8.5px] font-black uppercase tracking-wider shadow-sm active:scale-95 shrink-0 flex items-center gap-1 cursor-pointer"
                       >
                         <span><BrandIcon name="message"/></span><VisualText id="copy-e9e5a0773162" defaultText={" WhatsApp"}/></a>
                     </div>
@@ -762,7 +764,7 @@ export default function EventosClient({ eventosIniciais }: Props) {
               </div>
             )}
 
-            <div className="pt-2 border-t border-slate-100 dark:border-slate-800 flex justify-between items-center text-xs font-black">
+            <div className="rt-legacy-type pt-2 border-t border-slate-100 dark:border-slate-800 flex justify-between items-center text-xs font-black">
               <span className="text-slate-400 uppercase text-[9px]"><VisualText id="copy-a64d9bebe297" defaultText={"Total de Inscrições:"}/></span>
               <span className="text-blue-600 dark:text-cyan-400">
                 {inscritos.reduce((acc, i) => acc + (i.qtd_vagas || 1), 0)}<VisualText id="copy-4856eb07968a" defaultText={" vagas"}/></span>
@@ -776,19 +778,19 @@ export default function EventosClient({ eventosIniciais }: Props) {
       {modalCancelarAberto && (
         <div data-rt-modal className="fixed inset-0 z-[9995] bg-slate-900/70 backdrop-blur-sm flex items-center justify-center p-4">
           <div className="w-full max-w-sm bg-white dark:bg-slate-900 rounded-[2rem] p-6 border-t-4 !border-t-red-500 shadow-2xl space-y-3">
-            <p className="text-[10px] font-black text-red-500 uppercase tracking-wider"><VisualText id="copy-069423276b9e" defaultText={"CANCELAMENTO DE EVENTO"}/></p>
-            <h3 className="text-base font-black text-slate-900 dark:text-white uppercase"><VisualText id="copy-050a015896b0" defaultText={"CANCELAR REMADA?"}/></h3>
+            <p className="rt-legacy-type text-[10px] font-black text-red-500 uppercase tracking-wider"><VisualText id="copy-069423276b9e" defaultText={"CANCELAMENTO DE EVENTO"}/></p>
+            <h3 className="rt-legacy-type text-base font-black text-slate-900 dark:text-white uppercase"><VisualText id="copy-050a015896b0" defaultText={"CANCELAR REMADA?"}/></h3>
             <p className="text-xs font-bold text-slate-600 dark:text-slate-300"><VisualText id="copy-45d0a3f07f60" defaultText={"Deseja realmente cancelar o evento "}/><strong>{modalCancelarAberto.titulo}</strong><VisualText id="copy-20474f731d97" defaultText={"? As inscrições serão imediatamente suspensas no portal."}/></p>
             <div className="flex gap-2 pt-2">
               <button
                 type="button"
                 onClick={() => setModalCancelarAberto(null)}
-                className="flex-1 py-3 bg-slate-100 text-slate-600 rounded-xl text-[10px] font-black uppercase cursor-pointer"
+                className="rt-legacy-control rt-legacy-type flex-1 py-3 bg-slate-100 text-slate-600 rounded-xl text-[10px] font-black uppercase cursor-pointer"
               ><VisualText id="copy-abd42c000724" defaultText={"Voltar"}/></button>
               <button
                 type="button"
                 onClick={confirmarCancelarEvento}
-                className="flex-1 py-3 bg-red-600 text-white rounded-xl text-[10px] font-black uppercase shadow-md cursor-pointer"
+                className="rt-legacy-control rt-legacy-type flex-1 py-3 bg-red-600 text-white rounded-xl text-[10px] font-black uppercase shadow-md cursor-pointer"
               ><VisualText id="copy-009e3424000c" defaultText={"Confirmar"}/></button>
             </div>
           </div>
