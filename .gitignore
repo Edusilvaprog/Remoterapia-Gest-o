@@ -37,3 +37,6 @@ exports/
 Thumbs.db
 # Rascunhos do editor pertencem apenas a este computador.
 tools/editor-visual/.editor-draft.json
+
+# Pacotes privados de transferencia
+entrega-portatil/

@@ -1,0 +1,36 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypto'),{spawnSync}=require('node:child_process');
+const {json,validSnapshot}=require('./cli.cjs');
+const ROOT=path.resolve(__dirname,'../..'),APPS=['Remoterapia-Gest\u00e3o','Remoterapia-Portal'];
+const skipDirs=new Set(['node_modules','.git','.vercel','coverage','out','build','backups','exports','publicacao','.temp']);
+function excluded(name,directory=false){return directory?(skipDirs.has(name)||name.startsWith('.next')):/^\.env/i.test(name)||/\.(?:log|tmp|tsbuildinfo|zip|pem|key|p12|pfx|sqlite3?|dump|bak|bundle)$/i.test(name)||['.DS_Store','Thumbs.db','next-env.d.ts','.npmrc','.yarnrc','.yarnrc.yml'].includes(name);}
+function copyTree(source,destination){const stat=fs.lstatSync(source);if(stat.isSymbolicLink())throw Error('Link externo nao copiado: '+source);if(stat.isDirectory()){fs.mkdirSync(destination,{recursive:true});for(const entry of fs.readdirSync(source,{withFileTypes:true})){if(skipDirs.has(entry.name)||entry.name.startsWith('.next')||excluded(entry.name,entry.isDirectory()))continue;copyTree(path.join(source,entry.name),path.join(destination,entry.name));}}else{fs.mkdirSync(path.dirname(destination),{recursive:true});fs.copyFileSync(source,destination);}}
+function snapshotDisk(file){const data=JSON.parse(fs.readFileSync(file,'utf8').replace(/^\uFEFF/,''));if(!validSnapshot(data))throw Error('A captura informada nao contem dados ficticios validos.');return data;}
+async function chooseSnapshot(){
+ const own=path.join(ROOT,'dados/previa-local.json');
+ try{const live=await json('http://127.0.0.1:3010/api/editor/state',1200),disk=JSON.parse(fs.readFileSync(path.join(ROOT,'tools/editor-visual/.editor-draft.json'),'utf8'));if(live.revision!==disk.revision||JSON.stringify(live.state)!==JSON.stringify(disk.state))throw Error('O editor aberto nao corresponde ao rascunho desta pasta.');const data=await json('http://127.0.0.1:3010/api/export-preview',2000);if(!validSnapshot(data))throw Error('Captura local invalida.');return {data,source:'editor-em-execucao'};}catch(error){if(error.message.includes('nao corresponde'))throw error;}
+ const fallback=fs.existsSync(own)?own:path.resolve(ROOT,'../editor-recuperacao-arraste-20261015.json');if(!fs.existsSync(fallback))throw Error('Abra o editor para exportar os dados locais antes de montar a transferencia.');return {data:snapshotDisk(fallback),source:fs.existsSync(own)?'captura-desta-pasta':'recuperacao-2026-10-15'};
+}
+function inventory(folder){const result=[];function visit(current){for(const entry of fs.readdirSync(current,{withFileTypes:true})){const full=path.join(current,entry.name);if(entry.isDirectory())visit(full);else{const bytes=fs.readFileSync(full);result.push({path:path.relative(folder,full).split(path.sep).join('/'),bytes:bytes.length,sha256:crypto.createHash('sha256').update(bytes).digest('hex')});}}}visit(folder);return result.sort((a,b)=>a.path.localeCompare(b.path));}
+function scan(files,folder){const forbidden=/(?:sk_live_[A-Za-z0-9]{20,}|ghp_[A-Za-z0-9]{30,}|AKIA[0-9A-Z]{16}|-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----)/;for(const item of files){if(item.path.split('/').some(name=>excluded(name,false)))throw Error('Arquivo nao permitido: '+item.path);if(/\.(?:json|[cm]?js|tsx?|sql|md|ps1|cmd)$/i.test(item.path)&&forbidden.test(fs.readFileSync(path.join(folder,item.path),'utf8')))throw Error('Possivel credencial: confira '+item.path+' antes de transferir.');}}
+async function build(){
+ const stamp=new Date().toISOString().replace(/[:.]/g,'-'),name='Remoterapia-Portatil-'+stamp,destination=path.join(ROOT,'entrega-portatil',name),zip=destination+'.zip';
+ if(fs.existsSync(destination)||fs.existsSync(zip))throw Error('O destino ja existe. Tente novamente para gerar outro nome.');
+ const snapshot=await chooseSnapshot();fs.mkdirSync(destination,{recursive:true});
+ for(const app of APPS)copyTree(path.join(ROOT,app),path.join(destination,app));
+ const editor=path.join(destination,'tools/editor-visual');fs.mkdirSync(editor,{recursive:true});
+ for(const file of ['server.cjs','local-data.cjs','draft-store.cjs','style-engine.cjs','catalog.json','visual-settings.json','index.html','editor.js','editor.css','move-geometry.js','move-editor.js','.editor-draft.json'])fs.copyFileSync(path.join(ROOT,'tools/editor-visual',file),path.join(editor,file));
+ copyTree(path.join(ROOT,'tools/portatil'),path.join(destination,'tools/portatil'));
+ for(const file of ['original-preservado.json','STATUS.md','RETOMAR.md','COMO-USAR.md','REVISAO-VISUAL-GESTAO.md','COMPARACAO-BACKUP-NAVEGACAO.md','.gitignore'])fs.copyFileSync(path.join(ROOT,file),path.join(destination,file));
+ fs.copyFileSync(path.join(ROOT,'tools/portatil/LEIA-ME.md'),path.join(destination,'LEIA-ME.md'));fs.mkdirSync(path.join(destination,'dados'));fs.writeFileSync(path.join(destination,'dados/previa-local.json'),JSON.stringify(snapshot.data,null,2)+'\n');
+ const commands={'1-Preparar.cmd':'install','2-Abrir-Editor.cmd':'start','Verificar-Transferencia.cmd':'verify'};
+ for(const [file,action] of Object.entries(commands)){const text='@echo off\r\ncd /d "%~dp0"\r\nwhere node >nul 2>nul\r\nif errorlevel 1 (\r\n  echo Instale Node.js 24 antes de continuar.\r\n  pause\r\n  exit /b 1\r\n)\r\nnode "%~dp0tools\\portatil\\cli.cjs" '+action+'\r\nif errorlevel 1 pause\r\n';fs.writeFileSync(path.join(destination,file),text);}
+ fs.writeFileSync(path.join(destination,'Exportar-Nova-Copia.cmd'),'@echo off\r\ncd /d "%~dp0"\r\nnode "%~dp0tools\\portatil\\empacotar.cjs"\r\nif errorlevel 1 pause\r\n');
+ const draft=JSON.parse(fs.readFileSync(path.join(editor,'.editor-draft.json'),'utf8')),files=inventory(destination);scan(files,destination);
+ const manifest={format:1,createdAt:new Date().toISOString(),nodeRecommended:'24',draftRevision:draft.revision,draftHistory:draft.history.length,dataSource:snapshot.source,dataCapturedAt:snapshot.data.exportedAt||null,sourceOnly:true,notice:'Pacote privado de edicao local. Nao e backup do banco de producao.',files};
+ fs.writeFileSync(path.join(destination,'transferencia.json'),JSON.stringify(manifest,null,2)+'\n');
+ if(process.platform==='win32'){const compression=spawnSync('powershell.exe',['-NoProfile','-File',path.join(ROOT,'tools/portatil/criar-zip.ps1'),'-Pasta',destination,'-Destino',zip],{encoding:'utf8',windowsHide:true});if(compression.status!==0)throw Error('Pasta criada; compactacao falhou: '+compression.stderr);require('./verificar-zip.cjs').verifyZip(zip);const hash=crypto.createHash('sha256').update(fs.readFileSync(zip)).digest('hex');fs.writeFileSync(zip+'.sha256',hash+'  '+path.basename(zip)+'\n');}
+ console.log(JSON.stringify({folder:destination,zip:fs.existsSync(zip)?zip:null,files:files.length,sourceMB:Number((files.reduce((sum,file)=>sum+file.bytes,0)/1048576).toFixed(2)),zipMB:fs.existsSync(zip)?Number((fs.statSync(zip).size/1048576).toFixed(2)):null,draftRevision:draft.revision,history:draft.history.length,dataSource:snapshot.source,dataCapturedAt:manifest.dataCapturedAt},null,2));return {destination,zip,manifest};
+}
+if(require.main===module)build().catch(error=>{console.error(error.message);process.exitCode=1});
+module.exports={build,excluded,copyTree,inventory,scan,chooseSnapshot};
